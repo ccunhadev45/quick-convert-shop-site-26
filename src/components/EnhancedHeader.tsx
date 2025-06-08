@@ -231,13 +231,6 @@ const EnhancedHeader = () => {
                     <span>Dashboard</span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/admin/documentation" className="cursor-pointer">
-                    <Search className="mr-2 h-4 w-4" />
-                    <span>Documentação</span>
-                  </Link>
-                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 

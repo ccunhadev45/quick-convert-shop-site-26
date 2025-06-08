@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BarChart3, Settings, MessageSquare, Users, LogOut } from "lucide-react";
+import { ArrowLeft, BarChart3, Settings, MessageSquare, Users, LogOut, Database, Api, Book } from "lucide-react";
 import { Link } from "react-router-dom";
 import EnhancedHeader from "@/components/EnhancedHeader";
 import AnalyticsDashboard from "@/components/admin/AnalyticsDashboard";
@@ -12,6 +12,9 @@ import ProductManager from "@/components/admin/ProductManager";
 import UsageAnalytics from "@/components/admin/UsageAnalytics";
 import UserFeedback from "@/components/admin/UserFeedback";
 import SystemSettings from "@/components/admin/SystemSettings";
+import DatabaseDocumentation from "@/components/admin/DatabaseDocumentation";
+import ApiDocumentation from "@/components/admin/ApiDocumentation";
+import SystemDocumentation from "@/components/admin/SystemDocumentation";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 
 const AdminDashboard = () => {
@@ -23,7 +26,7 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <Settings className="h-8 w-8 animate-spin mx-auto mb-4" />
           <p>Verificando autenticação...</p>
@@ -37,18 +40,18 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-background">
       <EnhancedHeader />
       
       <div className="container mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
-            <Link to="/" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+            <Link to="/" className="text-primary hover:text-primary/80">
               <ArrowLeft className="h-6 w-6" />
             </Link>
             <div className="flex items-center gap-3">
-              <Settings className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+              <Settings className="h-8 w-8 text-primary" />
+              <h1 className="text-3xl font-bold text-foreground">
                 Painel Administrativo
               </h1>
             </div>
@@ -66,7 +69,7 @@ const AdminDashboard = () => {
 
         <div className="max-w-7xl mx-auto">
           <Tabs defaultValue="analytics" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-5">
+            <TabsList className="grid w-full grid-cols-4 md:grid-cols-8">
               <TabsTrigger value="analytics" className="flex items-center gap-2">
                 <BarChart3 className="h-4 w-4" />
                 Analytics
@@ -84,6 +87,18 @@ const AdminDashboard = () => {
                 Config
               </TabsTrigger>
               <TabsTrigger value="ads">Anúncios</TabsTrigger>
+              <TabsTrigger value="database" className="flex items-center gap-2">
+                <Database className="h-4 w-4" />
+                Doc DB
+              </TabsTrigger>
+              <TabsTrigger value="api" className="flex items-center gap-2">
+                <Api className="h-4 w-4" />
+                Doc API
+              </TabsTrigger>
+              <TabsTrigger value="system" className="flex items-center gap-2">
+                <Book className="h-4 w-4" />
+                Doc Sistema
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="analytics" className="mt-6">
@@ -119,6 +134,18 @@ const AdminDashboard = () => {
                 <AdSenseSettings />
                 <ProductManager />
               </div>
+            </TabsContent>
+
+            <TabsContent value="database" className="mt-6">
+              <DatabaseDocumentation />
+            </TabsContent>
+
+            <TabsContent value="api" className="mt-6">
+              <ApiDocumentation />
+            </TabsContent>
+
+            <TabsContent value="system" className="mt-6">
+              <SystemDocumentation />
             </TabsContent>
           </Tabs>
         </div>
