@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,15 +12,17 @@ const ImcCalculator = () => {
   const [height, setHeight] = useState("");
   const [imc, setImc] = useState<number | null>(null);
 
-  const calculateImc = () => {
+  useEffect(() => {
     const weightNum = parseFloat(weight);
     const heightNum = parseFloat(height) / 100; // Convert cm to meters
     
     if (weightNum > 0 && heightNum > 0) {
       const imcResult = weightNum / (heightNum * heightNum);
       setImc(imcResult);
+    } else {
+      setImc(null);
     }
-  };
+  }, [weight, height]);
 
   const getImcCategory = (imc: number) => {
     if (imc < 18.5) return { category: "Abaixo do peso", color: "text-blue-600" };
@@ -56,10 +58,7 @@ const ImcCalculator = () => {
                     type="number"
                     placeholder="Ex: 70"
                     value={weight}
-                    onChange={(e) => {
-                      setWeight(e.target.value);
-                      calculateImc();
-                    }}
+                    onChange={(e) => setWeight(e.target.value)}
                     className="text-lg"
                   />
                 </div>
@@ -70,10 +69,7 @@ const ImcCalculator = () => {
                     type="number"
                     placeholder="Ex: 175"
                     value={height}
-                    onChange={(e) => {
-                      setHeight(e.target.value);
-                      calculateImc();
-                    }}
+                    onChange={(e) => setHeight(e.target.value)}
                     className="text-lg"
                   />
                 </div>

@@ -1,117 +1,201 @@
 
+import { useState, useMemo } from "react";
 import Header from "@/components/Header";
-import ConverterCard from "@/components/ConverterCard";
+import EnhancedConverterCard from "@/components/EnhancedConverterCard";
+import SearchFilter from "@/components/SearchFilter";
 import AdSpace from "@/components/AdSpace";
 import ProductShowcase from "@/components/ProductShowcase";
 import { Ruler, Weight, Beaker, Thermometer, Square, Zap, Clock, Gauge, Calculator, Heart, Apple } from "lucide-react";
 
 const Index = () => {
-  const converterCategories = [
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const allCategories = [
+    // Conversores
     {
       title: "Comprimento",
       description: "Metro, pé, polegada, quilômetro",
       icon: Ruler,
       path: "/length",
-      color: "blue"
+      color: "blue",
+      type: "converter",
+      conversionExample: {
+        from: "1 metro",
+        to: "pé",
+        value: "3.28084 ft"
+      }
     },
     {
       title: "Peso",
       description: "Quilograma, libra, onça, tonelada",
       icon: Weight,
       path: "/weight",
-      color: "green"
+      color: "green",
+      type: "converter",
+      conversionExample: {
+        from: "1 kg",
+        to: "libra",
+        value: "2.20462 lb"
+      }
     },
     {
       title: "Volume",
       description: "Litro, galão, mililitro, metro cúbico",
       icon: Beaker,
       path: "/volume",
-      color: "purple"
+      color: "purple",
+      type: "converter",
+      conversionExample: {
+        from: "1 litro",
+        to: "galão",
+        value: "0.264172 gal"
+      }
     },
     {
       title: "Temperatura",
       description: "Celsius, Fahrenheit, Kelvin",
       icon: Thermometer,
       path: "/temperature",
-      color: "orange"
+      color: "orange",
+      type: "converter",
+      conversionExample: {
+        from: "0°C",
+        to: "Fahrenheit",
+        value: "32°F"
+      }
     },
     {
       title: "Área",
       description: "Metro quadrado, acre, hectare",
       icon: Square,
       path: "/area",
-      color: "teal"
+      color: "teal",
+      type: "converter",
+      conversionExample: {
+        from: "1 m²",
+        to: "pé²",
+        value: "10.7639 ft²"
+      }
     },
     {
       title: "Energia",
       description: "Joule, caloria, watt-hora",
       icon: Zap,
       path: "/energy",
-      color: "yellow"
+      color: "yellow",
+      type: "converter",
+      conversionExample: {
+        from: "1 kWh",
+        to: "joule",
+        value: "3.6e+6 J"
+      }
     },
     {
       title: "Tempo",
       description: "Segundo, minuto, hora, dia",
       icon: Clock,
       path: "/time",
-      color: "indigo"
+      color: "indigo",
+      type: "converter",
+      conversionExample: {
+        from: "1 hora",
+        to: "segundos",
+        value: "3600 s"
+      }
     },
     {
       title: "Velocidade",
       description: "km/h, mph, m/s, nó",
       icon: Gauge,
       path: "/speed",
-      color: "pink"
-    }
-  ];
-
-  const calculatorCategories = [
+      color: "pink",
+      type: "converter",
+      conversionExample: {
+        from: "100 km/h",
+        to: "mph",
+        value: "62.137 mph"
+      }
+    },
+    // Calculadoras
     {
       title: "Calculadora IMC",
       description: "Índice de Massa Corporal",
       icon: Calculator,
       path: "/imc",
-      color: "red"
+      color: "red",
+      type: "calculator"
     },
     {
       title: "Taxa Metabólica Basal",
       description: "Calorias diárias necessárias",
       icon: Heart,
       path: "/tmb",
-      color: "emerald"
-    }
-  ];
-
-  const nutritionCategories = [
+      color: "emerald",
+      type: "calculator"
+    },
+    // Nutrição
     {
       title: "Calculadora de Calorias",
       description: "Calorias e macros dos alimentos",
       icon: Apple,
       path: "/calories",
-      color: "green"
+      color: "green",
+      type: "nutrition"
     }
   ];
 
-  const CategorySection = ({ title, description, cards }: { title: string, description: string, cards: any[] }) => (
-    <div className="mb-16">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
-        <p className="text-gray-600">{description}</p>
+  const filteredCategories = useMemo(() => {
+    if (!searchTerm) return allCategories;
+    
+    const searchLower = searchTerm.toLowerCase();
+    return allCategories.filter(category => 
+      category.title.toLowerCase().includes(searchLower) ||
+      category.description.toLowerCase().includes(searchLower) ||
+      category.type.toLowerCase().includes(searchLower)
+    );
+  }, [searchTerm]);
+
+  const groupedCategories = useMemo(() => {
+    const converters = filteredCategories.filter(cat => cat.type === 'converter');
+    const calculators = filteredCategories.filter(cat => cat.type === 'calculator');
+    const nutrition = filteredCategories.filter(cat => cat.type === 'nutrition');
+    
+    return { converters, calculators, nutrition };
+  }, [filteredCategories]);
+
+  const CategorySection = ({ 
+    title, 
+    description, 
+    cards 
+  }: { 
+    title: string; 
+    description: string; 
+    cards: any[] 
+  }) => {
+    if (cards.length === 0) return null;
+    
+    return (
+      <div className="mb-16">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
+          <p className="text-gray-600">{description}</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {cards.map((category) => (
+            <EnhancedConverterCard
+              key={category.title}
+              title={category.title}
+              description={category.description}
+              icon={category.icon}
+              path={category.path}
+              color={category.color}
+              conversionExample={category.conversionExample}
+            />
+          ))}
+        </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {cards.map((category) => (
-          <ConverterCard
-            key={category.title}
-            title={category.title}
-            description={category.description}
-            icon={category.icon}
-            path={category.path}
-            color={category.color}
-          />
-        ))}
-      </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -120,6 +204,11 @@ const Index = () => {
       <AdSpace position="top" />
       
       <main className="container mx-auto px-6 py-12">
+        <SearchFilter 
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+        />
+
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Super Conversor de Unidades
@@ -132,20 +221,28 @@ const Index = () => {
         <CategorySection 
           title="Conversores de Unidades"
           description="Converta entre diferentes unidades de medida"
-          cards={converterCategories}
+          cards={groupedCategories.converters}
         />
 
         <CategorySection 
           title="Calculadoras de Saúde"
           description="Ferramentas para cálculos relacionados à saúde"
-          cards={calculatorCategories}
+          cards={groupedCategories.calculators}
         />
 
         <CategorySection 
           title="Valores Energéticos"
           description="Calcule calorias e macronutrientes dos alimentos"
-          cards={nutritionCategories}
+          cards={groupedCategories.nutrition}
         />
+
+        {filteredCategories.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">
+              Nenhum resultado encontrado para "{searchTerm}"
+            </p>
+          </div>
+        )}
 
         <AdSpace position="middle" />
 
