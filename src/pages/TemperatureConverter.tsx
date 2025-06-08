@@ -146,7 +146,7 @@ const TemperatureConverter = () => {
               <div className="bg-green-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-green-800 mb-2">Temperatura Corporal</h3>
                 <p>Normal: 37°C = 98.6°F = 310.15K</p>
-                <p>Febre: >38°C = >100.4°F = >311.15K</p>
+                <p>Febre: {'>'}38°C = {'>'}100.4°F = {'>'}311.15K</p>
               </div>
             </div>
           </CardContent>
