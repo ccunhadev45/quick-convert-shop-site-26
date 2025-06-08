@@ -1,41 +1,84 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Star, MapPin, Clock, Calendar } from "lucide-react";
+import { ArrowLeft, Star, MapPin, Clock, Calendar, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { geocodeCity } from "@/services/geocodingService";
+import { calculateAstrologyChart, AstrologyChart } from "@/services/astrologyService";
+import { useToast } from "@/hooks/use-toast";
 
 const BirthChart = () => {
   const [birthData, setBirthData] = useState({
     name: "",
     date: "",
     time: "",
-    city: "",
-    lat: "",
-    lng: ""
+    city: ""
   });
-  const [chartGenerated, setChartGenerated] = useState(false);
+  const [chartData, setChartData] = useState<AstrologyChart | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const handleInputChange = (field: string, value: string) => {
     setBirthData(prev => ({ ...prev, [field]: value }));
   };
 
-  const generateChart = () => {
-    if (birthData.name && birthData.date && birthData.time && birthData.city) {
-      setChartGenerated(true);
+  const generateChart = async () => {
+    if (!birthData.name || !birthData.date || !birthData.time || !birthData.city) {
+      toast({
+        title: "Dados incompletos",
+        description: "Por favor, preencha todos os campos obrigatórios.",
+        variant: "destructive"
+      });
+      return;
     }
-  };
 
-  const mockAstrologicalData = {
-    sun: { sign: "Leão", degree: "15°32'", house: "5ª Casa" },
-    moon: { sign: "Câncer", degree: "22°18'", house: "4ª Casa" },
-    ascendant: { sign: "Virgem", degree: "8°45'" },
-    mercury: { sign: "Virgem", degree: "3°12'", house: "6ª Casa" },
-    venus: { sign: "Câncer", degree: "28°55'", house: "4ª Casa" },
-    mars: { sign: "Gêmeos", degree: "11°33'", house: "3ª Casa" }
+    setIsLoading(true);
+    
+    try {
+      // Geocodificar a cidade
+      const locationData = await geocodeCity(birthData.city);
+      
+      if (!locationData) {
+        toast({
+          title: "Cidade não encontrada",
+          description: "Não foi possível encontrar as coordenadas da cidade informada.",
+          variant: "destructive"
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      // Criar objeto Date com data e hora de nascimento
+      const birthDateTime = new Date(`${birthData.date}T${birthData.time}`);
+      
+      // Calcular mapa astral
+      const chart = calculateAstrologyChart(
+        birthDateTime,
+        locationData.lat,
+        locationData.lng
+      );
+      
+      setChartData(chart);
+      
+      toast({
+        title: "Mapa astral gerado!",
+        description: "Seu mapa astral foi calculado com sucesso.",
+      });
+      
+    } catch (error) {
+      console.error('Erro ao gerar mapa astral:', error);
+      toast({
+        title: "Erro no cálculo",
+        description: "Ocorreu um erro ao calcular seu mapa astral. Tente novamente.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -110,44 +153,33 @@ const BirthChart = () => {
                 </Label>
                 <Input
                   id="city"
-                  placeholder="Ex: São Paulo, SP"
+                  placeholder="Ex: São Paulo, SP ou New York, USA"
                   value={birthData.city}
                   onChange={(e) => handleInputChange("city", e.target.value)}
                 />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="lat">Latitude</Label>
-                  <Input
-                    id="lat"
-                    placeholder="-23.5505"
-                    value={birthData.lat}
-                    onChange={(e) => handleInputChange("lat", e.target.value)}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="lng">Longitude</Label>
-                  <Input
-                    id="lng"
-                    placeholder="-46.6333"
-                    value={birthData.lng}
-                    onChange={(e) => handleInputChange("lng", e.target.value)}
-                  />
-                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  A latitude e longitude serão calculadas automaticamente
+                </p>
               </div>
 
               <Button
                 onClick={generateChart}
                 className="w-full bg-purple-600 hover:bg-purple-700"
-                disabled={!birthData.name || !birthData.date || !birthData.time || !birthData.city}
+                disabled={!birthData.name || !birthData.date || !birthData.time || !birthData.city || isLoading}
               >
-                Gerar Mapa Astral
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Calculando...
+                  </>
+                ) : (
+                  "Gerar Mapa Astral"
+                )}
               </Button>
             </CardContent>
           </Card>
 
-          {chartGenerated && (
+          {chartData && (
             <Card>
               <CardHeader>
                 <CardTitle>Seu Mapa Astral - {birthData.name}</CardTitle>
@@ -161,64 +193,125 @@ const BirthChart = () => {
                     <h3 className="font-semibold text-lg mb-3">Posições Planetárias</h3>
                     <div className="grid gap-3">
                       <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
-                        <div>
-                          <span className="font-medium">☉ Sol</span>
-                          <Badge variant="outline" className="ml-2">
-                            {mockAstrologicalData.sun.sign}
-                          </Badge>
+                        <div className="flex items-center">
+                          <span className="text-2xl mr-2">☉</span>
+                          <div>
+                            <span className="font-medium">Sol</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">{chartData.sun.symbol}</span>
+                              <Badge variant="outline">
+                                {chartData.sun.sign}
+                              </Badge>
+                            </div>
+                          </div>
                         </div>
                         <div className="text-right text-sm">
-                          <div>{mockAstrologicalData.sun.degree}</div>
-                          <div className="text-gray-500">{mockAstrologicalData.sun.house}</div>
+                          <div>{chartData.sun.degree.toFixed(0)}°</div>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                        <div>
-                          <span className="font-medium">☽ Lua</span>
-                          <Badge variant="outline" className="ml-2">
-                            {mockAstrologicalData.moon.sign}
-                          </Badge>
+                        <div className="flex items-center">
+                          <span className="text-2xl mr-2">☽</span>
+                          <div>
+                            <span className="font-medium">Lua</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">{chartData.moon.symbol}</span>
+                              <Badge variant="outline">
+                                {chartData.moon.sign}
+                              </Badge>
+                            </div>
+                          </div>
                         </div>
                         <div className="text-right text-sm">
-                          <div>{mockAstrologicalData.moon.degree}</div>
-                          <div className="text-gray-500">{mockAstrologicalData.moon.house}</div>
+                          <div>{chartData.moon.degree.toFixed(0)}°</div>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-                        <div>
-                          <span className="font-medium">↑ Ascendente</span>
-                          <Badge variant="outline" className="ml-2">
-                            {mockAstrologicalData.ascendant.sign}
-                          </Badge>
+                        <div className="flex items-center">
+                          <span className="text-2xl mr-2">↑</span>
+                          <div>
+                            <span className="font-medium">Ascendente</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">{chartData.ascendant.symbol}</span>
+                              <Badge variant="outline">
+                                {chartData.ascendant.sign}
+                              </Badge>
+                            </div>
+                          </div>
                         </div>
                         <div className="text-right text-sm">
-                          <div>{mockAstrologicalData.ascendant.degree}</div>
+                          <div>{chartData.ascendant.degree.toFixed(0)}°</div>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
-                        <div>
-                          <span className="font-medium">☿ Mercúrio</span>
-                          <Badge variant="outline" className="ml-2">
-                            {mockAstrologicalData.mercury.sign}
-                          </Badge>
+                        <div className="flex items-center">
+                          <span className="text-2xl mr-2">☿</span>
+                          <div>
+                            <span className="font-medium">Mercúrio</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">{chartData.mercury.symbol}</span>
+                              <Badge variant="outline">
+                                {chartData.mercury.sign}
+                              </Badge>
+                            </div>
+                          </div>
                         </div>
                         <div className="text-right text-sm">
-                          <div>{mockAstrologicalData.mercury.degree}</div>
-                          <div className="text-gray-500">{mockAstrologicalData.mercury.house}</div>
+                          <div>{chartData.mercury.degree.toFixed(0)}°</div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between p-3 bg-pink-50 rounded-lg">
+                        <div className="flex items-center">
+                          <span className="text-2xl mr-2">♀</span>
+                          <div>
+                            <span className="font-medium">Vênus</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">{chartData.venus.symbol}</span>
+                              <Badge variant="outline">
+                                {chartData.venus.sign}
+                              </Badge>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-right text-sm">
+                          <div>{chartData.venus.degree.toFixed(0)}°</div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
+                        <div className="flex items-center">
+                          <span className="text-2xl mr-2">♂</span>
+                          <div>
+                            <span className="font-medium">Marte</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg">{chartData.mars.symbol}</span>
+                              <Badge variant="outline">
+                                {chartData.mars.sign}
+                              </Badge>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-right text-sm">
+                          <div>{chartData.mars.degree.toFixed(0)}°</div>
                         </div>
                       </div>
                     </div>
                   </div>
 
                   <div className="bg-purple-50 p-4 rounded-lg">
-                    <h4 className="font-medium mb-2">Interpretação Resumida</h4>
+                    <h4 className="font-medium mb-2 flex items-center">
+                      <span className="text-lg mr-2">{chartData.sun.symbol}</span>
+                      Seu Signo Solar
+                    </h4>
                     <p className="text-sm text-gray-700">
-                      Com Sol em {mockAstrologicalData.sun.sign} e Lua em {mockAstrologicalData.moon.sign}, 
-                      você possui uma personalidade criativa e intuitiva. Seu ascendente em {mockAstrologicalData.ascendant.sign} 
-                      indica uma abordagem prática e detalhista da vida.
+                      Você é do signo de <strong>{chartData.sun.sign}</strong>. 
+                      Com Sol em {chartData.sun.sign} e Lua em {chartData.moon.sign}, 
+                      você possui características únicas que influenciam sua personalidade. 
+                      Seu ascendente em {chartData.ascendant.sign} mostra como você se apresenta ao mundo.
                     </p>
                   </div>
                 </div>
