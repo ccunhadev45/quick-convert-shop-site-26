@@ -1,9 +1,8 @@
-
 import Header from "@/components/Header";
 import ConverterCard from "@/components/ConverterCard";
 import AdSpace from "@/components/AdSpace";
 import ProductShowcase from "@/components/ProductShowcase";
-import { Ruler, Weight, Beaker, Thermometer, Square, Zap, Clock, Gauge } from "lucide-react";
+import { Ruler, Weight, Beaker, Thermometer, Square, Zap, Clock, Gauge, Calculator, Heart } from "lucide-react";
 
 const Index = () => {
   const converterCategories = [
@@ -62,6 +61,20 @@ const Index = () => {
       icon: Gauge,
       path: "/speed",
       color: "pink"
+    },
+    {
+      title: "Calculadora IMC",
+      description: "Índice de Massa Corporal",
+      icon: Calculator,
+      path: "/imc",
+      color: "red"
+    },
+    {
+      title: "Taxa Metabólica Basal",
+      description: "Calorias diárias necessárias",
+      icon: Heart,
+      path: "/tmb",
+      color: "emerald"
     }
   ];
 

@@ -21,6 +21,8 @@ const ConverterCard = ({ title, description, icon: Icon, path, color }: Converte
     yellow: "text-yellow-600 bg-yellow-50 hover:bg-yellow-100",
     indigo: "text-indigo-600 bg-indigo-50 hover:bg-indigo-100",
     pink: "text-pink-600 bg-pink-50 hover:bg-pink-100",
+    red: "text-red-600 bg-red-50 hover:bg-red-100",
+    emerald: "text-emerald-600 bg-emerald-50 hover:bg-emerald-100",
   };
 
   return (

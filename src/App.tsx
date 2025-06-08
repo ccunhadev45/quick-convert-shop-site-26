@@ -9,6 +9,8 @@ import LengthConverter from "./pages/LengthConverter";
 import WeightConverter from "./pages/WeightConverter";
 import VolumeConverter from "./pages/VolumeConverter";
 import TemperatureConverter from "./pages/TemperatureConverter";
+import ImcCalculator from "./pages/ImcCalculator";
+import TmbCalculator from "./pages/TmbCalculator";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
@@ -26,6 +28,8 @@ const App = () => (
           <Route path="/weight" element={<WeightConverter />} />
           <Route path="/volume" element={<VolumeConverter />} />
           <Route path="/temperature" element={<TemperatureConverter />} />
+          <Route path="/imc" element={<ImcCalculator />} />
+          <Route path="/tmb" element={<TmbCalculator />} />
           <Route path="/admin" element={<AdminDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
