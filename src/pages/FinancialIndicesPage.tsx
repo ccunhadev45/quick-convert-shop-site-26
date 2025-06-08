@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -16,15 +17,15 @@ const FinancialIndicesPage = () => {
     staleTime: 2 * 60 * 1000, // 2 minutes
   });
 
-  const getVariationIndicator = (value: number | null) => {
-    if (value === null) {
+  const getVariationIndicator = (value: number | null | undefined) => {
+    if (value === null || value === undefined) {
       return <Minus className="h-4 w-4 text-gray-500" />;
     }
     return value >= 0 ? <TrendingUp className="h-4 w-4 text-green-500" /> : <TrendingDown className="h-4 w-4 text-red-500" />;
   };
 
-  const getVariationColor = (value: number | null) => {
-    if (value === null) {
+  const getVariationColor = (value: number | null | undefined) => {
+    if (value === null || value === undefined) {
       return "text-gray-500";
     }
     return value >= 0 ? "text-green-500" : "text-red-500";
@@ -60,11 +61,11 @@ const FinancialIndicesPage = () => {
                   </p>
                   <div className="flex items-center space-x-2 mt-2">
                     <Badge variant="secondary">
-                      Variação: <span className={getVariationColor(financialData.usdBrl.variation)}>
-                        {financialData.usdBrl.variation ? financialData.usdBrl.variation.toFixed(2) : "0.00"}%
+                      Variação: <span className={getVariationColor(financialData.usdBrl.percentChange)}>
+                        {financialData.usdBrl.percentChange ? financialData.usdBrl.percentChange.toFixed(2) : "0.00"}%
                       </span>
                     </Badge>
-                    {getVariationIndicator(financialData.usdBrl.variation)}
+                    {getVariationIndicator(financialData.usdBrl.percentChange)}
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
                     Fonte: {financialData.usdBrl.source}
@@ -93,11 +94,11 @@ const FinancialIndicesPage = () => {
                   </p>
                   <div className="flex items-center space-x-2 mt-2">
                     <Badge variant="secondary">
-                      Variação: <span className={getVariationColor(financialData.eurBrl.variation)}>
-                        {financialData.eurBrl.variation ? financialData.eurBrl.variation.toFixed(2) : "0.00"}%
+                      Variação: <span className={getVariationColor(financialData.eurBrl.percentChange)}>
+                        {financialData.eurBrl.percentChange ? financialData.eurBrl.percentChange.toFixed(2) : "0.00"}%
                       </span>
                     </Badge>
-                    {getVariationIndicator(financialData.eurBrl.variation)}
+                    {getVariationIndicator(financialData.eurBrl.percentChange)}
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
                     Fonte: {financialData.eurBrl.source}
@@ -119,24 +120,24 @@ const FinancialIndicesPage = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {financialData ? (
+              {financialData?.bitcoin ? (
                 <>
                   <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                    R$ {financialData.btcBrl.value.toFixed(2)}
+                    R$ {financialData.bitcoin.value.toFixed(2)}
                   </p>
                   <div className="flex items-center space-x-2 mt-2">
                     <Badge variant="secondary">
-                      Variação: <span className={getVariationColor(financialData.btcBrl.variation)}>
-                        {financialData.btcBrl.variation ? financialData.btcBrl.variation.toFixed(2) : "0.00"}%
+                      Variação: <span className={getVariationColor(financialData.bitcoin.percentChange)}>
+                        {financialData.bitcoin.percentChange ? financialData.bitcoin.percentChange.toFixed(2) : "0.00"}%
                       </span>
                     </Badge>
-                    {getVariationIndicator(financialData.btcBrl.variation)}
+                    {getVariationIndicator(financialData.bitcoin.percentChange)}
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                    Fonte: {financialData.btcBrl.source}
+                    Fonte: {financialData.bitcoin.source}
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Última atualização: {financialData.btcBrl.lastUpdate}
+                    Última atualização: {financialData.bitcoin.lastUpdate}
                   </p>
                 </>
               ) : (
