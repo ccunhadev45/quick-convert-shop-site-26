@@ -1,5 +1,5 @@
 
-import { Ruler, Weight, Beaker, Thermometer, Square, Zap, Clock, Gauge, Calculator, Heart, Apple, DollarSign, TrendingUp, Bitcoin } from "lucide-react";
+import { Ruler, Weight, Beaker, Thermometer, Square, Zap, Clock, Gauge, Calculator, Heart, Apple, DollarSign, TrendingUp, Bitcoin, Compass, Building } from "lucide-react";
 
 export const allCategories = [
   // Conversores
@@ -147,14 +147,14 @@ export const allCategories = [
       value: "11.75%"
     }
   },
-  // Calculadoras
+  // Calculadoras de Saúde
   {
     title: "Calculadora IMC",
     description: "Índice de Massa Corporal",
     icon: Calculator,
     path: "/imc",
     color: "red",
-    type: "calculator"
+    type: "health"
   },
   {
     title: "Taxa Metabólica Basal",
@@ -162,15 +162,39 @@ export const allCategories = [
     icon: Heart,
     path: "/tmb",
     color: "emerald",
-    type: "calculator"
+    type: "health"
   },
-  // Nutrição
   {
     title: "Calculadora de Calorias",
     description: "Calorias e macros dos alimentos",
     icon: Apple,
     path: "/calories",
     color: "green",
-    type: "nutrition"
+    type: "health"
+  },
+  // Calculadoras para Arquitetura e Engenharia
+  {
+    title: "Calculadora de Concreto",
+    description: "Volume e materiais para concreto",
+    icon: Building,
+    path: "/concrete-calculator",
+    color: "slate",
+    type: "engineering"
+  },
+  {
+    title: "Calculadora de Área Construída",
+    description: "Área total e útil de construções",
+    icon: Compass,
+    path: "/construction-area",
+    color: "stone",
+    type: "engineering"
+  },
+  {
+    title: "Calculadora de Estruturas",
+    description: "Cálculos de vigas e pilares",
+    icon: Square,
+    path: "/structural-calculator",
+    color: "zinc",
+    type: "engineering"
   }
 ];

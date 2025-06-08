@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LucideIcon, Copy } from "lucide-react";
@@ -40,6 +39,9 @@ const EnhancedConverterCard = ({
     emerald: "text-emerald-600 bg-emerald-50 hover:bg-emerald-100",
     cyan: "text-cyan-600 bg-cyan-50 hover:bg-cyan-100",
     amber: "text-amber-600 bg-amber-50 hover:bg-amber-100",
+    slate: "text-slate-600 bg-slate-50 hover:bg-slate-100",
+    stone: "text-stone-600 bg-stone-50 hover:bg-stone-100",
+    zinc: "text-zinc-600 bg-zinc-50 hover:bg-zinc-100",
   };
 
   const copyToClipboard = (text: string) => {

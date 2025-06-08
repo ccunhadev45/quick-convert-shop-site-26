@@ -26,10 +26,10 @@ const Index = () => {
   const groupedCategories = useMemo(() => {
     const converters = filteredCategories.filter(cat => cat.type === 'converter');
     const financial = filteredCategories.filter(cat => cat.type === 'financial');
-    const calculators = filteredCategories.filter(cat => cat.type === 'calculator');
-    const nutrition = filteredCategories.filter(cat => cat.type === 'nutrition');
+    const health = filteredCategories.filter(cat => cat.type === 'health');
+    const engineering = filteredCategories.filter(cat => cat.type === 'engineering');
     
-    return { converters, financial, calculators, nutrition };
+    return { converters, financial, health, engineering };
   }, [filteredCategories]);
 
   return (
@@ -60,14 +60,14 @@ const Index = () => {
 
         <CategorySection 
           title="Calculadoras de Saúde"
-          description="Ferramentas para cálculos relacionados à saúde"
-          cards={groupedCategories.calculators}
+          description="Ferramentas para cálculos relacionados à saúde e nutrição"
+          cards={groupedCategories.health}
         />
 
         <CategorySection 
-          title="Valores Energéticos"
-          description="Calcule calorias e macronutrientes dos alimentos"
-          cards={groupedCategories.nutrition}
+          title="Calculadoras para Arquitetura e Engenharia"
+          description="Ferramentas especializadas para profissionais da construção"
+          cards={groupedCategories.engineering}
         />
 
         {filteredCategories.length === 0 && (
