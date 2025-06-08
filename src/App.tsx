@@ -67,6 +67,12 @@ import BasicStatistics from "./pages/BasicStatistics";
 import ClothingSizes from "./pages/ClothingSizes";
 import HairColor from "./pages/HairColor";
 import BodyMeasurements from "./pages/BodyMeasurements";
+import CarbonFootprint from "./pages/CarbonFootprint";
+import EnergySavings from "./pages/EnergySavings";
+import RecyclingCalculator from "./pages/RecyclingCalculator";
+import PetAgeConverter from "./pages/PetAgeConverter";
+import VetDosage from "./pages/VetDosage";
+import PetFeeding from "./pages/PetFeeding";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -151,6 +157,21 @@ const App = () => (
             <Route path="/ingredient-substitutes" element={<IngredientSubstitutes />} />
             <Route path="/oven-conversions" element={<OvenConversions />} />
             <Route path="/nutrition-calculator" element={<NutritionCalculator />} />
+            
+            {/* Novas rotas - Moda & Beleza */}
+            <Route path="/clothing-sizes" element={<ClothingSizes />} />
+            <Route path="/hair-color" element={<HairColor />} />
+            <Route path="/body-measurements" element={<BodyMeasurements />} />
+            
+            {/* Novas rotas - Sustentabilidade */}
+            <Route path="/carbon-footprint" element={<CarbonFootprint />} />
+            <Route path="/energy-savings" element={<EnergySavings />} />
+            <Route path="/recycling-calculator" element={<RecyclingCalculator />} />
+            
+            {/* Novas rotas - Pets & Veterinária */}
+            <Route path="/pet-age-converter" element={<PetAgeConverter />} />
+            <Route path="/vet-dosage" element={<VetDosage />} />
+            <Route path="/pet-feeding" element={<PetFeeding />} />
             
             {/* Administração */}
             <Route path="/admin-login" element={<AdminLogin />} />
