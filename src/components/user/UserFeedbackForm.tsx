@@ -10,13 +10,6 @@ import { MessageSquare, Send, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { allEnhancedCategories } from "@/data/enhancedCategoriesData";
 
-interface CategoryCard {
-  title: string;
-  description: string;
-  path: string;
-  category: string; // Added missing category property
-}
-
 const UserFeedbackForm = () => {
   const [feedback, setFeedback] = useState({
     type: "",
@@ -37,8 +30,7 @@ const UserFeedbackForm = () => {
 
   const categories = allEnhancedCategories.map(cat => ({
     value: cat.path,
-    label: cat.title,
-    category: cat.category // Now this property exists
+    label: cat.title
   }));
 
   const handleSubmit = async (e: React.FormEvent) => {
