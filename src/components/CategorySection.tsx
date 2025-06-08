@@ -1,7 +1,7 @@
 
 import EnhancedConverterCard from "@/components/EnhancedConverterCard";
 
-interface Category {
+interface CategoryCard {
   title: string;
   description: string;
   icon: any;
@@ -18,7 +18,7 @@ interface Category {
 interface CategorySectionProps {
   title: string;
   description: string;
-  cards: Category[];
+  cards: CategoryCard[];
 }
 
 const CategorySection = ({ title, description, cards }: CategorySectionProps) => {
