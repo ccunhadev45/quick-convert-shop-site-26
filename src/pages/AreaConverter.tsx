@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from "react";
-import Header from "@/components/Header";
+import EnhancedHeader from "@/components/EnhancedHeader";
 import AdSpace from "@/components/AdSpace";
 import ProductShowcase from "@/components/ProductShowcase";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,31 +53,31 @@ const AreaConverter = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <EnhancedHeader />
       
       <AdSpace position="top" />
       
       <main className="container mx-auto px-6 py-12">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
             Conversor de Área
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 dark:text-gray-400">
             Converta entre diferentes unidades de área
           </p>
         </div>
         
-        <Card className="w-full max-w-2xl mx-auto mb-12 border border-gray-200">
+        <Card className="w-full max-w-2xl mx-auto mb-12 border border-gray-200 dark:border-gray-700">
           <CardHeader>
-            <CardTitle className="text-xl text-center text-gray-800">Conversor de Área</CardTitle>
+            <CardTitle className="text-xl text-center text-gray-800 dark:text-gray-200">Conversor de Área</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
-                <label className="text-sm font-medium text-gray-700">De:</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">De:</label>
                 <Select value={fromUnit} onValueChange={setFromUnit}>
-                  <SelectTrigger className="border-gray-200">
+                  <SelectTrigger className="border-gray-200 dark:border-gray-700">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -94,14 +93,14 @@ const AreaConverter = () => {
                   value={fromValue}
                   onChange={(e) => setFromValue(e.target.value)}
                   placeholder="Digite a área"
-                  className="text-lg border-gray-200"
+                  className="text-lg border-gray-200 dark:border-gray-700"
                 />
               </div>
 
               <div className="space-y-3">
-                <label className="text-sm font-medium text-gray-700">Para:</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Para:</label>
                 <Select value={toUnit} onValueChange={setToUnit}>
-                  <SelectTrigger className="border-gray-200">
+                  <SelectTrigger className="border-gray-200 dark:border-gray-700">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -118,7 +117,7 @@ const AreaConverter = () => {
                     value={toValue}
                     readOnly
                     placeholder="Resultado"
-                    className="text-lg bg-gray-50 border-gray-200 pr-12"
+                    className="text-lg bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 pr-12"
                   />
                   <Button
                     size="icon"
@@ -133,15 +132,15 @@ const AreaConverter = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600 mt-8">
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                <h3 className="font-semibold text-blue-800 mb-2">Conversões Comuns</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600 dark:text-gray-400 mt-8">
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-100 dark:border-blue-900">
+                <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">Conversões Comuns</h3>
                 <p>1 m² = 10.000 cm²</p>
                 <p>1 m² = 10,76 ft²</p>
                 <p>1 hectare = 10.000 m²</p>
               </div>
-              <div className="bg-green-50 p-4 rounded-lg border border-green-100">
-                <h3 className="font-semibold text-green-800 mb-2">Áreas de Referência</h3>
+              <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-100 dark:border-green-900">
+                <h3 className="font-semibold text-green-800 dark:text-green-200 mb-2">Áreas de Referência</h3>
                 <p>Campo de futebol: ~7.000 m²</p>
                 <p>Quadra de tênis: ~261 m²</p>
                 <p>Casa média: ~150 m²</p>

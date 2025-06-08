@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import Header from "@/components/Header";
+import EnhancedHeader from "@/components/EnhancedHeader";
 import AdSpace from "@/components/AdSpace";
 import ProductShowcase from "@/components/ProductShowcase";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -74,8 +74,8 @@ const TemperatureConverter = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <EnhancedHeader />
       
       <AdSpace position="top" />
       

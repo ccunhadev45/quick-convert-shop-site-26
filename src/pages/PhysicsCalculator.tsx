@@ -4,11 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Calculator } from "lucide-react";
+import { ArrowLeft, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useConversionHistory } from "@/hooks/useConversionHistory";
 import { toast } from "@/hooks/use-toast";
-import Header from "@/components/Header";
+import EnhancedHeader from "@/components/EnhancedHeader";
 import AdSpace from "@/components/AdSpace";
 
 const PhysicsCalculator = () => {
@@ -87,7 +87,7 @@ const PhysicsCalculator = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
+      <EnhancedHeader />
       <AdSpace position="top" />
       
       <div className="container mx-auto px-6 py-8">
@@ -96,7 +96,7 @@ const PhysicsCalculator = () => {
             <ArrowLeft className="h-6 w-6" />
           </Link>
           <div className="flex items-center gap-3">
-            <Calculator className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+            <Zap className="h-8 w-8 text-blue-600 dark:text-blue-400" />
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               Calculadora de Física
             </h1>

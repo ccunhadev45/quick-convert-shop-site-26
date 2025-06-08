@@ -1,9 +1,8 @@
-
 import { useState } from "react";
-import Header from "@/components/Header";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import EnhancedHeader from "@/components/EnhancedHeader";
 import AdSpace from "@/components/AdSpace";
 import ProductShowcase from "@/components/ProductShowcase";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -111,9 +110,8 @@ const AstronomicalDistance = () => {
   const distance = calculated ? getDistance() : 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <EnhancedHeader />
       <AdSpace position="top" />
       
       <main className="container mx-auto px-6 py-12">

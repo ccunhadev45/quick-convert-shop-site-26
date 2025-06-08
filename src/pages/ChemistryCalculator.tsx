@@ -8,7 +8,7 @@ import { ArrowLeft, FlaskRound } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useConversionHistory } from "@/hooks/useConversionHistory";
 import { toast } from "@/hooks/use-toast";
-import Header from "@/components/Header";
+import EnhancedHeader from "@/components/EnhancedHeader";
 import AdSpace from "@/components/AdSpace";
 
 const ChemistryCalculator = () => {
@@ -87,7 +87,7 @@ const ChemistryCalculator = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
+      <EnhancedHeader />
       <AdSpace position="top" />
       
       <div className="container mx-auto px-6 py-8">
