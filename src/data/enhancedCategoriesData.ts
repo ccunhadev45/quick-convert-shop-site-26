@@ -1,3 +1,4 @@
+
 import {
   Calculator,
   LayoutDashboard,
@@ -8,7 +9,7 @@ import {
   Ruler,
   Package,
   Clock,
-  Speedometer,
+  Gauge,
   Coins,
   Bitcoin,
   Activity,
@@ -45,6 +46,7 @@ export type CategoryCard = {
   icon: any;
   path: string;
   type: string;
+  color: string;
   tags?: string[];
   premium?: boolean;
 };
@@ -56,6 +58,7 @@ const converterCategories: CategoryCard[] = [
     icon: Ruler,
     path: "/length",
     type: "converter",
+    color: "blue",
     tags: ["comprimento", "metros", "polegadas", "pés"],
     premium: false
   },
@@ -65,6 +68,7 @@ const converterCategories: CategoryCard[] = [
     icon: Scale,
     path: "/weight",
     type: "converter",
+    color: "green",
     tags: ["peso", "quilogramas", "gramas", "libras"],
     premium: false
   },
@@ -74,6 +78,7 @@ const converterCategories: CategoryCard[] = [
     icon: Package,
     path: "/volume",
     type: "converter",
+    color: "purple",
     tags: ["volume", "litros", "mililitros", "galões"],
     premium: false
   },
@@ -83,6 +88,7 @@ const converterCategories: CategoryCard[] = [
     icon: Thermometer,
     path: "/temperature",
     type: "converter",
+    color: "orange",
     tags: ["temperatura", "celsius", "fahrenheit", "kelvin"],
     premium: false
   },
@@ -92,6 +98,7 @@ const converterCategories: CategoryCard[] = [
     icon: LayoutDashboard,
     path: "/area",
     type: "converter",
+    color: "teal",
     tags: ["área", "metros quadrados", "hectares", "acres"],
     premium: false
   },
@@ -101,6 +108,7 @@ const converterCategories: CategoryCard[] = [
     icon: Flame,
     path: "/energy",
     type: "converter",
+    color: "yellow",
     tags: ["energia", "joules", "calorias", "watts"],
     premium: false
   },
@@ -110,15 +118,17 @@ const converterCategories: CategoryCard[] = [
     icon: Clock,
     path: "/time",
     type: "converter",
+    color: "indigo",
     tags: ["tempo", "segundos", "minutos", "horas"],
     premium: false
   },
   {
     title: "Conversor de Velocidade",
     description: "Converter entre diferentes unidades de velocidade",
-    icon: Speedometer,
+    icon: Gauge,
     path: "/speed",
     type: "converter",
+    color: "pink",
     tags: ["velocidade", "km/h", "m/s", "mph"],
     premium: false
   }
@@ -131,6 +141,7 @@ const healthCategories: CategoryCard[] = [
     icon: User,
     path: "/imc",
     type: "health",
+    color: "pink",
     tags: ["imc", "índice de massa corporal", "peso", "altura"],
     premium: false
   },
@@ -140,6 +151,7 @@ const healthCategories: CategoryCard[] = [
     icon: Activity,
     path: "/tmb",
     type: "health",
+    color: "purple",
     tags: ["tmb", "taxa metabólica basal", "energia", "metabolismo"],
     premium: false
   },
@@ -149,6 +161,7 @@ const healthCategories: CategoryCard[] = [
     icon: Flame,
     path: "/calories",
     type: "health",
+    color: "orange",
     tags: ["calorias", "energia", "dieta", "nutrição"],
     premium: false
   }
@@ -161,6 +174,7 @@ const engineeringCategories: CategoryCard[] = [
     icon: Construction,
     path: "/concrete-calculator",
     type: "engineering",
+    color: "stone",
     tags: ["concreto", "cimento", "areia", "brita"],
     premium: false
   },
@@ -170,6 +184,7 @@ const engineeringCategories: CategoryCard[] = [
     icon: LayoutDashboard,
     path: "/construction-area",
     type: "engineering",
+    color: "slate",
     tags: ["área", "construção", "edifício", "engenharia"],
     premium: false
   },
@@ -179,6 +194,7 @@ const engineeringCategories: CategoryCard[] = [
     icon: Waves,
     path: "/structural-calculator",
     type: "engineering",
+    color: "zinc",
     tags: ["estrutural", "cálculo", "engenharia", "estrutura"],
     premium: false
   }
@@ -191,6 +207,7 @@ const scientificCategories: CategoryCard[] = [
     icon: Aperture,
     path: "/physics-calculator",
     type: "scientific",
+    color: "blue",
     tags: ["física", "cálculo", "mecânica", "termodinâmica"],
     premium: false
   },
@@ -200,6 +217,7 @@ const scientificCategories: CategoryCard[] = [
     icon: Droplet,
     path: "/chemistry-calculator",
     type: "scientific",
+    color: "green",
     tags: ["química", "cálculo", "reações", "elementos"],
     premium: false
   },
@@ -209,6 +227,7 @@ const scientificCategories: CategoryCard[] = [
     icon: LineChart,
     path: "/math-calculator",
     type: "scientific",
+    color: "purple",
     tags: ["matemática", "cálculo", "álgebra", "geometria"],
     premium: false
   },
@@ -218,6 +237,7 @@ const scientificCategories: CategoryCard[] = [
     icon: Code,
     path: "/number-base-converter",
     type: "scientific",
+    color: "gray",
     tags: ["base numérica", "binário", "decimal", "hexadecimal"],
     premium: false
   }
@@ -230,6 +250,7 @@ const financialCategories: CategoryCard[] = [
     icon: Coins,
     path: "/currency",
     type: "financial",
+    color: "emerald",
     tags: ["moedas", "dólar", "euro", "real"],
     premium: false
   },
@@ -239,6 +260,7 @@ const financialCategories: CategoryCard[] = [
     icon: Bitcoin,
     path: "/crypto",
     type: "financial",
+    color: "amber",
     tags: ["criptomoedas", "bitcoin", "ethereum", "litecoin"],
     premium: false
   },
@@ -248,6 +270,7 @@ const financialCategories: CategoryCard[] = [
     icon: LineChart,
     path: "/financial-indices",
     type: "financial",
+    color: "red",
     tags: ["índices financeiros", "ibovespa", "s&p 500", "dólar"],
     premium: false
   }
@@ -260,6 +283,7 @@ const productivityCategories: CategoryCard[] = [
     icon: Percent,
     path: "/regra-de-tres",
     type: "productivity",
+    color: "indigo",
     tags: ["regra de três", "proporção", "cálculo", "matemática"],
     premium: false
   },
@@ -269,6 +293,7 @@ const productivityCategories: CategoryCard[] = [
     icon: FileText,
     path: "/fuel-calculator",
     type: "productivity",
+    color: "orange",
     tags: ["combustível", "consumo", "veículo", "gasolina"],
     premium: false
   },
@@ -278,6 +303,7 @@ const productivityCategories: CategoryCard[] = [
     icon: Code,
     path: "/encoding-converter",
     type: "productivity",
+    color: "indigo",
     tags: ["codificação", "texto", "ascii", "utf-8"],
     premium: false
   }
@@ -290,6 +316,7 @@ const programmingCategories: CategoryCard[] = [
     icon: Palette,
     path: "/color-converter",
     type: "programming",
+    color: "pink",
     tags: ["cores", "hexadecimal", "rgb", "hsl"],
     premium: false
   }
@@ -302,6 +329,7 @@ const astrologyCategories: CategoryCard[] = [
     icon: Star,
     path: "/birth-chart",
     type: "astrology",
+    color: "purple",
     tags: ["mapa astral", "astrologia", "signos", "ascendente"],
     premium: false
   }
@@ -314,6 +342,7 @@ const astronomicalCategories: CategoryCard[] = [
     icon: Telescope,
     path: "/astronomical-distance",
     type: "astronomical",
+    color: "cyan",
     tags: ["astronomia", "distância", "espaço", "luz"],
     premium: false
   }
@@ -327,6 +356,7 @@ const studentCategories: CategoryCard[] = [
     icon: Book,
     path: "/grade-converter",
     type: "student",
+    color: "blue",
     tags: ["notas", "escala", "conversão", "educação"],
     premium: false
   },
@@ -336,6 +366,7 @@ const studentCategories: CategoryCard[] = [
     icon: LineChart,
     path: "/grade-average",
     type: "student",
+    color: "green",
     tags: ["média", "notas", "cálculo", "educação"],
     premium: false
   },
@@ -345,6 +376,7 @@ const studentCategories: CategoryCard[] = [
     icon: Clock,
     path: "/educational-units",
     type: "student",
+    color: "indigo",
     tags: ["unidades", "créditos", "horas", "educação"],
     premium: false
   },
@@ -354,6 +386,7 @@ const studentCategories: CategoryCard[] = [
     icon: LineChart,
     path: "/basic-statistics",
     type: "student",
+    color: "purple",
     tags: ["estatísticas", "média", "mediana", "desvio", "educação"],
     premium: false
   }
@@ -366,6 +399,7 @@ const gamingCategories: CategoryCard[] = [
     icon: Gamepad2,
     path: "/fps-converter",
     type: "gaming",
+    color: "blue",
     tags: ["fps", "quadros", "conversão", "jogos"],
     premium: false
   },
@@ -375,6 +409,7 @@ const gamingCategories: CategoryCard[] = [
     icon: Coins,
     path: "/game-currency",
     type: "gaming",
+    color: "emerald",
     tags: ["moeda", "jogos", "conversão", "virtual"],
     premium: false
   },
@@ -384,6 +419,7 @@ const gamingCategories: CategoryCard[] = [
     icon: Activity,
     path: "/dps-calculator",
     type: "gaming",
+    color: "purple",
     tags: ["dps", "dano", "segundo", "jogos"],
     premium: false
   },
@@ -393,6 +429,7 @@ const gamingCategories: CategoryCard[] = [
     icon: Percent,
     path: "/gaming-probability",
     type: "gaming",
+    color: "indigo",
     tags: ["probabilidade", "jogos", "chance", "estatística"],
     premium: false
   }
@@ -405,6 +442,7 @@ const travelCategories: CategoryCard[] = [
     icon: Clock,
     path: "/timezone-converter",
     type: "travel",
+    color: "indigo",
     tags: ["fuso horário", "conversão", "tempo", "viagem"],
     premium: false
   },
@@ -414,6 +452,7 @@ const travelCategories: CategoryCard[] = [
     icon: Coins,
     path: "/tip-calculator",
     type: "travel",
+    color: "emerald",
     tags: ["gorjeta", "cálculo", "serviço", "viagem"],
     premium: false
   },
@@ -423,6 +462,7 @@ const travelCategories: CategoryCard[] = [
     icon: Plane,
     path: "/plug-voltage",
     type: "travel",
+    color: "blue",
     tags: ["voltagem", "plugues", "energia", "viagem"],
     premium: false
   },
@@ -432,6 +472,7 @@ const travelCategories: CategoryCard[] = [
     icon: Package,
     path: "/luggage-calculator",
     type: "travel",
+    color: "purple",
     tags: ["bagagem", "tamanho", "peso", "viagem"],
     premium: false
   }
@@ -444,6 +485,7 @@ const contentCreatorCategories: CategoryCard[] = [
     icon: Video,
     path: "/video-resolution",
     type: "content",
+    color: "blue",
     tags: ["resolução", "vídeo", "conversão", "criação"],
     premium: false
   },
@@ -453,6 +495,7 @@ const contentCreatorCategories: CategoryCard[] = [
     icon: Clock,
     path: "/upload-time",
     type: "content",
+    color: "indigo",
     tags: ["upload", "vídeo", "tempo", "internet"],
     premium: false
   },
@@ -462,6 +505,7 @@ const contentCreatorCategories: CategoryCard[] = [
     icon: Video,
     path: "/media-converter",
     type: "content",
+    color: "purple",
     tags: ["mídia", "conversão", "formato", "áudio", "vídeo"],
     premium: false
   },
@@ -471,6 +515,7 @@ const contentCreatorCategories: CategoryCard[] = [
     icon: LineChart,
     path: "/engagement-calculator",
     type: "content",
+    color: "green",
     tags: ["engajamento", "taxa", "mídias sociais", "criação"],
     premium: false
   }
@@ -483,6 +528,7 @@ const investmentCategories: CategoryCard[] = [
     icon: Coins,
     path: "/dividend-calculator",
     type: "investment",
+    color: "emerald",
     tags: ["dividendos", "cálculo", "investimento", "ações"],
     premium: false
   },
@@ -492,6 +538,7 @@ const investmentCategories: CategoryCard[] = [
     icon: Percent,
     path: "/stock-splits",
     type: "investment",
+    color: "indigo",
     tags: ["desdobramento", "ações", "cálculo", "investimento"],
     premium: false
   },
@@ -501,6 +548,7 @@ const investmentCategories: CategoryCard[] = [
     icon: TrendingUp,
     path: "/inflation-calculator",
     type: "investment",
+    color: "red",
     tags: ["inflação", "cálculo", "economia", "investimento"],
     premium: false
   },
@@ -510,6 +558,7 @@ const investmentCategories: CategoryCard[] = [
     icon: LineChart,
     path: "/investment-comparison",
     type: "investment",
+    color: "green",
     tags: ["comparação", "investimento", "retorno", "risco"],
     premium: false
   }
@@ -522,6 +571,7 @@ const culinaryCategories: CategoryCard[] = [
     icon: ChefHat,
     path: "/recipe-converter",
     type: "culinary",
+    color: "orange",
     tags: ["receitas", "medidas", "conversão", "culinária"],
     premium: false
   },
@@ -531,6 +581,7 @@ const culinaryCategories: CategoryCard[] = [
     icon: ChefHat,
     path: "/ingredient-substitutes",
     type: "culinary",
+    color: "green",
     tags: ["ingredientes", "substitutos", "receitas", "culinária"],
     premium: false
   },
@@ -540,6 +591,7 @@ const culinaryCategories: CategoryCard[] = [
     icon: Thermometer,
     path: "/oven-conversions",
     type: "culinary",
+    color: "orange",
     tags: ["forno", "temperatura", "conversão", "culinária"],
     premium: false
   },
@@ -549,6 +601,7 @@ const culinaryCategories: CategoryCard[] = [
     icon: Heart,
     path: "/nutrition-calculator",
     type: "culinary",
+    color: "pink",
     tags: ["nutrição", "cálculo", "alimentos", "culinária"],
     premium: false
   }
@@ -561,6 +614,7 @@ const fashionCategories: CategoryCard[] = [
     icon: Shirt,
     path: "/clothing-sizes",
     type: "fashion",
+    color: "blue",
     tags: ["roupa", "tamanhos", "conversão", "moda"],
     premium: false
   },
@@ -570,6 +624,7 @@ const fashionCategories: CategoryCard[] = [
     icon: Palette,
     path: "/hair-color",
     type: "fashion",
+    color: "pink",
     tags: ["cabelo", "cor", "moda", "beleza"],
     premium: false
   },
@@ -579,6 +634,7 @@ const fashionCategories: CategoryCard[] = [
     icon: Ruler,
     path: "/body-measurements",
     type: "fashion",
+    color: "blue",
     tags: ["medidas", "corpo", "moda", "beleza"],
     premium: false
   }
@@ -591,6 +647,7 @@ const sustainabilityCategories: CategoryCard[] = [
     icon: Leaf,
     path: "/carbon-footprint",
     type: "sustainability",
+    color: "green",
     tags: ["carbono", "pegada", "meio ambiente", "sustentabilidade"],
     premium: false
   },
@@ -600,6 +657,7 @@ const sustainabilityCategories: CategoryCard[] = [
     icon: Flame,
     path: "/energy-savings",
     type: "sustainability",
+    color: "yellow",
     tags: ["energia", "economia", "meio ambiente", "sustentabilidade"],
     premium: false
   },
@@ -609,6 +667,7 @@ const sustainabilityCategories: CategoryCard[] = [
     icon: Leaf,
     path: "/recycling-calculator",
     type: "sustainability",
+    color: "green",
     tags: ["reciclagem", "cálculo", "meio ambiente", "sustentabilidade"],
     premium: false
   }
@@ -621,6 +680,7 @@ const petCategories: CategoryCard[] = [
     icon: PawPrint,
     path: "/pet-age-converter",
     type: "pets",
+    color: "orange",
     tags: ["idade", "pet", "conversão", "animal"],
     premium: false
   },
@@ -630,6 +690,7 @@ const petCategories: CategoryCard[] = [
     icon: PawPrint,
     path: "/vet-dosage",
     type: "pets",
+    color: "blue",
     tags: ["dosagem", "veterinária", "pet", "animal"],
     premium: false
   },
@@ -639,6 +700,7 @@ const petCategories: CategoryCard[] = [
     icon: PawPrint,
     path: "/pet-feeding",
     type: "pets",
+    color: "green",
     tags: ["alimentação", "pet", "cálculo", "animal"],
     premium: false
   }
@@ -651,6 +713,7 @@ const healthProCategories: CategoryCard[] = [
     icon: Shield,
     path: "/occupational-health",
     type: "health-pro",
+    color: "blue",
     tags: ["saúde", "ocupacional", "trabalho", "avaliação"],
     premium: true
   },
@@ -660,6 +723,7 @@ const healthProCategories: CategoryCard[] = [
     icon: Brain,
     path: "/mental-wellness",
     type: "health-pro",
+    color: "purple",
     tags: ["bem-estar", "mental", "saúde", "avaliação"],
     premium: true
   },
@@ -669,6 +733,7 @@ const healthProCategories: CategoryCard[] = [
     icon: User,
     path: "/ergonomics",
     type: "health-pro",
+    color: "pink",
     tags: ["ergonomia", "trabalho", "saúde", "avaliação"],
     premium: true
   },
@@ -678,6 +743,7 @@ const healthProCategories: CategoryCard[] = [
     icon: Shield,
     path: "/workplace-safety",
     type: "health-pro",
+    color: "red",
     tags: ["segurança", "trabalho", "saúde", "avaliação"],
     premium: true
   },
@@ -687,6 +753,7 @@ const healthProCategories: CategoryCard[] = [
     icon: Shield,
     path: "/medical-dosage",
     type: "health-pro",
+    color: "green",
     tags: ["dosagem", "medicamentos", "saúde", "cálculo"],
     premium: true
   },
@@ -696,6 +763,7 @@ const healthProCategories: CategoryCard[] = [
     icon: Shield,
     path: "/lab-conversions",
     type: "health-pro",
+    color: "blue",
     tags: ["conversões", "laboratório", "saúde", "exames"],
     premium: true
   },
@@ -705,6 +773,7 @@ const healthProCategories: CategoryCard[] = [
     icon: Heart,
     path: "/specialized-bmi",
     type: "health-pro",
+    color: "pink",
     tags: ["imc", "especializado", "saúde", "cálculo"],
     premium: true
   },
@@ -714,6 +783,7 @@ const healthProCategories: CategoryCard[] = [
     icon: Droplet,
     path: "/hydration-calculator",
     type: "health-pro",
+    color: "cyan",
     tags: ["hidratação", "água", "saúde", "cálculo"],
     premium: true
   }
@@ -727,6 +797,7 @@ const agribusinessCategories: CategoryCard[] = [
     icon: Wheat,
     path: "/agribusiness-calculator",
     type: "agribusiness",
+    color: "green",
     tags: ["agro", "plantio", "fertilizante", "agricultura"],
     premium: false
   }
@@ -739,6 +810,7 @@ const logisticsCategories: CategoryCard[] = [
     icon: Truck,
     path: "/logistics-calculator", 
     type: "logistics",
+    color: "orange",
     tags: ["frete", "logística", "transporte", "entrega"],
     premium: false
   }
@@ -751,6 +823,7 @@ const advancedFinanceCategories: CategoryCard[] = [
     icon: TrendingUp,
     path: "/advanced-finance",
     type: "finance-advanced", 
+    color: "red",
     tags: ["empréstimo", "aposentadoria", "finanças", "investimento"],
     premium: true
   }
@@ -767,27 +840,16 @@ export const allEnhancedCategories = [
   ...programmingCategories,
   ...astrologyCategories,
   ...astronomicalCategories,
-  // Categorias de estudantes
   ...studentCategories,
-  // Categorias gaming
   ...gamingCategories,
-  // Categorias viagem
   ...travelCategories,
-  // Categorias criadores
   ...contentCreatorCategories,
-  // Categorias investimentos
   ...investmentCategories,
-  // Categorias culinária
   ...culinaryCategories,
-  // Categorias moda
   ...fashionCategories,
-  // Categorias sustentabilidade
   ...sustainabilityCategories,
-  // Categorias pets
   ...petCategories,
-  // Categorias saúde profissional
   ...healthProCategories,
-  // Novos módulos
   ...agribusinessCategories,
   ...logisticsCategories,
   ...advancedFinanceCategories
@@ -873,18 +935,14 @@ export const getGroupedCategories = () => {
       if (!grouped["health-pro"]) grouped["health-pro"] = [];
       grouped["health-pro"].push(category);
     }
-    
-    // Adicionar novos grupos
     if (category.type === "agribusiness") {
       if (!grouped.agribusiness) grouped.agribusiness = [];
       grouped.agribusiness.push(category);
     }
-    
     if (category.type === "logistics") {
       if (!grouped.logistics) grouped.logistics = [];
       grouped.logistics.push(category);
     }
-    
     if (category.type === "finance-advanced") {
       if (!grouped["finance-advanced"]) grouped["finance-advanced"] = [];
       grouped["finance-advanced"].push(category);
