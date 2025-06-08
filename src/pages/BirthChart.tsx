@@ -1,7 +1,8 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { ArrowLeft, Star, Clock, Calendar, Loader2 } from "lucide-react";
+import Header from "@/components/Header";
+import AdSpace from "@/components/AdSpace";
+import ProductShowcase from "@/components/ProductShowcase";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +12,7 @@ import { GeocodingResult } from "@/services/geocodingService";
 import { useToast } from "@/hooks/use-toast";
 import CityAutocomplete from "@/components/CityAutocomplete";
 import ChartComponent from "@/components/AstrologyChart";
+import { Star, Clock, Calendar, Loader2 } from "lucide-react";
 
 const BirthChart = () => {
   const [birthData, setBirthData] = useState({
@@ -87,47 +89,44 @@ const BirthChart = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background py-8">
-      <div className="container mx-auto px-6">
-        <div className="mb-6">
-          <Link
-            to="/"
-            className="inline-flex items-center text-primary hover:text-primary/80 mb-4 transition-colors"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Voltar para início
-          </Link>
-          <h1 className="text-3xl font-bold text-foreground mb-2">
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      
+      <AdSpace position="top" />
+      
+      <main className="container mx-auto px-6 py-12">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Gerador de Mapa Astral
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-lg text-gray-600">
             Insira seus dados de nascimento para gerar seu mapa astral completo
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card className="border border-border">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          <Card className="border border-gray-200">
             <CardHeader>
-              <CardTitle className="flex items-center text-card-foreground">
+              <CardTitle className="text-xl text-center text-gray-800 flex items-center justify-center">
                 <Star className="mr-2 h-5 w-5 text-purple-600" />
                 Dados de Nascimento
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label htmlFor="name" className="text-foreground">Nome Completo</Label>
+                <Label htmlFor="name" className="text-sm font-medium text-gray-700">Nome Completo</Label>
                 <Input
                   id="name"
                   placeholder="Seu nome completo"
                   value={birthData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
-                  className="border-input bg-background"
+                  className="border-gray-200"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="date" className="flex items-center text-foreground">
+                  <Label htmlFor="date" className="flex items-center text-sm font-medium text-gray-700">
                     <Calendar className="mr-2 h-4 w-4" />
                     Data de Nascimento
                   </Label>
@@ -136,11 +135,11 @@ const BirthChart = () => {
                     type="date"
                     value={birthData.date}
                     onChange={(e) => handleInputChange("date", e.target.value)}
-                    className="border-input bg-background"
+                    className="border-gray-200"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="time" className="flex items-center text-foreground">
+                  <Label htmlFor="time" className="flex items-center text-sm font-medium text-gray-700">
                     <Clock className="mr-2 h-4 w-4" />
                     Horário
                   </Label>
@@ -149,13 +148,13 @@ const BirthChart = () => {
                     type="time"
                     value={birthData.time}
                     onChange={(e) => handleInputChange("time", e.target.value)}
-                    className="border-input bg-background"
+                    className="border-gray-200"
                   />
                 </div>
               </div>
 
               <div>
-                <Label className="text-foreground">Cidade de Nascimento</Label>
+                <Label className="text-sm font-medium text-gray-700">Cidade de Nascimento</Label>
                 <CityAutocomplete
                   value={birthData.city}
                   onSelect={handleCitySelect}
@@ -184,7 +183,13 @@ const BirthChart = () => {
             <ChartComponent chartData={chartData} birthData={birthData} />
           )}
         </div>
-      </div>
+
+        <AdSpace position="middle" />
+        
+        <ProductShowcase />
+      </main>
+
+      <AdSpace position="footer" />
     </div>
   );
 };
