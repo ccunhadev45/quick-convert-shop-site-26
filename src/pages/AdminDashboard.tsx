@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BarChart3, Settings, MessageSquare, Users, LogOut, Database, Api, Book } from "lucide-react";
+import { ArrowLeft, BarChart3, Settings, MessageSquare, Users, LogOut, Database, Server, Book } from "lucide-react";
 import { Link } from "react-router-dom";
 import EnhancedHeader from "@/components/EnhancedHeader";
 import AnalyticsDashboard from "@/components/admin/AnalyticsDashboard";
@@ -92,7 +92,7 @@ const AdminDashboard = () => {
                 Doc DB
               </TabsTrigger>
               <TabsTrigger value="api" className="flex items-center gap-2">
-                <Api className="h-4 w-4" />
+                <Server className="h-4 w-4" />
                 Doc API
               </TabsTrigger>
               <TabsTrigger value="system" className="flex items-center gap-2">

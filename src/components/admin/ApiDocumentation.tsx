@@ -2,13 +2,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Api, Globe, DollarSign, Cloud, Zap } from "lucide-react";
+import { Server, Globe, DollarSign, Cloud, Zap } from "lucide-react";
 
 const ApiDocumentation = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
-        <Api className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+        <Server className="h-8 w-8 text-purple-600 dark:text-purple-400" />
         <h2 className="text-2xl font-bold text-foreground">Documentação de APIs</h2>
       </div>
       
