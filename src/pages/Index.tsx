@@ -28,8 +28,10 @@ const Index = () => {
     const financial = filteredCategories.filter(cat => cat.type === 'financial');
     const health = filteredCategories.filter(cat => cat.type === 'health');
     const engineering = filteredCategories.filter(cat => cat.type === 'engineering');
+    const astrology = filteredCategories.filter(cat => cat.type === 'astrology');
+    const astronomical = filteredCategories.filter(cat => cat.type === 'astronomical');
     
-    return { converters, financial, health, engineering };
+    return { converters, financial, health, engineering, astrology, astronomical };
   }, [filteredCategories]);
 
   return (
@@ -68,6 +70,18 @@ const Index = () => {
           title="Calculadoras para Arquitetura e Engenharia"
           description="Ferramentas especializadas para profissionais da construção"
           cards={groupedCategories.engineering}
+        />
+
+        <CategorySection 
+          title="Astrologia"
+          description="Ferramentas para análise astrológica e mapa astral"
+          cards={groupedCategories.astrology}
+        />
+
+        <CategorySection 
+          title="Astronomia"
+          description="Calculadoras para distâncias espaciais e tempo de viagem"
+          cards={groupedCategories.astronomical}
         />
 
         {filteredCategories.length === 0 && (

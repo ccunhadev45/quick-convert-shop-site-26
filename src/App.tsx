@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -25,6 +24,8 @@ import ConstructionAreaCalculator from "./pages/ConstructionAreaCalculator";
 import StructuralCalculator from "./pages/StructuralCalculator";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
+import BirthChart from "./pages/BirthChart";
+import AstronomicalDistance from "./pages/AstronomicalDistance";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,8 @@ const App = () => (
           <Route path="/concrete-calculator" element={<ConcreteCalculator />} />
           <Route path="/construction-area" element={<ConstructionAreaCalculator />} />
           <Route path="/structural-calculator" element={<StructuralCalculator />} />
+          <Route path="/birth-chart" element={<BirthChart />} />
+          <Route path="/astronomical-distance" element={<AstronomicalDistance />} />
           <Route path="/admin" element={<AdminDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

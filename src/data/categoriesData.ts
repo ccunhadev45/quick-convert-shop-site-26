@@ -1,5 +1,5 @@
 
-import { Calculator, Ruler, Weight, Thermometer, Square, Zap, Clock, Gauge, DollarSign, Bitcoin, TrendingUp, Heart, Activity, Utensils, Building, Home, Wrench, Users } from "lucide-react";
+import { Calculator, Ruler, Weight, Thermometer, Square, Zap, Clock, Gauge, DollarSign, Bitcoin, TrendingUp, Heart, Activity, Utensils, Building, Home, Wrench, Users, Star, Globe } from "lucide-react";
 
 export const allCategories = [
   // Conversores de Unidades
@@ -9,7 +9,12 @@ export const allCategories = [
     icon: Calculator, 
     path: "/regra-de-tres", 
     color: "indigo", 
-    type: "converter" 
+    type: "converter",
+    conversionExample: {
+      from: "5 : 10",
+      to: "x : 20",
+      value: "x = 10"
+    }
   },
   { 
     title: "Conversor de Comprimento", 
@@ -17,7 +22,12 @@ export const allCategories = [
     icon: Ruler, 
     path: "/length", 
     color: "blue", 
-    type: "converter" 
+    type: "converter",
+    conversionExample: {
+      from: "1 metro",
+      to: "centímetros",
+      value: "100 cm"
+    }
   },
   { 
     title: "Conversor de Peso", 
@@ -25,7 +35,12 @@ export const allCategories = [
     icon: Weight, 
     path: "/weight", 
     color: "green", 
-    type: "converter" 
+    type: "converter",
+    conversionExample: {
+      from: "1 kg",
+      to: "libras",
+      value: "2.20 lbs"
+    }
   },
   { 
     title: "Conversor de Volume", 
@@ -33,7 +48,12 @@ export const allCategories = [
     icon: Utensils, 
     path: "/volume", 
     color: "purple", 
-    type: "converter" 
+    type: "converter",
+    conversionExample: {
+      from: "1 litro",
+      to: "mililitros",
+      value: "1000 ml"
+    }
   },
   { 
     title: "Conversor de Temperatura", 
@@ -41,7 +61,12 @@ export const allCategories = [
     icon: Thermometer, 
     path: "/temperature", 
     color: "orange", 
-    type: "converter" 
+    type: "converter",
+    conversionExample: {
+      from: "25°C",
+      to: "Fahrenheit",
+      value: "77°F"
+    }
   },
   { 
     title: "Conversor de Área", 
@@ -49,7 +74,12 @@ export const allCategories = [
     icon: Square, 
     path: "/area", 
     color: "teal", 
-    type: "converter" 
+    type: "converter",
+    conversionExample: {
+      from: "1 m²",
+      to: "pés quadrados",
+      value: "10.76 ft²"
+    }
   },
   { 
     title: "Conversor de Energia", 
@@ -57,7 +87,12 @@ export const allCategories = [
     icon: Zap, 
     path: "/energy", 
     color: "yellow", 
-    type: "converter" 
+    type: "converter",
+    conversionExample: {
+      from: "1 kWh",
+      to: "joules",
+      value: "3.6 MJ"
+    }
   },
   { 
     title: "Conversor de Tempo", 
@@ -65,7 +100,12 @@ export const allCategories = [
     icon: Clock, 
     path: "/time", 
     color: "indigo", 
-    type: "converter" 
+    type: "converter",
+    conversionExample: {
+      from: "1 hora",
+      to: "minutos",
+      value: "60 min"
+    }
   },
   { 
     title: "Conversor de Velocidade", 
@@ -73,7 +113,12 @@ export const allCategories = [
     icon: Gauge, 
     path: "/speed", 
     color: "pink", 
-    type: "converter" 
+    type: "converter",
+    conversionExample: {
+      from: "100 km/h",
+      to: "m/s",
+      value: "27.78 m/s"
+    }
   },
 
   // Conversores Financeiros
@@ -83,7 +128,12 @@ export const allCategories = [
     icon: DollarSign, 
     path: "/currency", 
     color: "emerald", 
-    type: "financial" 
+    type: "financial",
+    conversionExample: {
+      from: "1 USD",
+      to: "BRL",
+      value: "R$ 5.60"
+    }
   },
   { 
     title: "Conversor de Criptomoedas", 
@@ -91,7 +141,12 @@ export const allCategories = [
     icon: Bitcoin, 
     path: "/crypto", 
     color: "amber", 
-    type: "financial" 
+    type: "financial",
+    conversionExample: {
+      from: "1 BTC",
+      to: "USD",
+      value: "$105,543"
+    }
   },
   { 
     title: "Índices Financeiros", 
@@ -99,7 +154,12 @@ export const allCategories = [
     icon: TrendingUp, 
     path: "/financial-indices", 
     color: "red", 
-    type: "financial" 
+    type: "financial",
+    conversionExample: {
+      from: "Taxa Selic",
+      to: "atual",
+      value: "14.75% a.a."
+    }
   },
 
   // Calculadoras de Saúde
@@ -109,7 +169,12 @@ export const allCategories = [
     icon: Heart, 
     path: "/imc", 
     color: "pink", 
-    type: "health" 
+    type: "health",
+    conversionExample: {
+      from: "70kg / 1.75m",
+      to: "IMC",
+      value: "22.9"
+    }
   },
   { 
     title: "Calculadora de TMB", 
@@ -117,7 +182,12 @@ export const allCategories = [
     icon: Activity, 
     path: "/tmb", 
     color: "purple", 
-    type: "health" 
+    type: "health",
+    conversionExample: {
+      from: "Homem 30 anos",
+      to: "TMB",
+      value: "1,680 kcal/dia"
+    }
   },
   { 
     title: "Calculadora de Calorias", 
@@ -125,7 +195,12 @@ export const allCategories = [
     icon: Utensils, 
     path: "/calories", 
     color: "orange", 
-    type: "health" 
+    type: "health",
+    conversionExample: {
+      from: "Ativo moderado",
+      to: "necessidade",
+      value: "2,200 kcal/dia"
+    }
   },
 
   // Calculadoras para Arquitetura e Engenharia
@@ -135,7 +210,12 @@ export const allCategories = [
     icon: Building, 
     path: "/concrete-calculator", 
     color: "stone", 
-    type: "engineering" 
+    type: "engineering",
+    conversionExample: {
+      from: "1 m³ concreto",
+      to: "materiais",
+      value: "320kg cimento"
+    }
   },
   { 
     title: "Calculadora de Área de Construção", 
@@ -143,7 +223,12 @@ export const allCategories = [
     icon: Home, 
     path: "/construction-area", 
     color: "slate", 
-    type: "engineering" 
+    type: "engineering",
+    conversionExample: {
+      from: "10m x 12m",
+      to: "área",
+      value: "120 m²"
+    }
   },
   { 
     title: "Calculadora Estrutural", 
@@ -151,6 +236,41 @@ export const allCategories = [
     icon: Wrench, 
     path: "/structural-calculator", 
     color: "zinc", 
-    type: "engineering" 
+    type: "engineering",
+    conversionExample: {
+      from: "Viga 6m",
+      to: "carga max",
+      value: "2.5 ton/m²"
+    }
+  },
+
+  // Calculadoras de Astrologia
+  { 
+    title: "Mapa Astral", 
+    description: "Gere seu mapa astral completo", 
+    icon: Star, 
+    path: "/birth-chart", 
+    color: "purple", 
+    type: "astrology",
+    conversionExample: {
+      from: "Data/hora/local",
+      to: "mapa astral",
+      value: "Sol em Leão"
+    }
+  },
+
+  // Calculadoras Astronômicas
+  { 
+    title: "Distância dos Astros", 
+    description: "Calcule distâncias e tempo de viagem espacial", 
+    icon: Globe, 
+    path: "/astronomical-distance", 
+    color: "cyan", 
+    type: "astronomical",
+    conversionExample: {
+      from: "Terra → Marte",
+      to: "distância",
+      value: "225 milhões km"
+    }
   },
 ];
