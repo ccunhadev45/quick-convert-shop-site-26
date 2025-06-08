@@ -5,16 +5,16 @@ import { TrendingUp, Users, Calculator, Clock } from "lucide-react";
 import { useConversionHistory } from "@/hooks/useConversionHistory";
 
 const UsageAnalytics = () => {
-  const { records } = useConversionHistory();
+  const { history } = useConversionHistory();
 
-  const totalUsage = records.length;
-  const uniqueCategories = [...new Set(records.map(r => r.category))].length;
-  const todayUsage = records.filter(r => {
+  const totalUsage = history.length;
+  const uniqueCategories = [...new Set(history.map(r => r.category))].length;
+  const todayUsage = history.filter(r => {
     const today = new Date().toDateString();
     return new Date(r.timestamp).toDateString() === today;
   }).length;
 
-  const categoryStats = records.reduce((acc, record) => {
+  const categoryStats = history.reduce((acc, record) => {
     acc[record.category] = (acc[record.category] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
@@ -23,7 +23,7 @@ const UsageAnalytics = () => {
     .sort(([,a], [,b]) => b - a)
     .slice(0, 5);
 
-  const typeStats = records.reduce((acc, record) => {
+  const typeStats = history.reduce((acc, record) => {
     acc[record.type] = (acc[record.type] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
@@ -137,7 +137,7 @@ const UsageAnalytics = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-2 max-h-60 overflow-y-auto">
-            {records.slice(-10).reverse().map((record, index) => (
+            {history.slice(-10).reverse().map((record, index) => (
               <div key={index} className="flex items-center justify-between p-2 border rounded-lg">
                 <div className="flex-1">
                   <div className="font-medium">{record.title}</div>
@@ -150,7 +150,7 @@ const UsageAnalytics = () => {
                 </Badge>
               </div>
             ))}
-            {records.length === 0 && (
+            {history.length === 0 && (
               <p className="text-muted-foreground text-center py-4">
                 Nenhum registro encontrado
               </p>

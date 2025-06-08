@@ -18,13 +18,13 @@ const HISTORY_KEY = 'super-conversor-history';
 const MAX_HISTORY_ITEMS = 100;
 
 export const useConversionHistory = () => {
-  const [history, setHistory] = useState<ConversionRecord[]>([]);
+  const [records, setRecords] = useState<ConversionRecord[]>([]);
 
   useEffect(() => {
     const savedHistory = localStorage.getItem(HISTORY_KEY);
     if (savedHistory) {
       try {
-        setHistory(JSON.parse(savedHistory));
+        setRecords(JSON.parse(savedHistory));
       } catch (error) {
         console.error('Erro ao carregar histórico:', error);
         localStorage.removeItem(HISTORY_KEY);
@@ -35,7 +35,7 @@ export const useConversionHistory = () => {
   const saveHistory = useCallback((newHistory: ConversionRecord[]) => {
     // Manter apenas os últimos MAX_HISTORY_ITEMS
     const limitedHistory = newHistory.slice(0, MAX_HISTORY_ITEMS);
-    setHistory(limitedHistory);
+    setRecords(limitedHistory);
     localStorage.setItem(HISTORY_KEY, JSON.stringify(limitedHistory));
   }, []);
 
@@ -46,7 +46,7 @@ export const useConversionHistory = () => {
       timestamp: new Date().toISOString()
     };
     
-    setHistory(prev => {
+    setRecords(prev => {
       const newHistory = [newRecord, ...prev];
       saveHistory(newHistory);
       return newHistory.slice(0, MAX_HISTORY_ITEMS);
@@ -54,7 +54,7 @@ export const useConversionHistory = () => {
   }, [saveHistory]);
 
   const toggleFavorite = useCallback((id: string) => {
-    setHistory(prev => {
+    setRecords(prev => {
       const newHistory = prev.map(record => 
         record.id === id 
           ? { ...record, isFavorite: !record.isFavorite }
@@ -66,7 +66,7 @@ export const useConversionHistory = () => {
   }, [saveHistory]);
 
   const removeRecord = useCallback((id: string) => {
-    setHistory(prev => {
+    setRecords(prev => {
       const newHistory = prev.filter(record => record.id !== id);
       saveHistory(newHistory);
       return newHistory;
@@ -74,20 +74,21 @@ export const useConversionHistory = () => {
   }, [saveHistory]);
 
   const clearHistory = useCallback(() => {
-    setHistory([]);
+    setRecords([]);
     localStorage.removeItem(HISTORY_KEY);
   }, []);
 
   const getFavorites = useCallback(() => {
-    return history.filter(record => record.isFavorite);
-  }, [history]);
+    return records.filter(record => record.isFavorite);
+  }, [records]);
 
   const getByCategory = useCallback((category: string) => {
-    return history.filter(record => record.category === category);
-  }, [history]);
+    return records.filter(record => record.category === category);
+  }, [records]);
 
   return {
-    history,
+    records,
+    history: records, // Manter compatibilidade
     addRecord,
     toggleFavorite,
     removeRecord,
