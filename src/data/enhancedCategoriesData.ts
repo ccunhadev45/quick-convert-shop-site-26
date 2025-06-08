@@ -294,36 +294,64 @@ export const allEnhancedCategories: Category[] = [
     description: "Avaliação de riscos e saúde no trabalho", 
     path: "/occupational-health",
     icon: Shield,
-    category: "health-pro",
+    color: "blue",
+    type: "health-pro",
     tags: ["trabalho", "saúde", "ocupacional", "risco"],
-    premium: true
+    difficulty: "intermediate",
+    premium: true,
+    conversionExample: {
+      from: "Ambiente trabalho",
+      to: "nível risco",
+      value: "Médio"
+    }
   },
   { 
     title: "Bem-Estar Mental", 
     description: "Avaliação de saúde mental e bem-estar", 
     path: "/mental-wellness",
     icon: Brain,
-    category: "health-pro", 
+    color: "purple",
+    type: "health-pro", 
     tags: ["mental", "stress", "bem-estar", "psicologia"],
-    premium: true
+    difficulty: "intermediate",
+    premium: true,
+    conversionExample: {
+      from: "Avaliação completa",
+      to: "score bem-estar",
+      value: "75%"
+    }
   },
   { 
     title: "Ergonomia", 
     description: "Avaliação ergonômica do ambiente de trabalho", 
     path: "/ergonomics",
     icon: Monitor,
-    category: "health-pro",
+    color: "teal",
+    type: "health-pro",
     tags: ["ergonomia", "postura", "trabalho", "cadeira"],
-    premium: true
+    difficulty: "intermediate",
+    premium: true,
+    conversionExample: {
+      from: "Setup trabalho",
+      to: "score ergonômico",
+      value: "Bom"
+    }
   },
   { 
     title: "Segurança no Trabalho", 
     description: "Avaliação de segurança ocupacional", 
     path: "/workplace-safety",
     icon: HardHat,
-    category: "health-pro",
+    color: "orange",
+    type: "health-pro",
     tags: ["segurança", "trabalho", "EPI", "risco"],
-    premium: true
+    difficulty: "intermediate",
+    premium: true,
+    conversionExample: {
+      from: "Local trabalho",
+      to: "nível segurança",
+      value: "Alto"
+    }
   },
 
   // === GAMERS ===
@@ -1075,9 +1103,16 @@ export const allEnhancedCategories: Category[] = [
     description: "Estado do sistema e roadmap de melhorias", 
     path: "/admin/documentation", 
     icon: FileText,
-    category: "admin",
+    color: "slate",
+    type: "admin",
     tags: ["documentação", "melhorias", "sistema", "roadmap"],
-    premium: false
+    difficulty: "advanced",
+    premium: false,
+    conversionExample: {
+      from: "Sistema atual",
+      to: "melhorias",
+      value: "50+ itens"
+    }
   }
 ];
 
