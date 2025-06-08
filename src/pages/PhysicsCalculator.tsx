@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +8,8 @@ import { ArrowLeft, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useConversionHistory } from "@/hooks/useConversionHistory";
 import { toast } from "@/hooks/use-toast";
+import Header from "@/components/Header";
+import AdSpace from "@/components/AdSpace";
 
 const PhysicsCalculator = () => {
   // Force calculations
@@ -85,7 +86,10 @@ const PhysicsCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <Header />
+      <AdSpace position="top" />
+      
       <div className="container mx-auto px-6 py-8">
         <div className="flex items-center gap-4 mb-8">
           <Link to="/" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
@@ -98,6 +102,8 @@ const PhysicsCalculator = () => {
             </h1>
           </div>
         </div>
+
+        <AdSpace position="middle" />
 
         <div className="max-w-4xl mx-auto">
           <Tabs defaultValue="force" className="w-full">
@@ -238,6 +244,8 @@ const PhysicsCalculator = () => {
             </TabsContent>
           </Tabs>
         </div>
+
+        <AdSpace position="footer" />
       </div>
     </div>
   );

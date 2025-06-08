@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Calculator, Menu, Settings, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -44,10 +43,26 @@ const Header = () => {
     { name: "Estrutural", path: "/structural-calculator" },
   ];
 
+  const scientificItems = [
+    { name: "Física", path: "/physics-calculator" },
+    { name: "Química", path: "/chemistry-calculator" },
+    { name: "Matemática", path: "/math-calculator" },
+    { name: "Base Numérica", path: "/number-base-converter" },
+  ];
+
+  const programmingItems = [
+    { name: "Encoding", path: "/encoding-converter" },
+    { name: "Cores", path: "/color-converter" },
+  ];
+
+  const productivityItems = [
+    { name: "Combustível", path: "/fuel-calculator" },
+    { name: "Regra de Três", path: "/regra-de-tres" },
+  ];
+
   const specialtyItems = [
     { name: "Mapa Astral", path: "/birth-chart" },
     { name: "Distância Astronômica", path: "/astronomical-distance" },
-    { name: "Regra de Três", path: "/regra-de-tres" },
   ];
 
   return (
@@ -84,6 +99,66 @@ const Header = () => {
                 <DropdownMenuLabel>Conversores de Unidades</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {converterItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link to={item.path} className="cursor-pointer">
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+                  <span>Científicas</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 bg-white dark:bg-gray-800 z-50">
+                <DropdownMenuLabel>Calculadoras Científicas</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {scientificItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link to={item.path} className="cursor-pointer">
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+                  <span>Programação</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 bg-white dark:bg-gray-800 z-50">
+                <DropdownMenuLabel>Ferramentas de Programação</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {programmingItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link to={item.path} className="cursor-pointer">
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
+                  <span>Produtividade</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 bg-white dark:bg-gray-800 z-50">
+                <DropdownMenuLabel>Ferramentas de Produtividade</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {productivityItems.map((item) => (
                   <DropdownMenuItem key={item.name} asChild>
                     <Link to={item.path} className="cursor-pointer">
                       {item.name}
@@ -209,13 +284,13 @@ const Header = () => {
                 </div>
                 
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-gray-900">Conversores</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">Conversores</h3>
                   <div className="pl-4 space-y-2">
                     {converterItems.map((item) => (
                       <Link
                         key={item.name}
                         to={item.path}
-                        className="block text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                        className="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                       >
                         {item.name}
                       </Link>
@@ -224,13 +299,58 @@ const Header = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-gray-900">Financeiro</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">Científicas</h3>
+                  <div className="pl-4 space-y-2">
+                    {scientificItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">Programação</h3>
+                  <div className="pl-4 space-y-2">
+                    {programmingItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">Produtividade</h3>
+                  <div className="pl-4 space-y-2">
+                    {productivityItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">Financeiro</h3>
                   <div className="pl-4 space-y-2">
                     {financialItems.map((item) => (
                       <Link
                         key={item.name}
                         to={item.path}
-                        className="block text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                        className="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                       >
                         {item.name}
                       </Link>
@@ -239,13 +359,13 @@ const Header = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-gray-900">Saúde</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">Saúde</h3>
                   <div className="pl-4 space-y-2">
                     {healthItems.map((item) => (
                       <Link
                         key={item.name}
                         to={item.path}
-                        className="block text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                        className="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                       >
                         {item.name}
                       </Link>
@@ -254,13 +374,13 @@ const Header = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-gray-900">Engenharia</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">Engenharia</h3>
                   <div className="pl-4 space-y-2">
                     {engineeringItems.map((item) => (
                       <Link
                         key={item.name}
                         to={item.path}
-                        className="block text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                        className="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                       >
                         {item.name}
                       </Link>
@@ -269,13 +389,13 @@ const Header = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-gray-900">Especialidades</h3>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">Especialidades</h3>
                   <div className="pl-4 space-y-2">
                     {specialtyItems.map((item) => (
                       <Link
                         key={item.name}
                         to={item.path}
-                        className="block text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                        className="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                       >
                         {item.name}
                       </Link>

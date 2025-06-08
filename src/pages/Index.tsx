@@ -8,6 +8,7 @@ import QuickConversions from "@/components/QuickConversions";
 import QuickFavorites from "@/components/QuickFavorites";
 import AdSpace from "@/components/AdSpace";
 import ProductShowcase from "@/components/ProductShowcase";
+import PWAInstaller from "@/components/PWAInstaller";
 import { allCategories } from "@/data/categoriesData";
 
 const Index = () => {
@@ -45,6 +46,8 @@ const Index = () => {
       <AdSpace position="top" />
       
       <main className="container mx-auto px-6 py-12">
+        <PWAInstaller />
+        
         <SearchFilter 
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
@@ -58,24 +61,6 @@ const Index = () => {
           title="Conversores de Unidades"
           description="Converta entre diferentes unidades de medida"
           cards={groupedCategories.converters}
-        />
-
-        <CategorySection 
-          title="Conversores Financeiros"
-          description="Converta moedas, criptomoedas e acompanhe índices financeiros"
-          cards={groupedCategories.financial}
-        />
-
-        <CategorySection 
-          title="Calculadoras de Saúde"
-          description="Ferramentas para cálculos relacionados à saúde e nutrição"
-          cards={groupedCategories.health}
-        />
-
-        <CategorySection 
-          title="Calculadoras para Arquitetura e Engenharia"
-          description="Ferramentas especializadas para profissionais da construção"
-          cards={groupedCategories.engineering}
         />
 
         <CategorySection 
@@ -94,6 +79,24 @@ const Index = () => {
           title="Ferramentas de Produtividade"
           description="Calculadoras práticas para o dia a dia"
           cards={groupedCategories.productivity}
+        />
+
+        <CategorySection 
+          title="Conversores Financeiros"
+          description="Converta moedas, criptomoedas e acompanhe índices financeiros"
+          cards={groupedCategories.financial}
+        />
+
+        <CategorySection 
+          title="Calculadoras de Saúde"
+          description="Ferramentas para cálculos relacionados à saúde e nutrição"
+          cards={groupedCategories.health}
+        />
+
+        <CategorySection 
+          title="Calculadoras para Arquitetura e Engenharia"
+          description="Ferramentas especializadas para profissionais da construção"
+          cards={groupedCategories.engineering}
         />
 
         <CategorySection 
