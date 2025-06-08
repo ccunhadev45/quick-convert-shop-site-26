@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -78,6 +79,10 @@ import OccupationalHealth from "./pages/OccupationalHealth";
 import MentalWellness from "./pages/MentalWellness";
 import Ergonomics from "./pages/Ergonomics";
 import WorkplaceSafety from "./pages/WorkplaceSafety";
+import MedicalDosage from "./pages/MedicalDosage";
+import LabConversions from "./pages/LabConversions";
+import SpecializedBmi from "./pages/SpecializedBmi";
+import HydrationCalculator from "./pages/HydrationCalculator";
 
 // Página administrativa
 import DocumentationAndImprovements from "./pages/DocumentationAndImprovements";
