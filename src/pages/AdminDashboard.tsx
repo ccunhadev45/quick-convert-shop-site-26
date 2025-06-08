@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BarChart3, Settings, MessageSquare, Users, LogOut, Database, Server, Book } from "lucide-react";
+import { ArrowLeft, BarChart3, Settings, MessageSquare, Users, LogOut, Database, Server, Book, Code } from "lucide-react";
 import { Link } from "react-router-dom";
 import EnhancedHeader from "@/components/EnhancedHeader";
 import AnalyticsDashboard from "@/components/admin/AnalyticsDashboard";
@@ -15,6 +15,7 @@ import SystemSettings from "@/components/admin/SystemSettings";
 import DatabaseDocumentation from "@/components/admin/DatabaseDocumentation";
 import ApiDocumentation from "@/components/admin/ApiDocumentation";
 import SystemDocumentation from "@/components/admin/SystemDocumentation";
+import SystemStructure from "@/components/admin/SystemStructure";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 
 const AdminDashboard = () => {
@@ -69,7 +70,7 @@ const AdminDashboard = () => {
 
         <div className="max-w-7xl mx-auto">
           <Tabs defaultValue="analytics" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 md:grid-cols-8">
+            <TabsList className="grid w-full grid-cols-3 md:grid-cols-9">
               <TabsTrigger value="analytics" className="flex items-center gap-2">
                 <BarChart3 className="h-4 w-4" />
                 Analytics
@@ -87,6 +88,10 @@ const AdminDashboard = () => {
                 Config
               </TabsTrigger>
               <TabsTrigger value="ads">Anúncios</TabsTrigger>
+              <TabsTrigger value="structure" className="flex items-center gap-2">
+                <Code className="h-4 w-4" />
+                Estrutura
+              </TabsTrigger>
               <TabsTrigger value="database" className="flex items-center gap-2">
                 <Database className="h-4 w-4" />
                 Doc DB
@@ -142,6 +147,10 @@ const AdminDashboard = () => {
 
             <TabsContent value="api" className="mt-6">
               <ApiDocumentation />
+            </TabsContent>
+
+            <TabsContent value="structure" className="mt-6">
+              <SystemStructure />
             </TabsContent>
 
             <TabsContent value="system" className="mt-6">
