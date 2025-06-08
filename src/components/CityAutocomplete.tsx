@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { MapPin, Loader2 } from "lucide-react";
-import { searchCities, geocodeBrazilianCity, CityResult } from "@/services/ibgeCitiesService";
+import { searchCitiesViaCep, geocodeCityViaCep, CityResult } from "@/services/viaCepService";
 import { GeocodingResult } from "@/services/geocodingService";
 
 interface CityAutocompleteProps {
@@ -36,7 +36,7 @@ const CityAutocomplete = ({ value, onSelect, placeholder = "Digite o nome da cid
 
       setIsLoading(true);
       try {
-        const results = await searchCities(inputValue);
+        const results = await searchCitiesViaCep(inputValue);
         setSuggestions(results);
         setShowSuggestions(true);
       } catch (error) {
@@ -83,7 +83,7 @@ const CityAutocomplete = ({ value, onSelect, placeholder = "Digite o nome da cid
     setIsGeocoding(true);
 
     try {
-      const coords = await geocodeBrazilianCity(city.name, city.stateCode);
+      const coords = await geocodeCityViaCep(city.name, city.stateCode);
       onSelect(city.fullName, coords || undefined);
     } catch (error) {
       console.error('Erro ao geocodificar cidade:', error);
