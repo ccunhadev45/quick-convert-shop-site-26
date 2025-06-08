@@ -1,1147 +1,895 @@
-import { 
-  Calculator, Ruler, Weight, Thermometer, Square, Zap, Clock, Gauge, 
-  DollarSign, Bitcoin, TrendingUp, Heart, Activity, Utensils, Building, 
-  Home, Wrench, Users, Star, Globe, FlaskRound, Binary, FileCode, 
-  Palette, Fuel, GraduationCap, Stethoscope, Gamepad2, Plane, Camera, 
-  PiggyBank, Pizza, Car, Smartphone, BookOpen, Target, Trophy, 
-  Calendar, MapPin, Settings, Briefcase, Music, Video, TrendingDown,
-  Coffee, Moon, Sun, Cloud, Droplet, Wind, Compass, Mountain,
-  Scissors, PaintBucket, Shirt, Baby, Dog, Leaf, Recycle, Shield, Brain, Monitor, HardHat, FileText
+import {
+  Calculator,
+  LayoutDashboard,
+  LineChart,
+  Percent,
+  Scale,
+  Thermometer,
+  Ruler,
+  Package,
+  Clock,
+  Speedometer,
+  Coins,
+  Bitcoin,
+  Activity,
+  User,
+  Flame,
+  Aperture,
+  Construction,
+  Waves,
+  Code,
+  Palette,
+  Droplet,
+  FileText,
+  Wheat,
+  Truck,
+  TrendingUp,
+  Book,
+  Gamepad2,
+  Plane,
+  Video,
+  ChefHat,
+  Shirt,
+  Leaf,
+  PawPrint,
+  Heart,
+  Brain,
+  Shield,
+  Star,
+  Telescope
 } from "lucide-react";
 
-export interface Category {
+export type CategoryCard = {
   title: string;
   description: string;
   icon: any;
   path: string;
-  color: string;
   type: string;
-  conversionExample?: {
-    from: string;
-    to: string;
-    value: string;
-  };
   tags?: string[];
-  difficulty?: 'basic' | 'intermediate' | 'advanced';
   premium?: boolean;
-}
+};
 
-export const allEnhancedCategories: Category[] = [
-  // === CONVERSORES DE UNIDADES ===
-  { 
-    title: "Regra de Três", 
-    description: "Resolva problemas de proporcionalidade", 
-    icon: Calculator, 
-    path: "/regra-de-tres", 
-    color: "indigo", 
+const converterCategories: CategoryCard[] = [
+  {
+    title: "Conversor de Comprimento",
+    description: "Converter entre diferentes unidades de comprimento",
+    icon: Ruler,
+    path: "/length",
     type: "converter",
-    tags: ["matemática", "proporção", "básico"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "5 : 10",
-      to: "x : 20",
-      value: "x = 10"
-    }
+    tags: ["comprimento", "metros", "polegadas", "pés"],
+    premium: false
   },
-  { 
-    title: "Conversor de Comprimento", 
-    description: "Converta metros, pés, polegadas e mais", 
-    icon: Ruler, 
-    path: "/length", 
-    color: "blue", 
+  {
+    title: "Conversor de Peso",
+    description: "Converter entre diferentes unidades de peso",
+    icon: Scale,
+    path: "/weight",
     type: "converter",
-    tags: ["medidas", "distância", "construção"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "1 metro",
-      to: "centímetros",
-      value: "100 cm"
-    }
+    tags: ["peso", "quilogramas", "gramas", "libras"],
+    premium: false
   },
-  { 
-    title: "Conversor de Peso", 
-    description: "Converta quilos, libras, gramas e mais", 
-    icon: Weight, 
-    path: "/weight", 
-    color: "green", 
+  {
+    title: "Conversor de Volume",
+    description: "Converter entre diferentes unidades de volume",
+    icon: Package,
+    path: "/volume",
     type: "converter",
-    tags: ["peso", "massa", "culinária"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "1 kg",
-      to: "libras",
-      value: "2.20 lbs"
-    }
+    tags: ["volume", "litros", "mililitros", "galões"],
+    premium: false
   },
-  { 
-    title: "Conversor de Volume", 
-    description: "Converta litros, galões, mililitros e mais", 
-    icon: Utensils, 
-    path: "/volume", 
-    color: "purple", 
+  {
+    title: "Conversor de Temperatura",
+    description: "Converter entre diferentes unidades de temperatura",
+    icon: Thermometer,
+    path: "/temperature",
     type: "converter",
-    tags: ["volume", "líquidos", "culinária"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "1 litro",
-      to: "mililitros",
-      value: "1000 ml"
-    }
+    tags: ["temperatura", "celsius", "fahrenheit", "kelvin"],
+    premium: false
   },
-  { 
-    title: "Conversor de Temperatura", 
-    description: "Converta Celsius, Fahrenheit e Kelvin", 
-    icon: Thermometer, 
-    path: "/temperature", 
-    color: "orange", 
+  {
+    title: "Conversor de Área",
+    description: "Converter entre diferentes unidades de área",
+    icon: LayoutDashboard,
+    path: "/area",
     type: "converter",
-    tags: ["temperatura", "clima", "ciência"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "25°C",
-      to: "Fahrenheit",
-      value: "77°F"
-    }
+    tags: ["área", "metros quadrados", "hectares", "acres"],
+    premium: false
   },
-  { 
-    title: "Conversor de Área", 
-    description: "Converta metros quadrados, pés quadrados e mais", 
-    icon: Square, 
-    path: "/area", 
-    color: "teal", 
+  {
+    title: "Conversor de Energia",
+    description: "Converter entre diferentes unidades de energia",
+    icon: Flame,
+    path: "/energy",
     type: "converter",
-    tags: ["área", "terreno", "construção"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "1 m²",
-      to: "pés quadrados",
-      value: "10.76 ft²"
-    }
+    tags: ["energia", "joules", "calorias", "watts"],
+    premium: false
   },
-  { 
-    title: "Conversor de Energia", 
-    description: "Converta joules, calorias, BTU e mais", 
-    icon: Zap, 
-    path: "/energy", 
-    color: "yellow", 
+  {
+    title: "Conversor de Tempo",
+    description: "Converter entre diferentes unidades de tempo",
+    icon: Clock,
+    path: "/time",
     type: "converter",
-    tags: ["energia", "física", "elétrica"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "1 kWh",
-      to: "joules",
-      value: "3.6 MJ"
-    }
+    tags: ["tempo", "segundos", "minutos", "horas"],
+    premium: false
   },
-  { 
-    title: "Conversor de Tempo", 
-    description: "Converta segundos, minutos, horas e mais", 
-    icon: Clock, 
-    path: "/time", 
-    color: "indigo", 
+  {
+    title: "Conversor de Velocidade",
+    description: "Converter entre diferentes unidades de velocidade",
+    icon: Speedometer,
+    path: "/speed",
     type: "converter",
-    tags: ["tempo", "duração", "básico"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "1 hora",
-      to: "minutos",
-      value: "60 min"
-    }
-  },
-  { 
-    title: "Conversor de Velocidade", 
-    description: "Converta km/h, mph, m/s e mais", 
-    icon: Gauge, 
-    path: "/speed", 
-    color: "pink", 
-    type: "converter",
-    tags: ["velocidade", "trânsito", "física"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "100 km/h",
-      to: "m/s",
-      value: "27.78 m/s"
-    }
-  },
-
-  // === ESTUDANTES ===
-  { 
-    title: "Conversor de Notas", 
-    description: "Converta notas entre diferentes sistemas educacionais", 
-    icon: GraduationCap, 
-    path: "/grade-converter", 
-    color: "blue", 
-    type: "student",
-    tags: ["educação", "notas", "estudante"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "8.5 (0-10)",
-      to: "GPA 4.0",
-      value: "3.4 GPA"
-    }
-  },
-  { 
-    title: "Calculadora de Média", 
-    description: "Calcule média escolar, ponderada e simples", 
-    icon: Target, 
-    path: "/grade-average", 
-    color: "green", 
-    type: "student",
-    tags: ["média", "notas", "estudante"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "4 notas",
-      to: "média",
-      value: "7.8"
-    }
-  },
-  { 
-    title: "Conversor Educacional", 
-    description: "Sistemas de medida por país para estudos", 
-    icon: Globe, 
-    path: "/educational-units", 
-    color: "purple", 
-    type: "student",
-    tags: ["educação", "geografia", "cultura"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "1 milha (EUA)",
-      to: "quilômetros",
-      value: "1.61 km"
-    }
-  },
-  { 
-    title: "Estatística Básica", 
-    description: "Média, mediana, moda e desvio padrão", 
-    icon: TrendingUp, 
-    path: "/basic-statistics", 
-    color: "orange", 
-    type: "student",
-    tags: ["estatística", "matemática", "dados"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "dataset",
-      to: "média",
-      value: "15.6"
-    }
-  },
-
-  // === SAÚDE PROFISSIONAL ===
-  { 
-    title: "Dosagens Médicas", 
-    description: "Calcule dosagens por peso corporal", 
-    icon: Stethoscope, 
-    path: "/medical-dosage", 
-    color: "red", 
-    type: "health-pro",
-    tags: ["medicina", "dosagem", "profissional"],
-    difficulty: "advanced",
-    premium: true,
-    conversionExample: {
-      from: "10mg/kg",
-      to: "70kg paciente",
-      value: "700mg"
-    }
-  },
-  { 
-    title: "Conversões Laboratoriais", 
-    description: "Unidades de laboratório clínico", 
-    icon: FlaskRound, 
-    path: "/lab-conversions", 
-    color: "teal", 
-    type: "health-pro",
-    tags: ["laboratório", "medicina", "exames"],
-    difficulty: "advanced",
-    premium: true,
-    conversionExample: {
-      from: "100 mg/dL",
-      to: "mmol/L",
-      value: "5.55 mmol/L"
-    }
-  },
-  { 
-    title: "IMC Especializado", 
-    description: "IMC infantil, geriátrico e atletas", 
-    icon: Heart, 
-    path: "/specialized-bmi", 
-    color: "pink", 
-    type: "health-pro",
-    tags: ["IMC", "saúde", "especializado"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "Criança 7 anos",
-      to: "percentil",
-      value: "P75"
-    }
-  },
-  { 
-    title: "Cálculos de Hidratação", 
-    description: "Necessidades hídricas por idade e peso", 
-    icon: Droplet, 
-    path: "/hydration-calculator", 
-    color: "cyan", 
-    type: "health-pro",
-    tags: ["hidratação", "saúde", "nutrição"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "Adulto 70kg",
-      to: "água/dia",
-      value: "2.5L"
-    }
-  },
-  { 
-    title: "Saúde Ocupacional", 
-    description: "Avaliação de riscos e saúde no trabalho", 
-    path: "/occupational-health",
-    icon: Shield,
-    color: "blue",
-    type: "health-pro",
-    tags: ["trabalho", "saúde", "ocupacional", "risco"],
-    difficulty: "intermediate",
-    premium: true,
-    conversionExample: {
-      from: "Ambiente trabalho",
-      to: "nível risco",
-      value: "Médio"
-    }
-  },
-  { 
-    title: "Bem-Estar Mental", 
-    description: "Avaliação de saúde mental e bem-estar", 
-    path: "/mental-wellness",
-    icon: Brain,
-    color: "purple",
-    type: "health-pro", 
-    tags: ["mental", "stress", "bem-estar", "psicologia"],
-    difficulty: "intermediate",
-    premium: true,
-    conversionExample: {
-      from: "Avaliação completa",
-      to: "score bem-estar",
-      value: "75%"
-    }
-  },
-  { 
-    title: "Ergonomia", 
-    description: "Avaliação ergonômica do ambiente de trabalho", 
-    path: "/ergonomics",
-    icon: Monitor,
-    color: "teal",
-    type: "health-pro",
-    tags: ["ergonomia", "postura", "trabalho", "cadeira"],
-    difficulty: "intermediate",
-    premium: true,
-    conversionExample: {
-      from: "Setup trabalho",
-      to: "score ergonômico",
-      value: "Bom"
-    }
-  },
-  { 
-    title: "Segurança no Trabalho", 
-    description: "Avaliação de segurança ocupacional", 
-    path: "/workplace-safety",
-    icon: HardHat,
-    color: "orange",
-    type: "health-pro",
-    tags: ["segurança", "trabalho", "EPI", "risco"],
-    difficulty: "intermediate",
-    premium: true,
-    conversionExample: {
-      from: "Local trabalho",
-      to: "nível segurança",
-      value: "Alto"
-    }
-  },
-
-  // === GAMERS ===
-  { 
-    title: "Conversor de FPS", 
-    description: "Frame rate e performance de jogos", 
-    icon: Gamepad2, 
-    path: "/fps-converter", 
-    color: "violet", 
-    type: "gaming",
-    tags: ["games", "performance", "fps"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "60 FPS",
-      to: "frame time",
-      value: "16.67ms"
-    }
-  },
-  { 
-    title: "Moedas de Jogos", 
-    description: "Converta moedas virtuais entre jogos", 
-    icon: Trophy, 
-    path: "/game-currency", 
-    color: "amber", 
-    type: "gaming",
-    tags: ["games", "moedas", "virtual"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "1000 V-Bucks",
-      to: "reais",
-      value: "R$ 50"
-    }
-  },
-  { 
-    title: "Calculadora de DPS", 
-    description: "Damage per second e builds", 
-    icon: Target, 
-    path: "/dps-calculator", 
-    color: "red", 
-    type: "gaming",
-    tags: ["games", "damage", "build"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "Arma + Stats",
-      to: "DPS",
-      value: "450 DPS"
-    }
-  },
-  { 
-    title: "Probabilidades Gaming", 
-    description: "Chance de drops e loot boxes", 
-    icon: Star, 
-    path: "/gaming-probability", 
-    color: "yellow", 
-    type: "gaming",
-    tags: ["games", "probabilidade", "drops"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "0.5% drop",
-      to: "100 tentativas",
-      value: "39.3% chance"
-    }
-  },
-
-  // === VIAJANTES ===
-  { 
-    title: "Fusos Horários", 
-    description: "Converta horários entre países", 
-    icon: Clock, 
-    path: "/timezone-converter", 
-    color: "blue", 
-    type: "travel",
-    tags: ["viagem", "tempo", "fuso"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "14:00 BR",
-      to: "Japão",
-      value: "02:00+1"
-    }
-  },
-  { 
-    title: "Calculadora de Gorjetas", 
-    description: "Gorjetas por país e costume local", 
-    icon: DollarSign, 
-    path: "/tip-calculator", 
-    color: "green", 
-    type: "travel",
-    tags: ["viagem", "gorjeta", "cultura"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "R$ 100 (EUA)",
-      to: "gorjeta 18%",
-      value: "R$ 18"
-    }
-  },
-  { 
-    title: "Tomadas e Voltagem", 
-    description: "Adaptadores e voltagens por país", 
-    icon: Zap, 
-    path: "/plug-voltage", 
-    color: "orange", 
-    type: "travel",
-    tags: ["viagem", "elétrica", "adaptador"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "Brasil → EUA",
-      to: "adaptador",
-      value: "Tipo A/B"
-    }
-  },
-  { 
-    title: "Calculadora de Bagagem", 
-    description: "Limites de peso e dimensões", 
-    icon: Plane, 
-    path: "/luggage-calculator", 
-    color: "purple", 
-    type: "travel",
-    tags: ["viagem", "bagagem", "peso"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "23kg + 55cm",
-      to: "status",
-      value: "Permitido"
-    }
-  },
-
-  // === CRIADORES DE CONTEÚDO ===
-  { 
-    title: "Resoluções de Vídeo", 
-    description: "Converta entre formatos e resoluções", 
-    icon: Video, 
-    path: "/video-resolution", 
-    color: "red", 
-    type: "content",
-    tags: ["vídeo", "resolução", "criador"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "1920x1080",
-      to: "aspect ratio",
-      value: "16:9"
-    }
-  },
-  { 
-    title: "Tempo de Upload", 
-    description: "Calcule tempo de upload por velocidade", 
-    icon: Cloud, 
-    path: "/upload-time", 
-    color: "cyan", 
-    type: "content",
-    tags: ["upload", "internet", "tempo"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "1GB / 10Mbps",
-      to: "tempo",
-      value: "13.3 min"
-    }
-  },
-  { 
-    title: "Conversor de Mídia", 
-    description: "Tamanhos e formatos de arquivo", 
-    icon: FileCode, 
-    path: "/media-converter", 
-    color: "indigo", 
-    type: "content",
-    tags: ["mídia", "formato", "arquivo"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "MP4 1GB",
-      to: "MOV",
-      value: "~1.1GB"
-    }
-  },
-  { 
-    title: "Engajamento Social", 
-    description: "Calcule taxas de engajamento", 
-    icon: Users, 
-    path: "/engagement-calculator", 
-    color: "pink", 
-    type: "content",
-    tags: ["social", "engajamento", "métricas"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "1000 likes / 50k",
-      to: "taxa",
-      value: "2%"
-    }
-  },
-
-  // === INVESTIDORES ===
-  { 
-    title: "Calculadora de Dividendos", 
-    description: "Rendimentos e yield de dividendos", 
-    icon: PiggyBank, 
-    path: "/dividend-calculator", 
-    color: "emerald", 
-    type: "investment",
-    tags: ["investimento", "dividendo", "renda"],
-    difficulty: "intermediate",
-    premium: true,
-    conversionExample: {
-      from: "100 ações R$2/ação",
-      to: "mensal",
-      value: "R$ 200"
-    }
-  },
-  { 
-    title: "Splits e Bonificações", 
-    description: "Cálculos de desdobramentos", 
-    icon: TrendingUp, 
-    path: "/stock-splits", 
-    color: "green", 
-    type: "investment",
-    tags: ["ações", "split", "bonificação"],
-    difficulty: "advanced",
-    premium: true,
-    conversionExample: {
-      from: "100 ações 1:2",
-      to: "novo total",
-      value: "200 ações"
-    }
-  },
-  { 
-    title: "Correção da Inflação", 
-    description: "Poder de compra ao longo do tempo", 
-    icon: TrendingDown, 
-    path: "/inflation-calculator", 
-    color: "orange", 
-    type: "investment",
-    tags: ["inflação", "poder", "compra"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "R$ 100 (2020)",
-      to: "hoje",
-      value: "R$ 135"
-    }
-  },
-  { 
-    title: "Comparador de Investimentos", 
-    description: "Compare rentabilidade de investimentos", 
-    icon: Briefcase, 
-    path: "/investment-comparison", 
-    color: "purple", 
-    type: "investment",
-    tags: ["investimento", "comparação", "rentabilidade"],
-    difficulty: "advanced",
-    premium: true,
-    conversionExample: {
-      from: "CDB vs Tesouro",
-      to: "melhor opção",
-      value: "CDB +15%"
-    }
-  },
-
-  // === CULINÁRIA AVANÇADA ===
-  { 
-    title: "Conversor de Receitas", 
-    description: "Ajuste ingredientes por porções", 
-    icon: Pizza, 
-    path: "/recipe-converter", 
-    color: "orange", 
-    type: "culinary",
-    tags: ["culinária", "receita", "porções"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "4 porções → 8",
-      to: "farinha",
-      value: "400g → 800g"
-    }
-  },
-  { 
-    title: "Substituições Culinárias", 
-    description: "Substitutos de ingredientes", 
-    icon: Coffee, 
-    path: "/ingredient-substitutes", 
-    color: "amber", 
-    type: "culinary",
-    tags: ["culinária", "substituto", "ingrediente"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "1 ovo",
-      to: "substituto",
-      value: "3 tbsp aquafaba"
-    }
-  },
-  { 
-    title: "Conversões de Forno", 
-    description: "Temperaturas e tempos de cozimento", 
-    icon: Thermometer, 
-    path: "/oven-conversions", 
-    color: "red", 
-    type: "culinary",
-    tags: ["forno", "temperatura", "tempo"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "180°C gas",
-      to: "forno elétrico",
-      value: "200°C"
-    }
-  },
-  { 
-    title: "Nutrição por Porção", 
-    description: "Calcule valores nutricionais", 
-    icon: Heart, 
-    path: "/nutrition-calculator", 
-    color: "green", 
-    type: "culinary",
-    tags: ["nutrição", "calorias", "porção"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "100g arroz",
-      to: "calorias",
-      value: "130 kcal"
-    }
-  },
-
-  // === MODA E BELEZA ===
-  { 
-    title: "Tamanhos de Roupa", 
-    description: "Converta tamanhos entre países", 
-    icon: Shirt, 
-    path: "/clothing-sizes", 
-    color: "pink", 
-    type: "fashion",
-    tags: ["roupa", "tamanho", "moda"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "M Brasil",
-      to: "EUA",
-      value: "Size 8"
-    }
-  },
-  { 
-    title: "Cores para Cabelo", 
-    description: "Tonalidades e misturas", 
-    icon: Palette, 
-    path: "/hair-color", 
-    color: "purple", 
-    type: "fashion",
-    tags: ["cabelo", "cor", "beleza"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "7.0 + 8.1",
-      to: "resultado",
-      value: "7.5 louro"
-    }
-  },
-  { 
-    title: "Medidas Corporais", 
-    description: "Circunferências e proporções", 
-    icon: Ruler, 
-    path: "/body-measurements", 
-    color: "teal", 
-    type: "fashion",
-    tags: ["corpo", "medida", "proporção"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "90-60-90",
-      to: "tipo corpo",
-      value: "Ampulheta"
-    }
-  },
-
-  // === PETS E VETERINÁRIA ===
-  { 
-    title: "Idade de Pets", 
-    description: "Converta idade animal para humana", 
-    icon: Dog, 
-    path: "/pet-age-converter", 
-    color: "amber", 
-    type: "pets",
-    tags: ["pet", "idade", "animal"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "3 anos cão",
-      to: "idade humana",
-      value: "28 anos"
-    }
-  },
-  { 
-    title: "Dosagem Veterinária", 
-    description: "Medicamentos para animais", 
-    icon: Stethoscope, 
-    path: "/vet-dosage", 
-    color: "green", 
-    type: "pets",
-    tags: ["veterinária", "dosagem", "medicamento"],
-    difficulty: "advanced",
-    premium: true,
-    conversionExample: {
-      from: "5mg/kg gato 4kg",
-      to: "dose total",
-      value: "20mg"
-    }
-  },
-  { 
-    title: "Ração e Alimentação", 
-    description: "Quantidades por peso e idade", 
-    icon: Utensils, 
-    path: "/pet-feeding", 
-    color: "orange", 
-    type: "pets",
-    tags: ["ração", "alimentação", "pet"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "Cão 15kg adulto",
-      to: "ração/dia",
-      value: "300g"
-    }
-  },
-
-  // === SUSTENTABILIDADE ===
-  { 
-    title: "Pegada de Carbono", 
-    description: "Calcule emissões de CO2", 
-    icon: Leaf, 
-    path: "/carbon-footprint", 
-    color: "green", 
-    type: "sustainability",
-    tags: ["carbono", "sustentabilidade", "co2"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "100km carro",
-      to: "CO2",
-      value: "23kg CO2"
-    }
-  },
-  { 
-    title: "Economia de Energia", 
-    description: "Consumo elétrico e economia", 
-    icon: Zap, 
-    path: "/energy-savings", 
-    color: "yellow", 
-    type: "sustainability",
-    tags: ["energia", "economia", "consumo"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "LED vs Incandescente",
-      to: "economia/ano",
-      value: "R$ 180"
-    }
-  },
-  { 
-    title: "Reciclagem", 
-    description: "Equivalências de materiais recicláveis", 
-    icon: Recycle, 
-    path: "/recycling-calculator", 
-    color: "teal", 
-    type: "sustainability",
-    tags: ["reciclagem", "material", "sustentável"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "1kg plástico",
-      to: "garrafas PET",
-      value: "25 garrafas"
-    }
-  },
-
-  // === CONVERSORES FINANCEIROS ORIGINAIS ===
-  { 
-    title: "Conversor de Moedas", 
-    description: "Converta entre moedas com taxas atualizadas", 
-    icon: DollarSign, 
-    path: "/currency", 
-    color: "emerald", 
-    type: "financial",
-    tags: ["moeda", "câmbio", "internacional"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "1 USD",
-      to: "BRL",
-      value: "R$ 5.60"
-    }
-  },
-  { 
-    title: "Conversor de Criptomoedas", 
-    description: "Converta Bitcoin, Ethereum e outras cripto", 
-    icon: Bitcoin, 
-    path: "/crypto", 
-    color: "amber", 
-    type: "financial",
-    tags: ["cripto", "bitcoin", "ethereum"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "1 BTC",
-      to: "USD",
-      value: "$105,543"
-    }
-  },
-  { 
-    title: "Índices Financeiros", 
-    description: "Acompanhe Selic, CDI, IPCA e mais", 
-    icon: TrendingUp, 
-    path: "/financial-indices", 
-    color: "red", 
-    type: "financial",
-    tags: ["índice", "selic", "economia"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "Taxa Selic",
-      to: "atual",
-      value: "14.75% a.a."
-    }
-  },
-
-  // === SAÚDE BÁSICA ORIGINAL ===
-  { 
-    title: "Calculadora de IMC", 
-    description: "Calcule seu Índice de Massa Corporal", 
-    icon: Heart, 
-    path: "/imc", 
-    color: "pink", 
-    type: "health",
-    tags: ["IMC", "peso", "saúde"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "70kg / 1.75m",
-      to: "IMC",
-      value: "22.9"
-    }
-  },
-  { 
-    title: "Calculadora de TMB", 
-    description: "Calcule sua Taxa Metabólica Basal", 
-    icon: Activity, 
-    path: "/tmb", 
-    color: "purple", 
-    type: "health",
-    tags: ["TMB", "metabolismo", "caloria"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "Homem 30 anos",
-      to: "TMB",
-      value: "1,680 kcal/dia"
-    }
-  },
-  { 
-    title: "Calculadora de Calorias", 
-    description: "Calcule suas necessidades calóricas diárias", 
-    icon: Utensils, 
-    path: "/calories", 
-    color: "orange", 
-    type: "health",
-    tags: ["caloria", "dieta", "nutrição"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "Ativo moderado",
-      to: "necessidade",
-      value: "2,200 kcal/dia"
-    }
-  },
-
-  // === ENGENHARIA ORIGINAL ===
-  { 
-    title: "Calculadora de Concreto", 
-    description: "Calcule materiais para concreto", 
-    icon: Building, 
-    path: "/concrete-calculator", 
-    color: "stone", 
-    type: "engineering",
-    tags: ["concreto", "construção", "material"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "1 m³ concreto",
-      to: "materiais",
-      value: "320kg cimento"
-    }
-  },
-  { 
-    title: "Calculadora de Área de Construção", 
-    description: "Calcule áreas e perímetros", 
-    icon: Home, 
-    path: "/construction-area", 
-    color: "slate", 
-    type: "engineering",
-    tags: ["área", "construção", "perímetro"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "10m x 12m",
-      to: "área",
-      value: "120 m²"
-    }
-  },
-  { 
-    title: "Calculadora Estrutural", 
-    description: "Cálculos estruturais básicos", 
-    icon: Wrench, 
-    path: "/structural-calculator", 
-    color: "zinc", 
-    type: "engineering",
-    tags: ["estrutura", "carga", "viga"],
-    difficulty: "advanced",
-    premium: true,
-    conversionExample: {
-      from: "Viga 6m",
-      to: "carga max",
-      value: "2.5 ton/m²"
-    }
-  },
-
-  // === CIENTÍFICAS ORIGINAIS ===
-  { 
-    title: "Calculadora de Física", 
-    description: "Força, energia, movimento e mais", 
-    icon: Calculator, 
-    path: "/physics-calculator", 
-    color: "blue", 
-    type: "scientific",
-    tags: ["física", "força", "energia"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "F = m × a",
-      to: "10kg × 9.8m/s²",
-      value: "98 N"
-    }
-  },
-  { 
-    title: "Calculadora de Química", 
-    description: "Molaridade, pH, massa molar", 
-    icon: FlaskRound, 
-    path: "/chemistry-calculator", 
-    color: "green", 
-    type: "scientific",
-    tags: ["química", "pH", "molaridade"],
-    difficulty: "advanced",
-    conversionExample: {
-      from: "0.1 M [H+]",
-      to: "pH",
-      value: "pH = 1"
-    }
-  },
-  { 
-    title: "Calculadora Matemática", 
-    description: "Geometria, trigonometria e mais", 
-    icon: Calculator, 
-    path: "/math-calculator", 
-    color: "purple", 
-    type: "scientific",
-    tags: ["matemática", "geometria", "trigonometria"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "r = 5",
-      to: "área círculo",
-      value: "78.54 u²"
-    }
-  },
-  { 
-    title: "Conversor de Base Numérica", 
-    description: "Binário, octal, decimal, hexadecimal", 
-    icon: Binary, 
-    path: "/number-base-converter", 
-    color: "slate", 
-    type: "scientific",
-    tags: ["base", "binário", "hexadecimal"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "255 (decimal)",
-      to: "binário",
-      value: "11111111"
-    }
-  },
-
-  // === PROGRAMAÇÃO ORIGINAL ===
-  { 
-    title: "Conversor de Encoding", 
-    description: "Base64, URL encoding, HTML entities", 
-    icon: FileCode, 
-    path: "/encoding-converter", 
-    color: "indigo", 
-    type: "programming",
-    tags: ["encoding", "base64", "html"],
-    difficulty: "intermediate",
-    conversionExample: {
-      from: "Hello World",
-      to: "Base64",
-      value: "SGVsbG8gV29ybGQ="
-    }
-  },
-  { 
-    title: "Conversor de Cores", 
-    description: "HEX, RGB, HSL, CMYK", 
-    icon: Palette, 
-    path: "/color-converter", 
-    color: "pink", 
-    type: "programming",
-    tags: ["cor", "hex", "rgb"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "#FF5733",
-      to: "RGB",
-      value: "255, 87, 51"
-    }
-  },
-
-  // === PRODUTIVIDADE ORIGINAL ===
-  { 
-    title: "Calculadora de Combustível", 
-    description: "Consumo, custos e comparações", 
-    icon: Fuel, 
-    path: "/fuel-calculator", 
-    color: "orange", 
-    type: "productivity",
-    tags: ["combustível", "consumo", "custo"],
-    difficulty: "basic",
-    conversionExample: {
-      from: "100km, 12km/L",
-      to: "combustível",
-      value: "8.33 L"
-    }
-  },
-
-  // === ASTROLOGIA ORIGINAL ===
-  { 
-    title: "Mapa Astral", 
-    description: "Gere seu mapa astral completo", 
-    icon: Star, 
-    path: "/birth-chart", 
-    color: "purple", 
-    type: "astrology",
-    tags: ["astrologia", "mapa", "astral"],
-    difficulty: "advanced",
-    premium: true,
-    conversionExample: {
-      from: "Data/hora/local",
-      to: "mapa astral",
-      value: "Sol em Leão"
-    }
-  },
-
-  // === ASTRONOMIA ORIGINAL ===
-  { 
-    title: "Distância dos Astros", 
-    description: "Calcule distâncias e tempo de viagem espacial", 
-    icon: Globe, 
-    path: "/astronomical-distance", 
-    color: "cyan", 
-    type: "astronomical",
-    tags: ["astronomia", "distância", "espaço"],
-    difficulty: "advanced",
-    conversionExample: {
-      from: "Terra → Marte",
-      to: "distância",
-      value: "225 milhões km"
-    }
-  },
-
-  // === CRIADORES DE CONTEÚDO ===
-  { 
-    title: "Documentação e Melhorias", 
-    description: "Estado do sistema e roadmap de melhorias", 
-    path: "/admin/documentation", 
-    icon: FileText,
-    color: "slate",
-    type: "admin",
-    tags: ["documentação", "melhorias", "sistema", "roadmap"],
-    difficulty: "advanced",
-    premium: false,
-    conversionExample: {
-      from: "Sistema atual",
-      to: "melhorias",
-      value: "50+ itens"
-    }
+    tags: ["velocidade", "km/h", "m/s", "mph"],
+    premium: false
   }
 ];
 
-// Função para agrupar categorias
+const healthCategories: CategoryCard[] = [
+  {
+    title: "Calculadora de IMC",
+    description: "Calcular o Índice de Massa Corporal (IMC)",
+    icon: User,
+    path: "/imc",
+    type: "health",
+    tags: ["imc", "índice de massa corporal", "peso", "altura"],
+    premium: false
+  },
+  {
+    title: "Calculadora de TMB",
+    description: "Calcular a Taxa Metabólica Basal (TMB)",
+    icon: Activity,
+    path: "/tmb",
+    type: "health",
+    tags: ["tmb", "taxa metabólica basal", "energia", "metabolismo"],
+    premium: false
+  },
+  {
+    title: "Calculadora de Calorias",
+    description: "Calcular as calorias diárias necessárias",
+    icon: Flame,
+    path: "/calories",
+    type: "health",
+    tags: ["calorias", "energia", "dieta", "nutrição"],
+    premium: false
+  }
+];
+
+const engineeringCategories: CategoryCard[] = [
+  {
+    title: "Calculadora de Concreto",
+    description: "Calcular a quantidade de materiais para concreto",
+    icon: Construction,
+    path: "/concrete-calculator",
+    type: "engineering",
+    tags: ["concreto", "cimento", "areia", "brita"],
+    premium: false
+  },
+  {
+    title: "Calculadora de Área de Construção",
+    description: "Calcular a área de construção de um edifício",
+    icon: LayoutDashboard,
+    path: "/construction-area",
+    type: "engineering",
+    tags: ["área", "construção", "edifício", "engenharia"],
+    premium: false
+  },
+  {
+    title: "Calculadora Estrutural",
+    description: "Realizar cálculos estruturais básicos",
+    icon: Waves,
+    path: "/structural-calculator",
+    type: "engineering",
+    tags: ["estrutural", "cálculo", "engenharia", "estrutura"],
+    premium: false
+  }
+];
+
+const scientificCategories: CategoryCard[] = [
+  {
+    title: "Calculadora de Física",
+    description: "Realizar cálculos de física básica",
+    icon: Aperture,
+    path: "/physics-calculator",
+    type: "scientific",
+    tags: ["física", "cálculo", "mecânica", "termodinâmica"],
+    premium: false
+  },
+  {
+    title: "Calculadora de Química",
+    description: "Realizar cálculos de química básica",
+    icon: Droplet,
+    path: "/chemistry-calculator",
+    type: "scientific",
+    tags: ["química", "cálculo", "reações", "elementos"],
+    premium: false
+  },
+  {
+    title: "Calculadora de Matemática",
+    description: "Realizar cálculos matemáticos básicos",
+    icon: LineChart,
+    path: "/math-calculator",
+    type: "scientific",
+    tags: ["matemática", "cálculo", "álgebra", "geometria"],
+    premium: false
+  },
+  {
+    title: "Conversor de Base Numérica",
+    description: "Converter entre diferentes bases numéricas",
+    icon: Code,
+    path: "/number-base-converter",
+    type: "scientific",
+    tags: ["base numérica", "binário", "decimal", "hexadecimal"],
+    premium: false
+  }
+];
+
+const financialCategories: CategoryCard[] = [
+  {
+    title: "Conversor de Moedas",
+    description: "Converter entre diferentes moedas",
+    icon: Coins,
+    path: "/currency",
+    type: "financial",
+    tags: ["moedas", "dólar", "euro", "real"],
+    premium: false
+  },
+  {
+    title: "Conversor de Criptomoedas",
+    description: "Converter entre diferentes criptomoedas",
+    icon: Bitcoin,
+    path: "/crypto",
+    type: "financial",
+    tags: ["criptomoedas", "bitcoin", "ethereum", "litecoin"],
+    premium: false
+  },
+  {
+    title: "Índices Financeiros",
+    description: "Acompanhar os principais índices financeiros",
+    icon: LineChart,
+    path: "/financial-indices",
+    type: "financial",
+    tags: ["índices financeiros", "ibovespa", "s&p 500", "dólar"],
+    premium: false
+  }
+];
+
+const productivityCategories: CategoryCard[] = [
+  {
+    title: "Calculadora de Regra de Três",
+    description: "Resolver problemas de regra de três simples e composta",
+    icon: Percent,
+    path: "/regra-de-tres",
+    type: "productivity",
+    tags: ["regra de três", "proporção", "cálculo", "matemática"],
+    premium: false
+  },
+  {
+    title: "Calculadora de Combustível",
+    description: "Calcular o consumo de combustível de um veículo",
+    icon: FileText,
+    path: "/fuel-calculator",
+    type: "productivity",
+    tags: ["combustível", "consumo", "veículo", "gasolina"],
+    premium: false
+  },
+  {
+    title: "Conversor de Codificação",
+    description: "Converter texto entre diferentes codificações",
+    icon: Code,
+    path: "/encoding-converter",
+    type: "productivity",
+    tags: ["codificação", "texto", "ascii", "utf-8"],
+    premium: false
+  }
+];
+
+const programmingCategories: CategoryCard[] = [
+  {
+    title: "Conversor de Cores",
+    description: "Converter entre diferentes formatos de cores",
+    icon: Palette,
+    path: "/color-converter",
+    type: "programming",
+    tags: ["cores", "hexadecimal", "rgb", "hsl"],
+    premium: false
+  }
+];
+
+const astrologyCategories: CategoryCard[] = [
+  {
+    title: "Mapa Astral",
+    description: "Calcular o mapa astral de uma pessoa",
+    icon: Star,
+    path: "/birth-chart",
+    type: "astrology",
+    tags: ["mapa astral", "astrologia", "signos", "ascendente"],
+    premium: false
+  }
+];
+
+const astronomicalCategories: CategoryCard[] = [
+  {
+    title: "Distância Astronômica",
+    description: "Calcular distâncias astronômicas",
+    icon: Telescope,
+    path: "/astronomical-distance",
+    type: "astronomical",
+    tags: ["astronomia", "distância", "espaço", "luz"],
+    premium: false
+  }
+];
+
+// Novas categorias
+const studentCategories: CategoryCard[] = [
+  {
+    title: "Conversor de Notas",
+    description: "Converter notas entre diferentes escalas",
+    icon: Book,
+    path: "/grade-converter",
+    type: "student",
+    tags: ["notas", "escala", "conversão", "educação"],
+    premium: false
+  },
+  {
+    title: "Média de Notas",
+    description: "Calcular a média de notas",
+    icon: LineChart,
+    path: "/grade-average",
+    type: "student",
+    tags: ["média", "notas", "cálculo", "educação"],
+    premium: false
+  },
+  {
+    title: "Unidades Educacionais",
+    description: "Converter unidades educacionais (créditos, horas)",
+    icon: Clock,
+    path: "/educational-units",
+    type: "student",
+    tags: ["unidades", "créditos", "horas", "educação"],
+    premium: false
+  },
+  {
+    title: "Estatísticas Básicas",
+    description: "Calcular estatísticas básicas (média, mediana, desvio)",
+    icon: LineChart,
+    path: "/basic-statistics",
+    type: "student",
+    tags: ["estatísticas", "média", "mediana", "desvio", "educação"],
+    premium: false
+  }
+];
+
+const gamingCategories: CategoryCard[] = [
+  {
+    title: "FPS Converter",
+    description: "Converter quadros por segundo (FPS)",
+    icon: Gamepad2,
+    path: "/fps-converter",
+    type: "gaming",
+    tags: ["fps", "quadros", "conversão", "jogos"],
+    premium: false
+  },
+  {
+    title: "Moeda de Jogos",
+    description: "Converter moedas de jogos",
+    icon: Coins,
+    path: "/game-currency",
+    type: "gaming",
+    tags: ["moeda", "jogos", "conversão", "virtual"],
+    premium: false
+  },
+  {
+    title: "DPS Calculator",
+    description: "Calcular dano por segundo (DPS)",
+    icon: Activity,
+    path: "/dps-calculator",
+    type: "gaming",
+    tags: ["dps", "dano", "segundo", "jogos"],
+    premium: false
+  },
+  {
+    title: "Probabilidade Gaming",
+    description: "Calcular probabilidades em jogos",
+    icon: Percent,
+    path: "/gaming-probability",
+    type: "gaming",
+    tags: ["probabilidade", "jogos", "chance", "estatística"],
+    premium: false
+  }
+];
+
+const travelCategories: CategoryCard[] = [
+  {
+    title: "Timezone Converter",
+    description: "Converter entre fusos horários",
+    icon: Clock,
+    path: "/timezone-converter",
+    type: "travel",
+    tags: ["fuso horário", "conversão", "tempo", "viagem"],
+    premium: false
+  },
+  {
+    title: "Calculadora de Gorjeta",
+    description: "Calcular o valor da gorjeta",
+    icon: Coins,
+    path: "/tip-calculator",
+    type: "travel",
+    tags: ["gorjeta", "cálculo", "serviço", "viagem"],
+    premium: false
+  },
+  {
+    title: "Voltagem de Plugues",
+    description: "Verificar a voltagem de plugues",
+    icon: Plane,
+    path: "/plug-voltage",
+    type: "travel",
+    tags: ["voltagem", "plugues", "energia", "viagem"],
+    premium: false
+  },
+  {
+    title: "Calculadora de Bagagem",
+    description: "Calcular o tamanho da bagagem",
+    icon: Package,
+    path: "/luggage-calculator",
+    type: "travel",
+    tags: ["bagagem", "tamanho", "peso", "viagem"],
+    premium: false
+  }
+];
+
+const contentCreatorCategories: CategoryCard[] = [
+  {
+    title: "Resolução de Vídeo",
+    description: "Converter resoluções de vídeo",
+    icon: Video,
+    path: "/video-resolution",
+    type: "content",
+    tags: ["resolução", "vídeo", "conversão", "criação"],
+    premium: false
+  },
+  {
+    title: "Tempo de Upload",
+    description: "Calcular o tempo de upload de vídeo",
+    icon: Clock,
+    path: "/upload-time",
+    type: "content",
+    tags: ["upload", "vídeo", "tempo", "internet"],
+    premium: false
+  },
+  {
+    title: "Conversor de Mídia",
+    description: "Converter formatos de mídia",
+    icon: Video,
+    path: "/media-converter",
+    type: "content",
+    tags: ["mídia", "conversão", "formato", "áudio", "vídeo"],
+    premium: false
+  },
+  {
+    title: "Calculadora de Engajamento",
+    description: "Calcular a taxa de engajamento",
+    icon: LineChart,
+    path: "/engagement-calculator",
+    type: "content",
+    tags: ["engajamento", "taxa", "mídias sociais", "criação"],
+    premium: false
+  }
+];
+
+const investmentCategories: CategoryCard[] = [
+  {
+    title: "Dividend Calculator",
+    description: "Calcular dividendos",
+    icon: Coins,
+    path: "/dividend-calculator",
+    type: "investment",
+    tags: ["dividendos", "cálculo", "investimento", "ações"],
+    premium: false
+  },
+  {
+    title: "Stock Splits",
+    description: "Calcular desdobramento de ações",
+    icon: Percent,
+    path: "/stock-splits",
+    type: "investment",
+    tags: ["desdobramento", "ações", "cálculo", "investimento"],
+    premium: false
+  },
+  {
+    title: "Inflation Calculator",
+    description: "Calcular a inflação",
+    icon: TrendingUp,
+    path: "/inflation-calculator",
+    type: "investment",
+    tags: ["inflação", "cálculo", "economia", "investimento"],
+    premium: false
+  },
+  {
+    title: "Investment Comparison",
+    description: "Comparar investimentos",
+    icon: LineChart,
+    path: "/investment-comparison",
+    type: "investment",
+    tags: ["comparação", "investimento", "retorno", "risco"],
+    premium: false
+  }
+];
+
+const culinaryCategories: CategoryCard[] = [
+  {
+    title: "Recipe Converter",
+    description: "Converter medidas de receitas",
+    icon: ChefHat,
+    path: "/recipe-converter",
+    type: "culinary",
+    tags: ["receitas", "medidas", "conversão", "culinária"],
+    premium: false
+  },
+  {
+    title: "Ingredient Substitutes",
+    description: "Encontrar substitutos para ingredientes",
+    icon: ChefHat,
+    path: "/ingredient-substitutes",
+    type: "culinary",
+    tags: ["ingredientes", "substitutos", "receitas", "culinária"],
+    premium: false
+  },
+  {
+    title: "Oven Conversions",
+    description: "Converter temperaturas de forno",
+    icon: Thermometer,
+    path: "/oven-conversions",
+    type: "culinary",
+    tags: ["forno", "temperatura", "conversão", "culinária"],
+    premium: false
+  },
+  {
+    title: "Nutrition Calculator",
+    description: "Calcular informações nutricionais",
+    icon: Heart,
+    path: "/nutrition-calculator",
+    type: "culinary",
+    tags: ["nutrição", "cálculo", "alimentos", "culinária"],
+    premium: false
+  }
+];
+
+const fashionCategories: CategoryCard[] = [
+  {
+    title: "Clothing Sizes",
+    description: "Converter tamanhos de roupa",
+    icon: Shirt,
+    path: "/clothing-sizes",
+    type: "fashion",
+    tags: ["roupa", "tamanhos", "conversão", "moda"],
+    premium: false
+  },
+  {
+    title: "Hair Color",
+    description: "Encontrar cores de cabelo",
+    icon: Palette,
+    path: "/hair-color",
+    type: "fashion",
+    tags: ["cabelo", "cor", "moda", "beleza"],
+    premium: false
+  },
+  {
+    title: "Body Measurements",
+    description: "Calcular medidas corporais",
+    icon: Ruler,
+    path: "/body-measurements",
+    type: "fashion",
+    tags: ["medidas", "corpo", "moda", "beleza"],
+    premium: false
+  }
+];
+
+const sustainabilityCategories: CategoryCard[] = [
+  {
+    title: "Carbon Footprint",
+    description: "Calcular pegada de carbono",
+    icon: Leaf,
+    path: "/carbon-footprint",
+    type: "sustainability",
+    tags: ["carbono", "pegada", "meio ambiente", "sustentabilidade"],
+    premium: false
+  },
+  {
+    title: "Energy Savings",
+    description: "Calcular economia de energia",
+    icon: Flame,
+    path: "/energy-savings",
+    type: "sustainability",
+    tags: ["energia", "economia", "meio ambiente", "sustentabilidade"],
+    premium: false
+  },
+  {
+    title: "Recycling Calculator",
+    description: "Calcular reciclagem",
+    icon: Leaf,
+    path: "/recycling-calculator",
+    type: "sustainability",
+    tags: ["reciclagem", "cálculo", "meio ambiente", "sustentabilidade"],
+    premium: false
+  }
+];
+
+const petCategories: CategoryCard[] = [
+  {
+    title: "Pet Age Converter",
+    description: "Converter idade de pets",
+    icon: PawPrint,
+    path: "/pet-age-converter",
+    type: "pets",
+    tags: ["idade", "pet", "conversão", "animal"],
+    premium: false
+  },
+  {
+    title: "Vet Dosage",
+    description: "Calcular dosagem veterinária",
+    icon: PawPrint,
+    path: "/vet-dosage",
+    type: "pets",
+    tags: ["dosagem", "veterinária", "pet", "animal"],
+    premium: false
+  },
+  {
+    title: "Pet Feeding",
+    description: "Calcular alimentação de pets",
+    icon: PawPrint,
+    path: "/pet-feeding",
+    type: "pets",
+    tags: ["alimentação", "pet", "cálculo", "animal"],
+    premium: false
+  }
+];
+
+const healthProCategories: CategoryCard[] = [
+  {
+    title: "Saúde Ocupacional",
+    description: "Avaliações de saúde ocupacional",
+    icon: Shield,
+    path: "/occupational-health",
+    type: "health-pro",
+    tags: ["saúde", "ocupacional", "trabalho", "avaliação"],
+    premium: true
+  },
+  {
+    title: "Bem-Estar Mental",
+    description: "Avaliações de bem-estar mental",
+    icon: Brain,
+    path: "/mental-wellness",
+    type: "health-pro",
+    tags: ["bem-estar", "mental", "saúde", "avaliação"],
+    premium: true
+  },
+  {
+    title: "Ergonomia",
+    description: "Avaliações de ergonomia",
+    icon: User,
+    path: "/ergonomics",
+    type: "health-pro",
+    tags: ["ergonomia", "trabalho", "saúde", "avaliação"],
+    premium: true
+  },
+  {
+    title: "Segurança no Trabalho",
+    description: "Avaliações de segurança no trabalho",
+    icon: Shield,
+    path: "/workplace-safety",
+    type: "health-pro",
+    tags: ["segurança", "trabalho", "saúde", "avaliação"],
+    premium: true
+  },
+  {
+    title: "Dosagem Médica",
+    description: "Calcular dosagens de medicamentos",
+    icon: Shield,
+    path: "/medical-dosage",
+    type: "health-pro",
+    tags: ["dosagem", "medicamentos", "saúde", "cálculo"],
+    premium: true
+  },
+  {
+    title: "Conversões Laboratoriais",
+    description: "Converter unidades de exames laboratoriais",
+    icon: Shield,
+    path: "/lab-conversions",
+    type: "health-pro",
+    tags: ["conversões", "laboratório", "saúde", "exames"],
+    premium: true
+  },
+  {
+    title: "IMC Especializado",
+    description: "Calcular IMC para atletas, idosos, etc",
+    icon: Heart,
+    path: "/specialized-bmi",
+    type: "health-pro",
+    tags: ["imc", "especializado", "saúde", "cálculo"],
+    premium: true
+  },
+  {
+    title: "Cálculo de Hidratação",
+    description: "Calcular a necessidade diária de água",
+    icon: Droplet,
+    path: "/hydration-calculator",
+    type: "health-pro",
+    tags: ["hidratação", "água", "saúde", "cálculo"],
+    premium: true
+  }
+];
+
+// Novos módulos
+const agribusinessCategories: CategoryCard[] = [
+  {
+    title: "Calculadora de Agronegócio",
+    description: "Plantio, fertilização e cálculos agrícolas",
+    icon: Wheat,
+    path: "/agribusiness-calculator",
+    type: "agribusiness",
+    tags: ["agro", "plantio", "fertilizante", "agricultura"],
+    premium: false
+  }
+];
+
+const logisticsCategories: CategoryCard[] = [
+  {
+    title: "Calculadora de Logística", 
+    description: "Frete, rotas, capacidade e tempo de entrega",
+    icon: Truck,
+    path: "/logistics-calculator", 
+    type: "logistics",
+    tags: ["frete", "logística", "transporte", "entrega"],
+    premium: false
+  }
+];
+
+const advancedFinanceCategories: CategoryCard[] = [
+  {
+    title: "Finanças Avançadas",
+    description: "Empréstimos, aposentadoria e análise de viabilidade",
+    icon: TrendingUp,
+    path: "/advanced-finance",
+    type: "finance-advanced", 
+    tags: ["empréstimo", "aposentadoria", "finanças", "investimento"],
+    premium: true
+  }
+];
+
+// Atualizar allEnhancedCategories para incluir as novas categorias
+export const allEnhancedCategories = [
+  ...converterCategories,
+  ...healthCategories,
+  ...engineeringCategories,
+  ...scientificCategories,
+  ...financialCategories,
+  ...productivityCategories,
+  ...programmingCategories,
+  ...astrologyCategories,
+  ...astronomicalCategories,
+  // Categorias de estudantes
+  ...studentCategories,
+  // Categorias gaming
+  ...gamingCategories,
+  // Categorias viagem
+  ...travelCategories,
+  // Categorias criadores
+  ...contentCreatorCategories,
+  // Categorias investimentos
+  ...investmentCategories,
+  // Categorias culinária
+  ...culinaryCategories,
+  // Categorias moda
+  ...fashionCategories,
+  // Categorias sustentabilidade
+  ...sustainabilityCategories,
+  // Categorias pets
+  ...petCategories,
+  // Categorias saúde profissional
+  ...healthProCategories,
+  // Novos módulos
+  ...agribusinessCategories,
+  ...logisticsCategories,
+  ...advancedFinanceCategories
+];
+
 export const getGroupedCategories = () => {
-  const grouped = allEnhancedCategories.reduce((acc, category) => {
-    if (!acc[category.type]) {
-      acc[category.type] = [];
+  const grouped: { [key: string]: CategoryCard[] } = {};
+  
+  allEnhancedCategories.forEach(category => {
+    if (category.type === "converter") {
+      if (!grouped.converter) grouped.converter = [];
+      grouped.converter.push(category);
     }
-    acc[category.type].push(category);
-    return acc;
-  }, {} as Record<string, Category[]>);
-
+    if (category.type === "health") {
+      if (!grouped.health) grouped.health = [];
+      grouped.health.push(category);
+    }
+    if (category.type === "engineering") {
+      if (!grouped.engineering) grouped.engineering = [];
+      grouped.engineering.push(category);
+    }
+    if (category.type === "scientific") {
+      if (!grouped.scientific) grouped.scientific = [];
+      grouped.scientific.push(category);
+    }
+    if (category.type === "financial") {
+      if (!grouped.financial) grouped.financial = [];
+      grouped.financial.push(category);
+    }
+    if (category.type === "productivity") {
+      if (!grouped.productivity) grouped.productivity = [];
+      grouped.productivity.push(category);
+    }
+    if (category.type === "programming") {
+      if (!grouped.programming) grouped.programming = [];
+      grouped.programming.push(category);
+    }
+    if (category.type === "astrology") {
+      if (!grouped.astrology) grouped.astrology = [];
+      grouped.astrology.push(category);
+    }
+    if (category.type === "astronomical") {
+      if (!grouped.astronomical) grouped.astronomical = [];
+      grouped.astronomical.push(category);
+    }
+    if (category.type === "student") {
+      if (!grouped.student) grouped.student = [];
+      grouped.student.push(category);
+    }
+    if (category.type === "gaming") {
+      if (!grouped.gaming) grouped.gaming = [];
+      grouped.gaming.push(category);
+    }
+    if (category.type === "travel") {
+      if (!grouped.travel) grouped.travel = [];
+      grouped.travel.push(category);
+    }
+    if (category.type === "content") {
+      if (!grouped.content) grouped.content = [];
+      grouped.content.push(category);
+    }
+    if (category.type === "investment") {
+      if (!grouped.investment) grouped.investment = [];
+      grouped.investment.push(category);
+    }
+    if (category.type === "culinary") {
+      if (!grouped.culinary) grouped.culinary = [];
+      grouped.culinary.push(category);
+    }
+    if (category.type === "fashion") {
+      if (!grouped.fashion) grouped.fashion = [];
+      grouped.fashion.push(category);
+    }
+    if (category.type === "sustainability") {
+      if (!grouped.sustainability) grouped.sustainability = [];
+      grouped.sustainability.push(category);
+    }
+    if (category.type === "pets") {
+      if (!grouped.pets) grouped.pets = [];
+      grouped.pets.push(category);
+    }
+    if (category.type === "health-pro") {
+      if (!grouped["health-pro"]) grouped["health-pro"] = [];
+      grouped["health-pro"].push(category);
+    }
+    
+    // Adicionar novos grupos
+    if (category.type === "agribusiness") {
+      if (!grouped.agribusiness) grouped.agribusiness = [];
+      grouped.agribusiness.push(category);
+    }
+    
+    if (category.type === "logistics") {
+      if (!grouped.logistics) grouped.logistics = [];
+      grouped.logistics.push(category);
+    }
+    
+    if (category.type === "finance-advanced") {
+      if (!grouped["finance-advanced"]) grouped["finance-advanced"] = [];
+      grouped["finance-advanced"].push(category);
+    }
+  });
+  
   return grouped;
-};
-
-// Função para filtrar por tags
-export const getCategoriesByTags = (tags: string[]) => {
-  return allEnhancedCategories.filter(category =>
-    category.tags?.some(tag => tags.includes(tag))
-  );
-};
-
-// Função para categorias premium
-export const getPremiumCategories = () => {
-  return allEnhancedCategories.filter(category => category.premium);
-};
-
-// Função para categorias por dificuldade
-export const getCategoriesByDifficulty = (difficulty: 'basic' | 'intermediate' | 'advanced') => {
-  return allEnhancedCategories.filter(category => category.difficulty === difficulty);
 };

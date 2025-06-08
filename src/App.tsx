@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -86,6 +85,11 @@ import HydrationCalculator from "./pages/HydrationCalculator";
 
 // Página administrativa
 import DocumentationAndImprovements from "./pages/DocumentationAndImprovements";
+
+// Novos módulos
+import AgribusinessCalculator from "./pages/AgribusinessCalculator";
+import LogisticsCalculator from "./pages/LogisticsCalculator";
+import AdvancedFinance from "./pages/AdvancedFinance";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -191,6 +195,15 @@ const App = () => (
             <Route path="/mental-wellness" element={<MentalWellness />} />
             <Route path="/ergonomics" element={<Ergonomics />} />
             <Route path="/workplace-safety" element={<WorkplaceSafety />} />
+            <Route path="/medical-dosage" element={<MedicalDosage />} />
+            <Route path="/lab-conversions" element={<LabConversions />} />
+            <Route path="/specialized-bmi" element={<SpecializedBmi />} />
+            <Route path="/hydration-calculator" element={<HydrationCalculator />} />
+            
+            {/* Novos módulos */}
+            <Route path="/agribusiness-calculator" element={<AgribusinessCalculator />} />
+            <Route path="/logistics-calculator" element={<LogisticsCalculator />} />
+            <Route path="/advanced-finance" element={<AdvancedFinance />} />
             
             {/* Administração */}
             <Route path="/admin-login" element={<AdminLogin />} />

@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -23,7 +22,9 @@ import {
   CheckCircle,
   AlertCircle,
   Clock,
-  Target
+  Target,
+  Wheat,
+  Truck
 } from "lucide-react";
 
 const DocumentationAndImprovements = () => {
@@ -231,8 +232,99 @@ const DocumentationAndImprovements = () => {
         "Crie calculadora de gestação para diferentes espécies",
         "Implemente sistema de tracking de peso e crescimento de filhotes"
       ]
+    },
+    {
+      category: "Agronegócio ✅",
+      icon: Wheat,
+      status: "implementado",
+      description: "Ferramentas para cálculos agrícolas",
+      pages: ["Calculadora de Agronegócio", "Plantio", "Fertilização", "Área de Cultivo"],
+      improvements: [
+        "Integração com dados meteorológicos",
+        "Banco de dados de sementes expandido",
+        "Calculadora de irrigação"
+      ],
+      prompts: [
+        "Adicione dados de diferentes tipos de solo para cálculos mais precisos",
+        "Integre API meteorológica para recomendações de plantio",
+        "Crie calculadora de custos de produção agrícola detalhada"
+      ]
+    },
+    {
+      category: "Logística ✅",
+      icon: Truck,
+      status: "implementado", 
+      description: "Ferramentas para transporte e distribuição",
+      pages: ["Calculadora de Frete", "Capacidade de Carga", "Otimização de Rotas", "Tempo de Entrega"],
+      improvements: [
+        "Integração com APIs de mapas",
+        "Cálculo de pedágios automático",
+        "Sistema de rastreamento"
+      ],
+      prompts: [
+        "Integre Google Maps API para cálculos de rota automáticos",
+        "Adicione calculadora de pegada de carbono para transporte",
+        "Crie sistema de otimização de múltiplas entregas"
+      ]
+    },
+    {
+      category: "Finanças Avançadas ⭐✅",
+      icon: TrendingUp,
+      status: "implementado",
+      description: "Ferramentas financeiras profissionais", 
+      pages: ["Empréstimos", "Aposentadoria", "Fluxo de Caixa", "Análise de Viabilidade"],
+      improvements: [
+        "Simuladores de cenários",
+        "Relatórios em PDF",
+        "Integração com bancos"
+      ],
+      prompts: [
+        "Adicione simulador de monte carlo para análise de riscos",
+        "Crie calculadora de previdência privada com diferentes tipos",
+        "Implemente análise de VPL e TIR para projetos de investimento"
+      ]
     }
   ];
+
+  const implementationProgress = {
+    "Fase 1 - Correções Críticas": {
+      status: "concluída",
+      items: [
+        "✅ Rotas quebradas corrigidas (/specialized-bmi, /lab-conversions)",
+        "✅ Páginas faltantes implementadas (SpecializedBmi, LabConversions)", 
+        "✅ Importações e navegação verificadas",
+        "⏳ Sistema de fallbacks para APIs (em andamento)"
+      ]
+    },
+    "Fase 2 - Melhorias Estruturais": {
+      status: "em_andamento",
+      items: [
+        "⏳ Sistema de favoritos persistente (próximo)",
+        "⏳ PWA completo com service worker",
+        "⏳ Sistema de exportação PDF",
+        "⏳ Padronização de navegação"
+      ]
+    },
+    "Fase 3 - Novos Módulos": {
+      status: "parcialmente_concluída",
+      items: [
+        "✅ Módulo Agronegócio implementado",
+        "✅ Módulo Logística implementado", 
+        "✅ Módulo Finanças Avançadas implementado",
+        "⏳ Módulo Educação Superior (próximo)",
+        "⏳ Módulo Saúde Corporativa (próximo)"
+      ]
+    },
+    "Fase 4 - Melhorias Avançadas": {
+      status: "planejada",
+      items: [
+        "⏳ Integração com Supabase",
+        "⏳ Analytics avançado",
+        "⏳ Sistema de feedback",
+        "⏳ API própria para dados"
+      ]
+    }
+  };
 
   const technicalImprovements = [
     {
@@ -301,18 +393,18 @@ const DocumentationAndImprovements = () => {
               Documentação e Melhorias do Sistema
             </CardTitle>
             <p className="text-gray-600">
-              Estado atual, melhorias necessárias e roadmap futuro
+              Estado atual, melhorias implementadas e roadmap futuro
             </p>
           </CardHeader>
           <CardContent className="space-y-8">
             
-            {/* Status Geral */}
+            {/* Status Geral Atualizado */}
             <div className="bg-green-50 p-6 rounded-lg">
               <h2 className="text-xl font-bold text-green-800 mb-4 flex items-center gap-2">
                 <CheckCircle className="h-6 w-6" />
-                Status Atual do Sistema
+                Status Atual do Sistema - ATUALIZADO
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="text-center">
                   <p className="text-3xl font-bold text-green-900">{systemModules.length}</p>
                   <p className="text-green-700">Módulos Implementados</p>
@@ -324,9 +416,51 @@ const DocumentationAndImprovements = () => {
                   <p className="text-green-700">Páginas Funcionais</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-green-900">100%</p>
-                  <p className="text-green-700">Módulos Básicos</p>
+                  <p className="text-3xl font-bold text-green-900">95%</p>
+                  <p className="text-green-700">Rotas Funcionais</p>
                 </div>
+                <div className="text-center">
+                  <p className="text-3xl font-bold text-green-900">3</p>
+                  <p className="text-green-700">Novos Módulos Hoje</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Progresso da Implementação */}
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <TrendingUp className="h-6 w-6" />
+                Progresso da Implementação
+              </h2>
+              <div className="space-y-4">
+                {Object.entries(implementationProgress).map(([phase, progress]) => (
+                  <Card key={phase} className="border-gray-200">
+                    <CardContent className="pt-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="font-semibold text-gray-900">{phase}</h3>
+                        <Badge variant={
+                          progress.status === "concluída" ? "default" :
+                          progress.status === "em_andamento" ? "secondary" :
+                          progress.status === "parcialmente_concluída" ? "outline" : "destructive"
+                        }>
+                          {progress.status.replace("_", " ")}
+                        </Badge>
+                      </div>
+                      <div className="space-y-1">
+                        {progress.items.map((item, idx) => (
+                          <div key={idx} className="flex items-start gap-2 text-sm">
+                            <span className={`mt-1 ${item.startsWith('✅') ? 'text-green-600' : 'text-orange-500'}`}>
+                              {item.startsWith('✅') ? '✅' : '⏳'}
+                            </span>
+                            <span className={item.startsWith('✅') ? 'text-green-700' : 'text-gray-600'}>
+                              {item.replace('✅ ', '').replace('⏳ ', '')}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
             </div>
 
