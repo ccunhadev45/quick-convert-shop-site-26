@@ -1,75 +1,44 @@
 
-import { useState, useEffect } from "react";
-import { Check, ChevronsUpDown, MapPin } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useState, useEffect, useRef } from "react";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { geocodeCity, GeocodingResult } from "@/services/geocodingService";
+import { Card } from "@/components/ui/card";
+import { MapPin, Loader2 } from "lucide-react";
+import { searchCities, geocodeBrazilianCity, CityResult } from "@/services/ibgeCitiesService";
+import { GeocodingResult } from "@/services/geocodingService";
 
 interface CityAutocompleteProps {
   value: string;
-  onSelect: (city: string, coordinates?: GeocodingResult) => void;
+  onSelect: (city: string, coords?: GeocodingResult) => void;
   placeholder?: string;
 }
 
-const CityAutocomplete = ({ value, onSelect, placeholder = "Digite uma cidade..." }: CityAutocompleteProps) => {
-  const [open, setOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState(value);
-  const [suggestions, setSuggestions] = useState<GeocodingResult[]>([]);
-  const [selectedCoordinates, setSelectedCoordinates] = useState<GeocodingResult | null>(null);
+const CityAutocomplete = ({ value, onSelect, placeholder = "Digite o nome da cidade..." }: CityAutocompleteProps) => {
+  const [inputValue, setInputValue] = useState(value);
+  const [suggestions, setSuggestions] = useState<CityResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isGeocoding, setIsGeocoding] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const searchCities = async () => {
-      if (searchValue.length < 3) {
+    setInputValue(value);
+  }, [value]);
+
+  useEffect(() => {
+    const searchCitiesDebounced = async () => {
+      if (inputValue.length < 2) {
         setSuggestions([]);
+        setShowSuggestions(false);
         return;
       }
 
       setIsLoading(true);
       try {
-        // Fazer múltiplas buscas para diferentes variações
-        const queries = [
-          searchValue,
-          `${searchValue}, Brasil`,
-          `${searchValue}, Brazil`
-        ];
-
-        const searchPromises = queries.map(query =>
-          fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=br`)
-            .then(res => res.json())
-            .catch(() => [])
-        );
-
-        const results = await Promise.all(searchPromises);
-        const allResults = results.flat();
-
-        // Remover duplicatas e formatar resultados
-        const uniqueResults = allResults
-          .filter((item, index, self) => 
-            index === self.findIndex(t => t.place_id === item.place_id)
-          )
-          .slice(0, 8)
-          .map(item => ({
-            lat: parseFloat(item.lat),
-            lng: parseFloat(item.lon),
-            city: item.display_name.split(',')[0],
-            country: item.display_name
-          }));
-
-        setSuggestions(uniqueResults);
+        const results = await searchCities(inputValue);
+        setSuggestions(results);
+        setShowSuggestions(true);
       } catch (error) {
         console.error('Erro ao buscar cidades:', error);
         setSuggestions([]);
@@ -78,83 +47,111 @@ const CityAutocomplete = ({ value, onSelect, placeholder = "Digite uma cidade...
       }
     };
 
-    const debounceTimer = setTimeout(searchCities, 300);
-    return () => clearTimeout(debounceTimer);
-  }, [searchValue]);
+    const timeoutId = setTimeout(searchCitiesDebounced, 300);
+    return () => clearTimeout(timeoutId);
+  }, [inputValue]);
 
-  const handleSelect = async (suggestion: GeocodingResult) => {
-    setSearchValue(suggestion.city);
-    setSelectedCoordinates(suggestion);
-    onSelect(suggestion.city, suggestion);
-    setOpen(false);
+  // Fechar sugestões ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target as Node) &&
+        inputRef.current &&
+        !inputRef.current.contains(event.target as Node)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+    
+    if (!newValue) {
+      onSelect("");
+    }
+  };
+
+  const handleSuggestionClick = async (city: CityResult) => {
+    setInputValue(city.fullName);
+    setShowSuggestions(false);
+    setIsGeocoding(true);
+
+    try {
+      const coords = await geocodeBrazilianCity(city.name, city.stateCode);
+      onSelect(city.fullName, coords || undefined);
+    } catch (error) {
+      console.error('Erro ao geocodificar cidade:', error);
+      onSelect(city.fullName);
+    } finally {
+      setIsGeocoding(false);
+    }
+  };
+
+  const handleInputFocus = () => {
+    if (suggestions.length > 0) {
+      setShowSuggestions(true);
+    }
   };
 
   return (
-    <div className="space-y-2">
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            className="w-full justify-between text-left font-normal"
-          >
-            {searchValue || placeholder}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-full p-0" align="start">
-          <Command>
-            <CommandInput
-              placeholder="Buscar cidade..."
-              value={searchValue}
-              onValueChange={setSearchValue}
-            />
-            <CommandList>
-              {isLoading && (
-                <CommandEmpty>Buscando cidades...</CommandEmpty>
-              )}
-              {!isLoading && suggestions.length === 0 && searchValue.length >= 3 && (
-                <CommandEmpty>Nenhuma cidade encontrada.</CommandEmpty>
-              )}
-              {!isLoading && suggestions.length > 0 && (
-                <CommandGroup>
-                  {suggestions.map((suggestion, index) => (
-                    <CommandItem
-                      key={`${suggestion.lat}-${suggestion.lng}-${index}`}
-                      value={suggestion.city}
-                      onSelect={() => handleSelect(suggestion)}
-                      className="cursor-pointer"
-                    >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          searchValue === suggestion.city ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                      <div className="flex flex-col">
-                        <span className="font-medium">{suggestion.city}</span>
-                        <span className="text-xs text-gray-500 truncate">
-                          {suggestion.country}
-                        </span>
-                      </div>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              )}
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
-
-      {selectedCoordinates && (
-        <div className="flex items-center text-sm text-gray-600 bg-gray-50 p-2 rounded">
-          <MapPin className="mr-2 h-4 w-4" />
-          <span>
-            Latitude: {selectedCoordinates.lat.toFixed(6)}, 
-            Longitude: {selectedCoordinates.lng.toFixed(6)}
-          </span>
+    <div className="relative">
+      <div className="relative">
+        <Input
+          ref={inputRef}
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          onFocus={handleInputFocus}
+          placeholder={placeholder}
+          className="border-gray-200 pr-10"
+        />
+        <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+          {isLoading || isGeocoding ? (
+            <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
+          ) : (
+            <MapPin className="h-4 w-4 text-gray-400" />
+          )}
         </div>
+      </div>
+
+      {showSuggestions && suggestions.length > 0 && (
+        <Card 
+          ref={suggestionsRef}
+          className="absolute z-50 w-full mt-1 max-h-60 overflow-y-auto bg-white border border-gray-200 shadow-lg"
+        >
+          <div className="p-1">
+            {suggestions.map((city) => (
+              <Button
+                key={city.id}
+                variant="ghost"
+                className="w-full justify-start text-left h-auto p-3 hover:bg-gray-50"
+                onClick={() => handleSuggestionClick(city)}
+              >
+                <div className="flex items-center space-x-3">
+                  <MapPin className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                  <div>
+                    <div className="font-medium text-gray-900">{city.name}</div>
+                    <div className="text-sm text-gray-500">{city.state} ({city.stateCode})</div>
+                  </div>
+                </div>
+              </Button>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {showSuggestions && suggestions.length === 0 && !isLoading && inputValue.length >= 2 && (
+        <Card className="absolute z-50 w-full mt-1 bg-white border border-gray-200 shadow-lg">
+          <div className="p-4 text-center text-gray-500">
+            Nenhuma cidade encontrada
+          </div>
+        </Card>
       )}
     </div>
   );

@@ -7,25 +7,29 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Globe, Rocket, Clock } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Globe, Rocket, Clock, CheckCircle, Zap } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const AstronomicalDistance = () => {
-  const [selectedOrigin, setSelectedOrigin] = useState("earth");
-  const [selectedDestination, setSelectedDestination] = useState("moon");
+  const [selectedOrigin, setSelectedOrigin] = useState("");
+  const [selectedDestination, setSelectedDestination] = useState("");
   const [calculated, setCalculated] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const { toast } = useToast();
 
   const celestialBodies = {
-    earth: { name: "Terra", avgDistance: 0 },
-    moon: { name: "Lua", avgDistance: 384400 },
-    mars: { name: "Marte", avgDistance: 225000000 },
-    venus: { name: "Vênus", avgDistance: 108000000 },
-    jupiter: { name: "Júpiter", avgDistance: 778000000 },
-    saturn: { name: "Saturno", avgDistance: 1400000000 },
-    sun: { name: "Sol", avgDistance: 150000000 },
-    mercury: { name: "Mercúrio", avgDistance: 77000000 },
-    uranus: { name: "Urano", avgDistance: 2900000000 },
-    neptune: { name: "Netuno", avgDistance: 4500000000 }
+    earth: { name: "Terra", avgDistance: 0, icon: "🌍", color: "text-blue-600" },
+    moon: { name: "Lua", avgDistance: 384400, icon: "🌙", color: "text-gray-400" },
+    mars: { name: "Marte", avgDistance: 225000000, icon: "🔴", color: "text-red-600" },
+    venus: { name: "Vênus", avgDistance: 108000000, icon: "💛", color: "text-yellow-500" },
+    jupiter: { name: "Júpiter", avgDistance: 778000000, icon: "🟠", color: "text-orange-600" },
+    saturn: { name: "Saturno", avgDistance: 1400000000, icon: "🪐", color: "text-yellow-700" },
+    sun: { name: "Sol", avgDistance: 150000000, icon: "☀️", color: "text-yellow-400" },
+    mercury: { name: "Mercúrio", avgDistance: 77000000, icon: "⚫", color: "text-gray-600" },
+    uranus: { name: "Urano", avgDistance: 2900000000, icon: "🔵", color: "text-cyan-500" },
+    neptune: { name: "Netuno", avgDistance: 4500000000, icon: "🔷", color: "text-blue-800" }
   };
 
   const spacecraftSpeeds = {
@@ -35,13 +39,44 @@ const AstronomicalDistance = () => {
     parker: { name: "Parker Solar Probe", speed: 200000, description: "Sonda solar mais rápida (no periélio)" }
   };
 
-  const calculateDistance = () => {
-    const origin = celestialBodies[selectedOrigin as keyof typeof celestialBodies];
-    const destination = celestialBodies[selectedDestination as keyof typeof celestialBodies];
-    
-    if (selectedOrigin !== selectedDestination) {
-      setCalculated(true);
+  const calculateDistance = async () => {
+    if (!selectedOrigin || !selectedDestination) {
+      toast({
+        title: "Seleção incompleta",
+        description: "Por favor, selecione origem e destino.",
+        variant: "destructive"
+      });
+      return;
     }
+
+    if (selectedOrigin === selectedDestination) {
+      toast({
+        title: "Mesma localização",
+        description: "Origem e destino não podem ser iguais.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsAnimating(true);
+    setShowSuccess(false);
+    setCalculated(false);
+
+    // Animação do foguete (3 segundos)
+    setTimeout(() => {
+      setIsAnimating(false);
+      setCalculated(true);
+      setShowSuccess(true);
+      
+      const destName = celestialBodies[selectedDestination as keyof typeof celestialBodies].name;
+      toast({
+        title: "🚀 Viagem Concluída!",
+        description: `Você chegou com sucesso em ${destName}!`,
+      });
+
+      // Remove mensagem de sucesso após 3 segundos
+      setTimeout(() => setShowSuccess(false), 3000);
+    }, 3000);
   };
 
   const getDistance = () => {
@@ -101,45 +136,107 @@ const AstronomicalDistance = () => {
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <Label className="text-base font-medium text-gray-700">Origem</Label>
-                <RadioGroup value={selectedOrigin} onValueChange={setSelectedOrigin} className="mt-2">
-                  {Object.entries(celestialBodies).map(([key, body]) => (
-                    <div key={key} className="flex items-center space-x-2">
-                      <RadioGroupItem value={key} id={`origin-${key}`} />
-                      <Label htmlFor={`origin-${key}`} className="cursor-pointer text-gray-700">
-                        {body.name}
-                      </Label>
-                    </div>
-                  ))}
-                </RadioGroup>
+                <Label className="text-base font-medium text-gray-700 mb-3 block">Origem</Label>
+                <Select value={selectedOrigin} onValueChange={setSelectedOrigin}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Selecione a origem da viagem" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(celestialBodies).map(([key, body]) => (
+                      <SelectItem key={key} value={key}>
+                        <div className="flex items-center space-x-3">
+                          <span className="text-xl">{body.icon}</span>
+                          <span className={`font-medium ${body.color}`}>{body.name}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
-              <div>
-                <Label className="text-base font-medium text-gray-700">Destino</Label>
-                <RadioGroup value={selectedDestination} onValueChange={setSelectedDestination} className="mt-2">
-                  {Object.entries(celestialBodies).map(([key, body]) => (
-                    <div key={key} className="flex items-center space-x-2">
-                      <RadioGroupItem value={key} id={`dest-${key}`} />
-                      <Label htmlFor={`dest-${key}`} className="cursor-pointer text-gray-700">
-                        {body.name}
-                      </Label>
+              {/* Animação do foguete */}
+              {(selectedOrigin && selectedDestination) && (
+                <div className="relative py-8">
+                  <div className="flex items-center justify-between">
+                    <div className="text-center">
+                      <div className="text-3xl mb-2">
+                        {celestialBodies[selectedOrigin as keyof typeof celestialBodies]?.icon}
+                      </div>
+                      <span className="text-sm text-gray-600">
+                        {celestialBodies[selectedOrigin as keyof typeof celestialBodies]?.name}
+                      </span>
                     </div>
-                  ))}
-                </RadioGroup>
+                    
+                    <div className="flex-1 relative mx-4">
+                      <div className="h-0.5 bg-gray-300 w-full"></div>
+                      {isAnimating && (
+                        <div className="absolute top-1/2 transform -translate-y-1/2 animate-[slide-in-right_3s_ease-in-out]">
+                          <Rocket className="h-6 w-6 text-blue-600 animate-pulse" />
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="text-center">
+                      <div className="text-3xl mb-2">
+                        {celestialBodies[selectedDestination as keyof typeof celestialBodies]?.icon}
+                      </div>
+                      <span className="text-sm text-gray-600">
+                        {celestialBodies[selectedDestination as keyof typeof celestialBodies]?.name}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {showSuccess && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="bg-green-100 border border-green-300 rounded-lg p-4 animate-fade-in">
+                        <div className="flex items-center space-x-2 text-green-800">
+                          <CheckCircle className="h-5 w-5" />
+                          <span className="font-medium">Chegou ao destino!</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <div>
+                <Label className="text-base font-medium text-gray-700 mb-3 block">Destino</Label>
+                <Select value={selectedDestination} onValueChange={setSelectedDestination}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Selecione o destino da viagem" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(celestialBodies).map(([key, body]) => (
+                      <SelectItem key={key} value={key}>
+                        <div className="flex items-center space-x-3">
+                          <span className="text-xl">{body.icon}</span>
+                          <span className={`font-medium ${body.color}`}>{body.name}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <Button
                 onClick={calculateDistance}
                 className="w-full bg-cyan-600 hover:bg-cyan-700 text-white"
-                disabled={selectedOrigin === selectedDestination}
+                disabled={!selectedOrigin || !selectedDestination || selectedOrigin === selectedDestination || isAnimating}
               >
-                Calcular Distância e Tempo de Viagem
+                {isAnimating ? (
+                  <>
+                    <Zap className="mr-2 h-4 w-4 animate-spin" />
+                    Viajando pelo espaço...
+                  </>
+                ) : (
+                  "Iniciar Viagem Espacial"
+                )}
               </Button>
             </CardContent>
           </Card>
 
           {calculated && (
-            <Card className="border border-gray-200">
+            <Card className="border border-gray-200 animate-fade-in">
               <CardHeader>
                 <CardTitle className="text-xl text-center text-gray-800">Resultados da Viagem</CardTitle>
                 <p className="text-sm text-gray-600 text-center">
