@@ -9,7 +9,7 @@ import QuickFavorites from "@/components/QuickFavorites";
 import AdSpace from "@/components/AdSpace";
 import ProductShowcase from "@/components/ProductShowcase";
 import PWAInstaller from "@/components/PWAInstaller";
-import { allEnhancedCategories, getGroupedCategories } from "@/data/enhancedCategoriesData";
+import { unifiedCategories as allEnhancedCategories, getGroupedCategories } from "@/data/unifiedCategoriesData";
 
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
