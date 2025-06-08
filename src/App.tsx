@@ -24,6 +24,7 @@ import ConcreteCalculator from "./pages/ConcreteCalculator";
 import ConstructionAreaCalculator from "./pages/ConstructionAreaCalculator";
 import StructuralCalculator from "./pages/StructuralCalculator";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminLogin from "./pages/AdminLogin";
 import NotFound from "./pages/NotFound";
 import BirthChart from "./pages/BirthChart";
 import AstronomicalDistance from "./pages/AstronomicalDistance";
@@ -146,6 +147,7 @@ const App = () => (
             <Route path="/nutrition-calculator" element={<NutritionCalculator />} />
             
             {/* Administração */}
+            <Route path="/admin-login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -139,22 +139,22 @@ const EnhancedHeader = () => {
             <NavigationMenuList>
               {megaMenuCategories.slice(0, 4).map((category) => (
                 <NavigationMenuItem key={category.key}>
-                  <NavigationMenuTrigger className="flex items-center space-x-2">
+                  <NavigationMenuTrigger className="flex items-center space-x-2 relative group">
                     <span>{category.title}</span>
                     {category.premium && <Star className="h-3 w-3 text-yellow-500" />}
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="grid gap-3 p-6 w-80">
+                  <NavigationMenuContent className="absolute top-full left-0 mt-2 z-[100]">
+                    <div className="grid gap-3 p-6 w-80 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
                       <div className="border-b pb-3 mb-3">
                         <h3 className="font-semibold text-gray-900 dark:text-gray-100">{category.title}</h3>
                         <p className="text-sm text-gray-500 dark:text-gray-400">{category.description}</p>
                       </div>
-                      <div className="grid gap-2">
-                        {groupedCategories[category.key]?.slice(0, 6).map((item) => (
+                      <div className="grid gap-2 max-h-96 overflow-y-auto">
+                        {groupedCategories[category.key]?.map((item) => (
                           <NavigationMenuLink key={item.path} asChild>
                             <Link
                               to={item.path}
-                              className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                              className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                             >
                               <item.icon className="h-4 w-4 text-gray-400" />
                               <div className="flex-1">
@@ -166,14 +166,6 @@ const EnhancedHeader = () => {
                           </NavigationMenuLink>
                         ))}
                       </div>
-                      {groupedCategories[category.key]?.length > 6 && (
-                        <Link
-                          to={`/category/${category.key}`}
-                          className="text-center py-2 text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 border-t pt-3"
-                        >
-                          Ver todos ({groupedCategories[category.key]?.length})
-                        </Link>
-                      )}
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -181,8 +173,8 @@ const EnhancedHeader = () => {
               
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Mais</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="grid grid-cols-2 gap-6 p-6 w-96">
+                <NavigationMenuContent className="absolute top-full left-0 mt-2 z-[100]">
+                  <div className="grid grid-cols-2 gap-6 p-6 w-96 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
                     {megaMenuCategories.slice(4).map((category) => (
                       <div key={category.key} className="space-y-2">
                         <h4 className="font-semibold text-gray-900 dark:text-gray-100 flex items-center space-x-2">
@@ -221,7 +213,7 @@ const EnhancedHeader = () => {
             </Button>
             
             <Link
-              to="/admin"
+              to="/admin-login"
               className="hidden lg:flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-lg transition-colors duration-200 text-sm"
             >
               <Settings className="h-4 w-4" />
@@ -277,7 +269,7 @@ const EnhancedHeader = () => {
                       <span>Perfil</span>
                     </Button>
                     <Link
-                      to="/admin"
+                      to="/admin-login"
                       className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
                     >
                       <Settings className="h-4 w-4" />
