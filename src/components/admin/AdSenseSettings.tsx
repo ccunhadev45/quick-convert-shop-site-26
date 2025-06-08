@@ -15,12 +15,14 @@ interface AdSenseConfig {
     middle: boolean;
     sidebar: boolean;
     footer: boolean;
+    categoryTop: boolean;
   };
   adUnits: {
     top: string;
     middle: string;
     sidebar: string;
     footer: string;
+    categoryTop: string;
   };
 }
 
@@ -31,13 +33,15 @@ const AdSenseSettings = () => {
       top: true,
       middle: true,
       sidebar: false,
-      footer: true
+      footer: true,
+      categoryTop: true
     },
     adUnits: {
       top: '',
       middle: '',
       sidebar: '',
-      footer: ''
+      footer: '',
+      categoryTop: ''
     }
   });
 
@@ -73,9 +77,17 @@ const AdSenseSettings = () => {
     });
   };
 
+  const positionLabels = {
+    top: 'Topo da Página',
+    middle: 'Meio da Página',
+    sidebar: 'Barra Lateral',
+    footer: 'Rodapé',
+    categoryTop: 'Topo das Categorias'
+  };
+
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Configurações do AdSense</h2>
+      <h2 className="text-2xl font-bold text-foreground">Configurações do AdSense</h2>
       
       <Card>
         <CardHeader>
@@ -103,10 +115,7 @@ const AdSenseSettings = () => {
             <div key={position} className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label htmlFor={position} className="capitalize">
-                  {position === 'top' && 'Topo da Página'}
-                  {position === 'middle' && 'Meio da Página'}
-                  {position === 'sidebar' && 'Barra Lateral'}
-                  {position === 'footer' && 'Rodapé'}
+                  {positionLabels[position as keyof typeof positionLabels]}
                 </Label>
                 <Switch
                   id={position}
@@ -137,9 +146,9 @@ const AdSenseSettings = () => {
           <CardTitle>Informações Importantes</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="bg-blue-50 p-4 rounded-lg">
-            <h4 className="font-semibold text-blue-900 mb-2">Como configurar:</h4>
-            <ol className="text-sm text-blue-800 space-y-1">
+          <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg">
+            <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">Como configurar:</h4>
+            <ol className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
               <li>1. Acesse sua conta do Google AdSense</li>
               <li>2. Crie ad units para cada posição desejada</li>
               <li>3. Copie o código HTML gerado</li>

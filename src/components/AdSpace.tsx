@@ -1,6 +1,6 @@
 
 interface AdSpaceProps {
-  position: 'top' | 'middle' | 'sidebar' | 'footer';
+  position: 'top' | 'middle' | 'sidebar' | 'footer' | 'category-top';
   width?: string;
   height?: string;
 }
@@ -16,6 +16,8 @@ const AdSpace = ({ position, width, height }: AdSpaceProps) => {
         return { width: '300px', height: '600px' };
       case 'footer':
         return { width: '100%', height: '90px' };
+      case 'category-top':
+        return { width: '100%', height: '120px' };
       default:
         return { width: '300px', height: '250px' };
     }
@@ -28,10 +30,10 @@ const AdSpace = ({ position, width, height }: AdSpaceProps) => {
   return (
     <div className="flex justify-center my-8">
       <div 
-        className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center"
+        className="bg-muted border-2 border-dashed border-border rounded-lg flex items-center justify-center"
         style={{ width: adWidth, height: adHeight }}
       >
-        <div className="text-center text-gray-500">
+        <div className="text-center text-muted-foreground">
           <p className="text-sm font-medium">Espaço para AdSense</p>
           <p className="text-xs">{adWidth} x {adHeight}</p>
           <p className="text-xs mt-1">Posição: {position}</p>

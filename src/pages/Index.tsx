@@ -30,8 +30,121 @@ const Index = () => {
     return getGroupedCategories();
   }, []);
 
+  const filteredGroupedCategories = useMemo(() => {
+    if (!searchTerm) return groupedCategories;
+    
+    const filtered: { [key: string]: any[] } = {};
+    Object.keys(groupedCategories).forEach(key => {
+      const categoryCards = groupedCategories[key]?.filter(category => 
+        filteredCategories.some(filtered => filtered.path === category.path)
+      ) || [];
+      if (categoryCards.length > 0) {
+        filtered[key] = categoryCards;
+      }
+    });
+    return filtered;
+  }, [searchTerm, groupedCategories, filteredCategories]);
+
+  const categoryData = [
+    {
+      key: "converter",
+      title: "Conversores de Unidades",
+      description: "Converta entre diferentes unidades de medida"
+    },
+    {
+      key: "student",
+      title: "Ferramentas para Estudantes",
+      description: "Calculadoras acadêmicas e educacionais"
+    },
+    {
+      key: "gaming",
+      title: "Gaming & E-sports",
+      description: "Performance, FPS, moedas virtuais e estatísticas"
+    },
+    {
+      key: "travel",
+      title: "Ferramentas de Viagem",
+      description: "Fusos horários, moedas, bagagem e dicas culturais"
+    },
+    {
+      key: "content",
+      title: "Criadores de Conteúdo",
+      description: "Resoluções, upload, formatos e engajamento"
+    },
+    {
+      key: "culinary",
+      title: "Culinária & Gastronomia",
+      description: "Receitas, substituições, fornos e nutrição"
+    },
+    {
+      key: "scientific",
+      title: "Calculadoras Científicas",
+      description: "Física, química, matemática e conversões de base numérica"
+    },
+    {
+      key: "programming",
+      title: "Ferramentas de Programação",
+      description: "Encoding, cores e outras ferramentas para desenvolvedores"
+    },
+    {
+      key: "productivity",
+      title: "Ferramentas de Produtividade",
+      description: "Calculadoras práticas para o dia a dia"
+    },
+    {
+      key: "financial",
+      title: "Conversores Financeiros",
+      description: "Moedas, criptomoedas e índices financeiros básicos"
+    },
+    {
+      key: "investment",
+      title: "Investimentos Avançados ⭐",
+      description: "Ferramentas premium para investidores e traders"
+    },
+    {
+      key: "health",
+      title: "Calculadoras de Saúde",
+      description: "Ferramentas básicas para cálculos de saúde"
+    },
+    {
+      key: "health-pro",
+      title: "Saúde Profissional ⭐",
+      description: "Ferramentas avançadas para profissionais médicos"
+    },
+    {
+      key: "engineering",
+      title: "Calculadoras para Arquitetura e Engenharia",
+      description: "Ferramentas especializadas para profissionais da construção"
+    },
+    {
+      key: "fashion",
+      title: "Moda & Beleza",
+      description: "Tamanhos, cores, medidas e conversões de estilo"
+    },
+    {
+      key: "pets",
+      title: "Pets & Veterinária",
+      description: "Cuidados com animais e cálculos veterinários"
+    },
+    {
+      key: "sustainability",
+      title: "Sustentabilidade",
+      description: "Pegada de carbono, energia e reciclagem"
+    },
+    {
+      key: "astrology",
+      title: "Astrologia",
+      description: "Ferramentas para análise astrológica e mapa astral"
+    },
+    {
+      key: "astronomical",
+      title: "Astronomia",
+      description: "Calculadoras para distâncias espaciais e tempo de viagem"
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-background">
       <EnhancedHeader />
       
       <AdSpace position="top" />
@@ -48,142 +161,29 @@ const Index = () => {
 
         <QuickFavorites />
 
-        {/* Conversores Básicos */}
-        <CategorySection 
-          title="Conversores de Unidades"
-          description="Converta entre diferentes unidades de medida"
-          cards={groupedCategories.converter || []}
-        />
+        {/* Renderizar categorias dinamicamente */}
+        {categoryData.map((category, index) => {
+          const categoryCards = filteredGroupedCategories[category.key] || [];
+          
+          if (categoryCards.length === 0 && searchTerm) return null;
 
-        {/* Ferramentas para Estudantes */}
-        <CategorySection 
-          title="Ferramentas para Estudantes"
-          description="Calculadoras acadêmicas e educacionais"
-          cards={groupedCategories.student || []}
-        />
+          return (
+            <div key={category.key}>
+              {/* Banner do AdSense antes de cada categoria */}
+              <AdSpace position="category-top" />
+              
+              <CategorySection 
+                title={category.title}
+                description={category.description}
+                cards={categoryCards}
+              />
+            </div>
+          );
+        })}
 
-        {/* Gaming */}
-        <CategorySection 
-          title="Gaming & E-sports"
-          description="Performance, FPS, moedas virtuais e estatísticas"
-          cards={groupedCategories.gaming || []}
-        />
-
-        {/* Viagem */}
-        <CategorySection 
-          title="Ferramentas de Viagem"
-          description="Fusos horários, moedas, bagagem e dicas culturais"
-          cards={groupedCategories.travel || []}
-        />
-
-        {/* Criadores de Conteúdo */}
-        <CategorySection 
-          title="Criadores de Conteúdo"
-          description="Resoluções, upload, formatos e engajamento"
-          cards={groupedCategories.content || []}
-        />
-
-        {/* Culinária */}
-        <CategorySection 
-          title="Culinária & Gastronomia"
-          description="Receitas, substituições, fornos e nutrição"
-          cards={groupedCategories.culinary || []}
-        />
-
-        {/* Científicas */}
-        <CategorySection 
-          title="Calculadoras Científicas"
-          description="Física, química, matemática e conversões de base numérica"
-          cards={groupedCategories.scientific || []}
-        />
-
-        {/* Programação */}
-        <CategorySection 
-          title="Ferramentas de Programação"
-          description="Encoding, cores e outras ferramentas para desenvolvedores"
-          cards={groupedCategories.programming || []}
-        />
-
-        {/* Produtividade */}
-        <CategorySection 
-          title="Ferramentas de Produtividade"
-          description="Calculadoras práticas para o dia a dia"
-          cards={groupedCategories.productivity || []}
-        />
-
-        {/* Financeiro */}
-        <CategorySection 
-          title="Conversores Financeiros"
-          description="Moedas, criptomoedas e índices financeiros básicos"
-          cards={groupedCategories.financial || []}
-        />
-
-        {/* Investimentos Premium */}
-        <CategorySection 
-          title="Investimentos Avançados ⭐"
-          description="Ferramentas premium para investidores e traders"
-          cards={groupedCategories.investment || []}
-        />
-
-        {/* Saúde Básica */}
-        <CategorySection 
-          title="Calculadoras de Saúde"
-          description="Ferramentas básicas para cálculos de saúde"
-          cards={groupedCategories.health || []}
-        />
-
-        {/* Saúde Profissional Premium */}
-        <CategorySection 
-          title="Saúde Profissional ⭐"
-          description="Ferramentas avançadas para profissionais médicos"
-          cards={groupedCategories["health-pro"] || []}
-        />
-
-        {/* Engenharia */}
-        <CategorySection 
-          title="Calculadoras para Arquitetura e Engenharia"
-          description="Ferramentas especializadas para profissionais da construção"
-          cards={groupedCategories.engineering || []}
-        />
-
-        {/* Moda */}
-        <CategorySection 
-          title="Moda & Beleza"
-          description="Tamanhos, cores, medidas e conversões de estilo"
-          cards={groupedCategories.fashion || []}
-        />
-
-        {/* Pets */}
-        <CategorySection 
-          title="Pets & Veterinária"
-          description="Cuidados com animais e cálculos veterinários"
-          cards={groupedCategories.pets || []}
-        />
-
-        {/* Sustentabilidade */}
-        <CategorySection 
-          title="Sustentabilidade"
-          description="Pegada de carbono, energia e reciclagem"
-          cards={groupedCategories.sustainability || []}
-        />
-
-        {/* Astrologia */}
-        <CategorySection 
-          title="Astrologia"
-          description="Ferramentas para análise astrológica e mapa astral"
-          cards={groupedCategories.astrology || []}
-        />
-
-        {/* Astronomia */}
-        <CategorySection 
-          title="Astronomia"
-          description="Calculadoras para distâncias espaciais e tempo de viagem"
-          cards={groupedCategories.astronomical || []}
-        />
-
-        {filteredCategories.length === 0 && (
+        {filteredCategories.length === 0 && searchTerm && (
           <div className="text-center py-12">
-            <p className="text-gray-500 dark:text-gray-400 text-lg">
+            <p className="text-muted-foreground text-lg">
               Nenhum resultado encontrado para "{searchTerm}"
             </p>
           </div>
