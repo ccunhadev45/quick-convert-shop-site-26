@@ -1,4 +1,5 @@
 
+
 import * as Astronomy from 'astronomy-engine';
 
 export interface PlanetPosition {
@@ -47,37 +48,52 @@ export const calculateAstrologyChart = (
   longitude: number
 ): AstrologyChart => {
   try {
-    // Calcular posições planetárias usando astronomy-engine
-    const observer = Astronomy.MakeObserver(latitude, longitude, 0);
+    console.log('Calculando mapa astral para:', { date, latitude, longitude });
     
-    // Sol
+    // Criar observador usando a API correta
+    const observer = new Astronomy.Observer(latitude, longitude, 0);
+    
+    // Sol - usando SunPosition que retorna coordenadas eclípticas
     const sunPos = Astronomy.SunPosition(date);
     const sunLon = sunPos.elon;
     const sunSign = getZodiacSign(sunLon);
     
-    // Lua
+    // Lua - usando GeoMoon que retorna coordenadas geográficas
     const moonPos = Astronomy.GeoMoon(date);
-    const moonLon = moonPos.lon;
-    const moonSign = getZodiacSign(moonLon);
+    // Converter para longitude eclíptica (simplificado)
+    const moonLon = Math.atan2(moonPos.y, moonPos.x) * 180 / Math.PI;
+    const moonLonPositive = moonLon < 0 ? moonLon + 360 : moonLon;
+    const moonSign = getZodiacSign(moonLonPositive);
     
-    // Mercúrio
+    // Mercúrio - usando HelioVector para posição heliocêntrica
     const mercuryPos = Astronomy.HelioVector(Astronomy.Body.Mercury, date);
     const mercuryLon = Math.atan2(mercuryPos.y, mercuryPos.x) * 180 / Math.PI;
-    const mercurySign = getZodiacSign(mercuryLon < 0 ? mercuryLon + 360 : mercuryLon);
+    const mercuryLonPositive = mercuryLon < 0 ? mercuryLon + 360 : mercuryLon;
+    const mercurySign = getZodiacSign(mercuryLonPositive);
     
     // Vênus
     const venusPos = Astronomy.HelioVector(Astronomy.Body.Venus, date);
     const venusLon = Math.atan2(venusPos.y, venusPos.x) * 180 / Math.PI;
-    const venusSign = getZodiacSign(venusLon < 0 ? venusLon + 360 : venusLon);
+    const venusLonPositive = venusLon < 0 ? venusLon + 360 : venusLon;
+    const venusSign = getZodiacSign(venusLonPositive);
     
     // Marte
     const marsPos = Astronomy.HelioVector(Astronomy.Body.Mars, date);
     const marsLon = Math.atan2(marsPos.y, marsPos.x) * 180 / Math.PI;
-    const marsSign = getZodiacSign(marsLon < 0 ? marsLon + 360 : marsLon);
+    const marsLonPositive = marsLon < 0 ? marsLon + 360 : marsLon;
+    const marsSign = getZodiacSign(marsLonPositive);
     
-    // Ascendente (simplificado)
+    // Ascendente (simplificado - baseado no Sol e hora local)
     const ascendantLon = (sunLon + 90) % 360;
     const ascendantSign = getZodiacSign(ascendantLon);
+
+    console.log('Cálculos concluídos:', {
+      sunLon,
+      moonLonPositive,
+      mercuryLonPositive,
+      venusLonPositive,
+      marsLonPositive
+    });
 
     return {
       sun: {
@@ -87,7 +103,7 @@ export const calculateAstrologyChart = (
       },
       moon: {
         sign: moonSign.name,
-        degree: getDegreeInSign(moonLon),
+        degree: getDegreeInSign(moonLonPositive),
         symbol: moonSign.icon,
       },
       ascendant: {
@@ -97,17 +113,17 @@ export const calculateAstrologyChart = (
       },
       mercury: {
         sign: mercurySign.name,
-        degree: getDegreeInSign(mercuryLon < 0 ? mercuryLon + 360 : mercuryLon),
+        degree: getDegreeInSign(mercuryLonPositive),
         symbol: mercurySign.icon,
       },
       venus: {
         sign: venusSign.name,
-        degree: getDegreeInSign(venusLon < 0 ? venusLon + 360 : venusLon),
+        degree: getDegreeInSign(venusLonPositive),
         symbol: venusSign.icon,
       },
       mars: {
         sign: marsSign.name,
-        degree: getDegreeInSign(marsLon < 0 ? marsLon + 360 : marsLon),
+        degree: getDegreeInSign(marsLonPositive),
         symbol: marsSign.icon,
       }
     };
@@ -124,3 +140,4 @@ export const calculateAstrologyChart = (
     };
   }
 };
+
