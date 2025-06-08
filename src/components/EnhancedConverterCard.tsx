@@ -12,6 +12,7 @@ interface EnhancedConverterCardProps {
   icon: LucideIcon;
   path: string;
   color: string;
+  premium?: boolean;
   conversionExample?: {
     from: string;
     to: string;
@@ -25,6 +26,7 @@ const EnhancedConverterCard = ({
   icon: Icon, 
   path, 
   color, 
+  premium,
   conversionExample 
 }: EnhancedConverterCardProps) => {
   const colorClasses = {
