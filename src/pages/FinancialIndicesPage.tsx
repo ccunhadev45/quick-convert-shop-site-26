@@ -1,25 +1,30 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import AdSpace from "@/components/AdSpace";
 import ProductShowcase from "@/components/ProductShowcase";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Copy, TrendingUp, TrendingDown, Calendar } from "lucide-react";
+import { Copy, TrendingUp, TrendingDown, Calendar, RefreshCw } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { financialDataService } from "@/services/financialDataService";
 
 const FinancialIndicesPage = () => {
-  // Simulação de dados financeiros - em produção, usar API real
-  const financialData = {
-    selic: { value: 11.75, change: 0.25, lastUpdate: "14/12/2024" },
-    cdi: { value: 11.65, change: 0.20, lastUpdate: "14/12/2024" },
-    ipca: { value: 4.87, change: -0.13, lastUpdate: "Nov/2024" },
-    igpm: { value: 3.92, change: 0.45, lastUpdate: "Nov/2024" },
-    dolar: { value: 5.20, change: 0.15, lastUpdate: "14/12/2024" },
-    euro: { value: 5.65, change: -0.08, lastUpdate: "14/12/2024" },
-    bovespa: { value: 125480, change: 1.25, lastUpdate: "14/12/2024" },
-    bitcoin: { value: 42500, change: 2.5, lastUpdate: "14/12/2024" }
-  };
+  const [lastRefresh, setLastRefresh] = useState<string>("");
+
+  const { data: financialData, isLoading, refetch } = useQuery({
+    queryKey: ['financial-data'],
+    queryFn: () => financialDataService.getAllFinancialData(),
+    refetchInterval: 5 * 60 * 1000, // Atualiza a cada 5 minutos
+    staleTime: 2 * 60 * 1000, // Considera dados frescos por 2 minutos
+  });
+
+  useEffect(() => {
+    if (financialData) {
+      setLastRefresh(new Date().toLocaleTimeString('pt-BR'));
+    }
+  }, [financialData]);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -44,7 +49,29 @@ const FinancialIndicesPage = () => {
     }
   };
 
-  const indices = [
+  const handleRefresh = () => {
+    refetch();
+    toast({
+      title: "Atualizando...",
+      description: "Buscando dados mais recentes",
+    });
+  };
+
+  if (isLoading && !financialData) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <div className="container mx-auto px-6 py-12">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Carregando dados financeiros...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const indices = financialData ? [
     {
       title: "Taxa Selic",
       description: "Taxa básica de juros da economia",
@@ -52,7 +79,8 @@ const FinancialIndicesPage = () => {
       change: financialData.selic.change,
       lastUpdate: financialData.selic.lastUpdate,
       type: "percentage",
-      color: "blue"
+      color: "blue",
+      source: financialData.selic.source
     },
     {
       title: "CDI",
@@ -61,7 +89,8 @@ const FinancialIndicesPage = () => {
       change: financialData.cdi.change,
       lastUpdate: financialData.cdi.lastUpdate,
       type: "percentage",
-      color: "green"
+      color: "green",
+      source: financialData.cdi.source
     },
     {
       title: "IPCA",
@@ -70,43 +99,38 @@ const FinancialIndicesPage = () => {
       change: financialData.ipca.change,
       lastUpdate: financialData.ipca.lastUpdate,
       type: "percentage",
-      color: "orange"
-    },
-    {
-      title: "IGP-M",
-      description: "Índice Geral de Preços do Mercado",
-      value: financialData.igpm.value,
-      change: financialData.igpm.change,
-      lastUpdate: financialData.igpm.lastUpdate,
-      type: "percentage",
-      color: "purple"
+      color: "orange",
+      source: financialData.ipca.source
     },
     {
       title: "Dólar",
       description: "USD/BRL",
-      value: financialData.dolar.value,
-      change: financialData.dolar.change,
-      lastUpdate: financialData.dolar.lastUpdate,
+      value: financialData.usdBrl.value,
+      change: financialData.usdBrl.change,
+      lastUpdate: financialData.usdBrl.lastUpdate,
       type: "currency",
-      color: "emerald"
+      color: "emerald",
+      source: financialData.usdBrl.source
     },
     {
       title: "Euro",
       description: "EUR/BRL",
-      value: financialData.euro.value,
-      change: financialData.euro.change,
-      lastUpdate: financialData.euro.lastUpdate,
+      value: financialData.eurBrl.value,
+      change: financialData.eurBrl.change,
+      lastUpdate: financialData.eurBrl.lastUpdate,
       type: "currency",
-      color: "cyan"
+      color: "cyan",
+      source: financialData.eurBrl.source
     },
     {
       title: "Ibovespa",
       description: "Índice da Bolsa de Valores de São Paulo",
-      value: financialData.bovespa.value,
-      change: financialData.bovespa.change,
-      lastUpdate: financialData.bovespa.lastUpdate,
+      value: financialData.ibovespa.value,
+      change: financialData.ibovespa.change,
+      lastUpdate: financialData.ibovespa.lastUpdate,
       type: "points",
-      color: "red"
+      color: "red",
+      source: financialData.ibovespa.source
     },
     {
       title: "Bitcoin",
@@ -115,9 +139,10 @@ const FinancialIndicesPage = () => {
       change: financialData.bitcoin.change,
       lastUpdate: financialData.bitcoin.lastUpdate,
       type: "dollar",
-      color: "amber"
+      color: "amber",
+      source: financialData.bitcoin.source
     }
-  ];
+  ] : [];
 
   const colorClasses = {
     blue: "bg-blue-50 border-blue-200",
@@ -137,13 +162,31 @@ const FinancialIndicesPage = () => {
       <AdSpace position="top" />
       
       <main className="container mx-auto px-6 py-12">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Índices Financeiros
           </h1>
           <p className="text-lg text-gray-600">
-            Acompanhe os principais indicadores econômicos e financeiros
+            Acompanhe os principais indicadores econômicos e financeiros em tempo real
           </p>
+          
+          <div className="flex items-center justify-center gap-4 mt-4">
+            <Button 
+              onClick={handleRefresh} 
+              variant="outline" 
+              size="sm"
+              disabled={isLoading}
+              className="flex items-center gap-2"
+            >
+              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+              Atualizar
+            </Button>
+            {lastRefresh && (
+              <span className="text-sm text-gray-500">
+                Última atualização: {lastRefresh}
+              </span>
+            )}
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -180,16 +223,21 @@ const FinancialIndicesPage = () => {
                       <span className={`text-sm font-semibold ${
                         index.change >= 0 ? 'text-green-600' : 'text-red-600'
                       }`}>
-                        {index.change > 0 ? '+' : ''}{index.change.toFixed(2)}
-                        {index.type === 'percentage' || index.type === 'points' ? '%' : ''}
+                        {index.change > 0 ? '+' : ''}{index.change.toFixed(2)}%
                       </span>
                     </div>
                     
                     <div className="flex items-center gap-1 text-xs text-gray-500">
                       <Calendar className="h-3 w-3" />
-                      {index.lastUpdate}
+                      {typeof index.lastUpdate === 'string' ? index.lastUpdate.slice(0, 10) : index.lastUpdate}
                     </div>
                   </div>
+                  
+                  {index.source && (
+                    <p className="text-xs text-gray-400 mt-1">
+                      Fonte: {index.source}
+                    </p>
+                  )}
                 </div>
               </CardContent>
             </Card>

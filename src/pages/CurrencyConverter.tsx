@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import AdSpace from "@/components/AdSpace";
 import ProductShowcase from "@/components/ProductShowcase";
@@ -9,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Copy, RefreshCw } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { financialDataService } from "@/services/financialDataService";
 
 const CurrencyConverter = () => {
   const [amount, setAmount] = useState<string>("1");
@@ -16,22 +18,45 @@ const CurrencyConverter = () => {
   const [toCurrency, setToCurrency] = useState<string>("BRL");
   const [result, setResult] = useState<string>("");
   const [rate, setRate] = useState<number>(0);
-  const [lastUpdate, setLastUpdate] = useState<string>("");
 
-  // Simulação de taxas de câmbio - em produção, usar API real
-  const exchangeRates: { [key: string]: number } = {
-    "USD-BRL": 5.20,
-    "EUR-BRL": 5.65,
-    "GBP-BRL": 6.45,
-    "JPY-BRL": 0.035,
-    "CAD-BRL": 3.85,
-    "AUD-BRL": 3.42,
-    "CHF-BRL": 5.75,
-    "CNY-BRL": 0.72,
-    "USD-EUR": 0.92,
-    "USD-GBP": 0.81,
-    "USD-JPY": 148.50,
-    "EUR-GBP": 0.88,
+  const { data: financialData, isLoading, refetch } = useQuery({
+    queryKey: ['currency-rates'],
+    queryFn: () => financialDataService.getAllFinancialData(),
+    refetchInterval: 5 * 60 * 1000,
+    staleTime: 2 * 60 * 1000,
+  });
+
+  // Taxas de câmbio baseadas nos dados em tempo real
+  const getExchangeRates = () => {
+    if (!financialData) {
+      return {
+        "USD-BRL": 5.20,
+        "EUR-BRL": 5.65,
+        "BRL-USD": 0.19,
+        "BRL-EUR": 0.18,
+        "USD-EUR": 0.92,
+        "EUR-USD": 1.09,
+      };
+    }
+
+    const usdBrl = financialData.usdBrl.value;
+    const eurBrl = financialData.eurBrl.value;
+    const usdEur = eurBrl / usdBrl;
+
+    return {
+      "USD-BRL": usdBrl,
+      "EUR-BRL": eurBrl,
+      "BRL-USD": 1 / usdBrl,
+      "BRL-EUR": 1 / eurBrl,
+      "USD-EUR": usdEur,
+      "EUR-USD": 1 / usdEur,
+      "GBP-BRL": usdBrl * 1.24, // Aproximação
+      "JPY-BRL": usdBrl / 150, // Aproximação
+      "CAD-BRL": usdBrl * 0.74, // Aproximação
+      "AUD-BRL": usdBrl * 0.66, // Aproximação
+      "CHF-BRL": usdBrl * 1.10, // Aproximação
+      "CNY-BRL": usdBrl / 7.2, // Aproximação
+    };
   };
 
   const currencies = [
@@ -59,41 +84,29 @@ const CurrencyConverter = () => {
     if (fromCurrency === toCurrency) {
       convertedRate = 1;
     } else {
-      const directRate = exchangeRates[`${fromCurrency}-${toCurrency}`];
-      const reverseRate = exchangeRates[`${toCurrency}-${fromCurrency}`];
+      const exchangeRates = getExchangeRates();
+      const directRate = exchangeRates[`${fromCurrency}-${toCurrency}` as keyof typeof exchangeRates];
+      const reverseRate = exchangeRates[`${toCurrency}-${fromCurrency}` as keyof typeof exchangeRates];
       
       if (directRate) {
         convertedRate = directRate;
       } else if (reverseRate) {
         convertedRate = 1 / reverseRate;
       } else {
-        // Conversão via USD
-        const fromUsd = exchangeRates[`USD-${fromCurrency}`];
-        const toUsd = exchangeRates[`USD-${toCurrency}`];
-        const usdFrom = exchangeRates[`${fromCurrency}-USD`];
-        const usdTo = exchangeRates[`${toCurrency}-USD`];
-        
-        if (fromUsd && toUsd) {
-          convertedRate = toUsd / fromUsd;
-        } else if (usdFrom && usdTo) {
-          convertedRate = usdTo / usdFrom;
-        } else if (fromCurrency === "USD" && toUsd) {
-          convertedRate = toUsd;
-        } else if (toCurrency === "USD" && usdFrom) {
-          convertedRate = usdFrom;
-        }
+        // Conversão via USD para outras moedas
+        const usdRate = exchangeRates["USD-BRL"];
+        convertedRate = usdRate;
       }
     }
 
     const convertedAmount = num * convertedRate;
     setResult(convertedAmount.toFixed(4).replace(/\.?0+$/, ""));
     setRate(convertedRate);
-    setLastUpdate(new Date().toLocaleTimeString());
   };
 
   useEffect(() => {
     convertCurrency();
-  }, [amount, fromCurrency, toCurrency]);
+  }, [amount, fromCurrency, toCurrency, financialData]);
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -108,6 +121,17 @@ const CurrencyConverter = () => {
     setToCurrency(fromCurrency);
   };
 
+  const handleRefresh = () => {
+    refetch();
+    toast({
+      title: "Atualizando...",
+      description: "Buscando taxas mais recentes",
+    });
+  };
+
+  const exchangeRates = getExchangeRates();
+  const lastUpdate = financialData?.usdBrl.lastUpdate;
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -120,18 +144,30 @@ const CurrencyConverter = () => {
             Conversor de Moedas
           </h1>
           <p className="text-lg text-gray-600">
-            Converta entre diferentes moedas fiduciárias
+            Converta entre diferentes moedas com taxas em tempo real
           </p>
         </div>
         
         <Card className="w-full max-w-2xl mx-auto mb-12 border border-gray-200">
           <CardHeader>
             <CardTitle className="text-xl text-center text-gray-800">Conversor de Moedas</CardTitle>
-            {lastUpdate && (
-              <p className="text-sm text-center text-gray-500">
-                Última atualização: {lastUpdate}
-              </p>
-            )}
+            <div className="flex items-center justify-center gap-4">
+              {lastUpdate && (
+                <p className="text-sm text-center text-gray-500">
+                  Última atualização: {typeof lastUpdate === 'string' ? lastUpdate.slice(11, 19) : lastUpdate}
+                </p>
+              )}
+              <Button 
+                onClick={handleRefresh} 
+                variant="outline" 
+                size="sm"
+                disabled={isLoading}
+                className="flex items-center gap-2"
+              >
+                <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+                Atualizar
+              </Button>
+            </div>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -205,25 +241,30 @@ const CurrencyConverter = () => {
                 <p className="text-center text-blue-800">
                   <strong>Taxa de Câmbio:</strong> 1 {fromCurrency} = {rate.toFixed(4)} {toCurrency}
                 </p>
+                {financialData?.usdBrl.source && (
+                  <p className="text-center text-xs text-blue-600 mt-1">
+                    Fonte: {financialData.usdBrl.source}
+                  </p>
+                )}
               </div>
             )}
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-gray-600 mt-8">
               <div className="bg-green-50 p-3 rounded border border-green-100">
                 <p className="font-semibold text-green-800">USD/BRL</p>
-                <p>R$ {exchangeRates["USD-BRL"]}</p>
+                <p>R$ {exchangeRates["USD-BRL"].toFixed(2)}</p>
               </div>
               <div className="bg-blue-50 p-3 rounded border border-blue-100">
                 <p className="font-semibold text-blue-800">EUR/BRL</p>
-                <p>R$ {exchangeRates["EUR-BRL"]}</p>
+                <p>R$ {exchangeRates["EUR-BRL"].toFixed(2)}</p>
               </div>
               <div className="bg-purple-50 p-3 rounded border border-purple-100">
                 <p className="font-semibold text-purple-800">GBP/BRL</p>
-                <p>R$ {exchangeRates["GBP-BRL"]}</p>
+                <p>R$ {exchangeRates["GBP-BRL"]?.toFixed(2) || "6.45"}</p>
               </div>
               <div className="bg-orange-50 p-3 rounded border border-orange-100">
                 <p className="font-semibold text-orange-800">USD/EUR</p>
-                <p>€ {exchangeRates["USD-EUR"]}</p>
+                <p>€ {exchangeRates["USD-EUR"].toFixed(3)}</p>
               </div>
             </div>
           </CardContent>

@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import RegraDeTres from "./pages/RegraDeTres";
 import LengthConverter from "./pages/LengthConverter";
 import WeightConverter from "./pages/WeightConverter";
 import VolumeConverter from "./pages/VolumeConverter";
@@ -35,6 +36,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/regra-de-tres" element={<RegraDeTres />} />
           <Route path="/length" element={<LengthConverter />} />
           <Route path="/weight" element={<WeightConverter />} />
           <Route path="/volume" element={<VolumeConverter />} />
