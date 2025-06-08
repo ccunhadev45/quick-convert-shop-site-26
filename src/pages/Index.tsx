@@ -29,10 +29,13 @@ const Index = () => {
     const financial = filteredCategories.filter(cat => cat.type === 'financial');
     const health = filteredCategories.filter(cat => cat.type === 'health');
     const engineering = filteredCategories.filter(cat => cat.type === 'engineering');
+    const scientific = filteredCategories.filter(cat => cat.type === 'scientific');
+    const programming = filteredCategories.filter(cat => cat.type === 'programming');
+    const productivity = filteredCategories.filter(cat => cat.type === 'productivity');
     const astrology = filteredCategories.filter(cat => cat.type === 'astrology');
     const astronomical = filteredCategories.filter(cat => cat.type === 'astronomical');
     
-    return { converters, financial, health, engineering, astrology, astronomical };
+    return { converters, financial, health, engineering, scientific, programming, productivity, astrology, astronomical };
   }, [filteredCategories]);
 
   return (
@@ -73,6 +76,24 @@ const Index = () => {
           title="Calculadoras para Arquitetura e Engenharia"
           description="Ferramentas especializadas para profissionais da construção"
           cards={groupedCategories.engineering}
+        />
+
+        <CategorySection 
+          title="Calculadoras Científicas"
+          description="Física, química, matemática e conversões de base numérica"
+          cards={groupedCategories.scientific}
+        />
+
+        <CategorySection 
+          title="Ferramentas de Programação"
+          description="Encoding, cores e outras ferramentas para desenvolvedores"
+          cards={groupedCategories.programming}
+        />
+
+        <CategorySection 
+          title="Ferramentas de Produtividade"
+          description="Calculadoras práticas para o dia a dia"
+          cards={groupedCategories.productivity}
         />
 
         <CategorySection 

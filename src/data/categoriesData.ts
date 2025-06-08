@@ -1,5 +1,5 @@
 
-import { Calculator, Ruler, Weight, Thermometer, Square, Zap, Clock, Gauge, DollarSign, Bitcoin, TrendingUp, Heart, Activity, Utensils, Building, Home, Wrench, Users, Star, Globe } from "lucide-react";
+import { Calculator, Ruler, Weight, Thermometer, Square, Zap, Clock, Gauge, DollarSign, Bitcoin, TrendingUp, Heart, Activity, Utensils, Building, Home, Wrench, Users, Star, Globe, FlaskRound, Binary, FileCode, Palette, Fuel } from "lucide-react";
 
 export const allCategories = [
   // Conversores de Unidades
@@ -241,6 +241,103 @@ export const allCategories = [
       from: "Viga 6m",
       to: "carga max",
       value: "2.5 ton/m²"
+    }
+  },
+
+  // Calculadoras Científicas
+  { 
+    title: "Calculadora de Física", 
+    description: "Força, energia, movimento e mais", 
+    icon: Calculator, 
+    path: "/physics-calculator", 
+    color: "blue", 
+    type: "scientific",
+    conversionExample: {
+      from: "F = m × a",
+      to: "10kg × 9.8m/s²",
+      value: "98 N"
+    }
+  },
+  { 
+    title: "Calculadora de Química", 
+    description: "Molaridade, pH, massa molar", 
+    icon: FlaskRound, 
+    path: "/chemistry-calculator", 
+    color: "green", 
+    type: "scientific",
+    conversionExample: {
+      from: "0.1 M [H+]",
+      to: "pH",
+      value: "pH = 1"
+    }
+  },
+  { 
+    title: "Calculadora Matemática", 
+    description: "Geometria, trigonometria e mais", 
+    icon: Calculator, 
+    path: "/math-calculator", 
+    color: "purple", 
+    type: "scientific",
+    conversionExample: {
+      from: "r = 5",
+      to: "área círculo",
+      value: "78.54 u²"
+    }
+  },
+  { 
+    title: "Conversor de Base Numérica", 
+    description: "Binário, octal, decimal, hexadecimal", 
+    icon: Binary, 
+    path: "/number-base-converter", 
+    color: "gray", 
+    type: "scientific",
+    conversionExample: {
+      from: "255 (decimal)",
+      to: "binário",
+      value: "11111111"
+    }
+  },
+
+  // Ferramentas de Programação
+  { 
+    title: "Conversor de Encoding", 
+    description: "Base64, URL encoding, HTML entities", 
+    icon: FileCode, 
+    path: "/encoding-converter", 
+    color: "indigo", 
+    type: "programming",
+    conversionExample: {
+      from: "Hello World",
+      to: "Base64",
+      value: "SGVsbG8gV29ybGQ="
+    }
+  },
+  { 
+    title: "Conversor de Cores", 
+    description: "HEX, RGB, HSL, CMYK", 
+    icon: Palette, 
+    path: "/color-converter", 
+    color: "pink", 
+    type: "programming",
+    conversionExample: {
+      from: "#FF5733",
+      to: "RGB",
+      value: "255, 87, 51"
+    }
+  },
+
+  // Ferramentas de Produtividade
+  { 
+    title: "Calculadora de Combustível", 
+    description: "Consumo, custos e comparações", 
+    icon: Fuel, 
+    path: "/fuel-calculator", 
+    color: "orange", 
+    type: "productivity",
+    conversionExample: {
+      from: "100km, 12km/L",
+      to: "combustível",
+      value: "8.33 L"
     }
   },
 

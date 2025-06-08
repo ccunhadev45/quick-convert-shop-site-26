@@ -28,6 +28,13 @@ import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import BirthChart from "./pages/BirthChart";
 import AstronomicalDistance from "./pages/AstronomicalDistance";
+import PhysicsCalculator from "./pages/PhysicsCalculator";
+import ChemistryCalculator from "./pages/ChemistryCalculator";
+import MathCalculator from "./pages/MathCalculator";
+import NumberBaseConverter from "./pages/NumberBaseConverter";
+import EncodingConverter from "./pages/EncodingConverter";
+import ColorConverter from "./pages/ColorConverter";
+import FuelCalculator from "./pages/FuelCalculator";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -69,6 +76,13 @@ const App = () => (
             <Route path="/structural-calculator" element={<StructuralCalculator />} />
             <Route path="/birth-chart" element={<BirthChart />} />
             <Route path="/astronomical-distance" element={<AstronomicalDistance />} />
+            <Route path="/physics-calculator" element={<PhysicsCalculator />} />
+            <Route path="/chemistry-calculator" element={<ChemistryCalculator />} />
+            <Route path="/math-calculator" element={<MathCalculator />} />
+            <Route path="/number-base-converter" element={<NumberBaseConverter />} />
+            <Route path="/encoding-converter" element={<EncodingConverter />} />
+            <Route path="/color-converter" element={<ColorConverter />} />
+            <Route path="/fuel-calculator" element={<FuelCalculator />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
