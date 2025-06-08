@@ -5,7 +5,7 @@ import EnhancedConverterCard from "@/components/EnhancedConverterCard";
 import SearchFilter from "@/components/SearchFilter";
 import AdSpace from "@/components/AdSpace";
 import ProductShowcase from "@/components/ProductShowcase";
-import { Ruler, Weight, Beaker, Thermometer, Square, Zap, Clock, Gauge, Calculator, Heart, Apple } from "lucide-react";
+import { Ruler, Weight, Beaker, Thermometer, Square, Zap, Clock, Gauge, Calculator, Heart, Apple, DollarSign, TrendingUp, Bitcoin } from "lucide-react";
 
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,7 +21,7 @@ const Index = () => {
       type: "converter",
       conversionExample: {
         from: "1 metro",
-        to: "pé",
+        to: "pés",
         value: "3.28084 ft"
       }
     },
@@ -34,7 +34,7 @@ const Index = () => {
       type: "converter",
       conversionExample: {
         from: "1 kg",
-        to: "libra",
+        to: "libras",
         value: "2.20462 lb"
       }
     },
@@ -47,7 +47,7 @@ const Index = () => {
       type: "converter",
       conversionExample: {
         from: "1 litro",
-        to: "galão",
+        to: "galões",
         value: "0.264172 gal"
       }
     },
@@ -73,7 +73,7 @@ const Index = () => {
       type: "converter",
       conversionExample: {
         from: "1 m²",
-        to: "pé²",
+        to: "pés²",
         value: "10.7639 ft²"
       }
     },
@@ -86,7 +86,7 @@ const Index = () => {
       type: "converter",
       conversionExample: {
         from: "1 kWh",
-        to: "joule",
+        to: "joules",
         value: "3.6e+6 J"
       }
     },
@@ -114,6 +114,46 @@ const Index = () => {
         from: "100 km/h",
         to: "mph",
         value: "62.137 mph"
+      }
+    },
+    // Conversores Financeiros
+    {
+      title: "Moedas Fiduciárias",
+      description: "Real, Dólar, Euro, Libra",
+      icon: DollarSign,
+      path: "/currency",
+      color: "cyan",
+      type: "financial",
+      conversionExample: {
+        from: "1 USD",
+        to: "BRL",
+        value: "R$ 5.20"
+      }
+    },
+    {
+      title: "Criptomoedas",
+      description: "Bitcoin, Ethereum, BNB, Cardano",
+      icon: Bitcoin,
+      path: "/crypto",
+      color: "amber",
+      type: "financial",
+      conversionExample: {
+        from: "1 BTC",
+        to: "USD",
+        value: "$42,500.00"
+      }
+    },
+    {
+      title: "Índices Financeiros",
+      description: "Inflação, juros, taxas",
+      icon: TrendingUp,
+      path: "/financial-indices",
+      color: "emerald",
+      type: "financial",
+      conversionExample: {
+        from: "Taxa Selic",
+        to: "Anual",
+        value: "11.75%"
       }
     },
     // Calculadoras
@@ -157,10 +197,11 @@ const Index = () => {
 
   const groupedCategories = useMemo(() => {
     const converters = filteredCategories.filter(cat => cat.type === 'converter');
+    const financial = filteredCategories.filter(cat => cat.type === 'financial');
     const calculators = filteredCategories.filter(cat => cat.type === 'calculator');
     const nutrition = filteredCategories.filter(cat => cat.type === 'nutrition');
     
-    return { converters, calculators, nutrition };
+    return { converters, financial, calculators, nutrition };
   }, [filteredCategories]);
 
   const CategorySection = ({ 
@@ -214,7 +255,7 @@ const Index = () => {
             Super Conversor de Unidades
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Converta facilmente entre diferentes unidades de medida com precisão e rapidez
+            Converta facilmente entre diferentes unidades de medida, moedas e criptomoedas com precisão e rapidez
           </p>
         </div>
 
@@ -222,6 +263,12 @@ const Index = () => {
           title="Conversores de Unidades"
           description="Converta entre diferentes unidades de medida"
           cards={groupedCategories.converters}
+        />
+
+        <CategorySection 
+          title="Conversores Financeiros"
+          description="Converta moedas, criptomoedas e acompanhe índices financeiros"
+          cards={groupedCategories.financial}
         />
 
         <CategorySection 
@@ -267,8 +314,8 @@ const Index = () => {
               <p className="text-sm text-gray-600">1 kg = 2.20462 lb</p>
             </div>
             <div className="bg-white p-6 rounded-xl border border-gray-100 text-center">
-              <p className="font-semibold text-gray-800 mb-2">Litro → Galão</p>
-              <p className="text-sm text-gray-600">1 L = 0.264172 gal</p>
+              <p className="font-semibold text-gray-800 mb-2">USD → BRL</p>
+              <p className="text-sm text-gray-600">$1 = R$ 5.20</p>
             </div>
           </div>
         </div>

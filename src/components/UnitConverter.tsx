@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 
 interface Unit {
   symbol: string;
@@ -53,6 +54,14 @@ const UnitConverter = ({ title, units, defaultFromUnit, defaultToUnit }: UnitCon
     setToValue(fromValue);
   };
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({
+      title: "Copiado!",
+      description: "Valor copiado para a área de transferência",
+    });
+  };
+
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
@@ -74,13 +83,23 @@ const UnitConverter = ({ title, units, defaultFromUnit, defaultToUnit }: UnitCon
                 ))}
               </SelectContent>
             </Select>
-            <Input
-              type="number"
-              value={fromValue}
-              onChange={(e) => setFromValue(e.target.value)}
-              placeholder="Digite o valor"
-              className="text-lg"
-            />
+            <div className="flex gap-2">
+              <Input
+                type="number"
+                value={fromValue}
+                onChange={(e) => setFromValue(e.target.value)}
+                placeholder="Digite o valor"
+                className="text-lg"
+              />
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={() => copyToClipboard(fromValue)}
+                className="shrink-0"
+              >
+                <Copy className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
 
           <div className="space-y-2">
@@ -97,13 +116,24 @@ const UnitConverter = ({ title, units, defaultFromUnit, defaultToUnit }: UnitCon
                 ))}
               </SelectContent>
             </Select>
-            <Input
-              type="number"
-              value={toValue}
-              readOnly
-              placeholder="Resultado"
-              className="text-lg bg-gray-50"
-            />
+            <div className="flex gap-2">
+              <Input
+                type="number"
+                value={toValue}
+                readOnly
+                placeholder="Resultado"
+                className="text-lg bg-gray-50"
+              />
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={() => copyToClipboard(toValue)}
+                disabled={!toValue}
+                className="shrink-0"
+              >
+                <Copy className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
 
