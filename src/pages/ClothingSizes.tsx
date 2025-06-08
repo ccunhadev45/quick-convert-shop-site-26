@@ -43,7 +43,11 @@ const ClothingSizes = () => {
     
     return Object.keys(categoryData).reduce((acc, country) => {
       if (country !== fromCountry) {
-        acc[country] = categoryData[country as keyof typeof categoryData][size as keyof typeof categoryData[typeof fromCountry]];
+        const countryData = categoryData[country as keyof typeof categoryData];
+        const sizeValue = countryData[size as keyof typeof countryData];
+        if (sizeValue) {
+          acc[country] = sizeValue;
+        }
       }
       return acc;
     }, {} as Record<string, string>);
