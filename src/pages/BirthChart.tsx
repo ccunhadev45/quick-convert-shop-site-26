@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Star, Clock, Calendar, Loader2 } from "lucide-react";
@@ -10,7 +9,7 @@ import { calculateAstrologyChart, AstrologyChart } from "@/services/astrologySer
 import { GeocodingResult } from "@/services/geocodingService";
 import { useToast } from "@/hooks/use-toast";
 import CityAutocomplete from "@/components/CityAutocomplete";
-import AstrologyChart as ChartComponent from "@/components/AstrologyChart";
+import ChartComponent from "@/components/AstrologyChart";
 
 const BirthChart = () => {
   const [birthData, setBirthData] = useState({
