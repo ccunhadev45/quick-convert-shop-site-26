@@ -9,6 +9,7 @@ import LengthConverter from "./pages/LengthConverter";
 import WeightConverter from "./pages/WeightConverter";
 import VolumeConverter from "./pages/VolumeConverter";
 import TemperatureConverter from "./pages/TemperatureConverter";
+import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/weight" element={<WeightConverter />} />
           <Route path="/volume" element={<VolumeConverter />} />
           <Route path="/temperature" element={<TemperatureConverter />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

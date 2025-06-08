@@ -1,6 +1,8 @@
 
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
+import AdSpace from "@/components/AdSpace";
+import ProductShowcase from "@/components/ProductShowcase";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -72,10 +74,13 @@ const TemperatureConverter = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-100">
+    <div className="min-h-screen bg-gray-50">
       <Header />
-      <main className="container mx-auto px-4 py-12">
-        <div className="text-center mb-8">
+      
+      <AdSpace position="top" />
+      
+      <main className="container mx-auto px-6 py-12">
+        <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Conversor de Temperatura
           </h1>
@@ -84,16 +89,16 @@ const TemperatureConverter = () => {
           </p>
         </div>
         
-        <Card className="w-full max-w-2xl mx-auto">
+        <Card className="w-full max-w-2xl mx-auto mb-12 border border-gray-200">
           <CardHeader>
-            <CardTitle className="text-2xl text-center text-gray-800">Conversor de Temperatura</CardTitle>
+            <CardTitle className="text-xl text-center text-gray-800">Conversor de Temperatura</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-3">
                 <label className="text-sm font-medium text-gray-700">De:</label>
                 <Select value={fromUnit} onValueChange={setFromUnit}>
-                  <SelectTrigger>
+                  <SelectTrigger className="border-gray-200">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -109,14 +114,14 @@ const TemperatureConverter = () => {
                   value={fromValue}
                   onChange={(e) => setFromValue(e.target.value)}
                   placeholder="Digite a temperatura"
-                  className="text-lg"
+                  className="text-lg border-gray-200"
                 />
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <label className="text-sm font-medium text-gray-700">Para:</label>
                 <Select value={toUnit} onValueChange={setToUnit}>
-                  <SelectTrigger>
+                  <SelectTrigger className="border-gray-200">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -132,18 +137,18 @@ const TemperatureConverter = () => {
                   value={toValue}
                   readOnly
                   placeholder="Resultado"
-                  className="text-lg bg-gray-50"
+                  className="text-lg bg-gray-50 border-gray-200"
                 />
               </div>
             </div>
 
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
-              <div className="bg-blue-50 p-4 rounded-lg">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600 mt-8">
+              <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
                 <h3 className="font-semibold text-blue-800 mb-2">Pontos de Referência</h3>
                 <p>Água congela: 0°C = 32°F = 273.15K</p>
                 <p>Água ferve: 100°C = 212°F = 373.15K</p>
               </div>
-              <div className="bg-green-50 p-4 rounded-lg">
+              <div className="bg-green-50 p-4 rounded-lg border border-green-100">
                 <h3 className="font-semibold text-green-800 mb-2">Temperatura Corporal</h3>
                 <p>Normal: 37°C = 98.6°F = 310.15K</p>
                 <p>Febre: {'>'}38°C = {'>'}100.4°F = {'>'}311.15K</p>
@@ -151,7 +156,13 @@ const TemperatureConverter = () => {
             </div>
           </CardContent>
         </Card>
+
+        <AdSpace position="middle" />
+        
+        <ProductShowcase />
       </main>
+
+      <AdSpace position="footer" />
     </div>
   );
 };
