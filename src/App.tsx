@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -73,6 +72,15 @@ import RecyclingCalculator from "./pages/RecyclingCalculator";
 import PetAgeConverter from "./pages/PetAgeConverter";
 import VetDosage from "./pages/VetDosage";
 import PetFeeding from "./pages/PetFeeding";
+
+// Novas páginas de Saúde Profissional
+import OccupationalHealth from "./pages/OccupationalHealth";
+import MentalWellness from "./pages/MentalWellness";
+import Ergonomics from "./pages/Ergonomics";
+import WorkplaceSafety from "./pages/WorkplaceSafety";
+
+// Página administrativa
+import DocumentationAndImprovements from "./pages/DocumentationAndImprovements";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -173,9 +181,16 @@ const App = () => (
             <Route path="/vet-dosage" element={<VetDosage />} />
             <Route path="/pet-feeding" element={<PetFeeding />} />
             
+            {/* Novas rotas - Saúde Profissional */}
+            <Route path="/occupational-health" element={<OccupationalHealth />} />
+            <Route path="/mental-wellness" element={<MentalWellness />} />
+            <Route path="/ergonomics" element={<Ergonomics />} />
+            <Route path="/workplace-safety" element={<WorkplaceSafety />} />
+            
             {/* Administração */}
             <Route path="/admin-login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/documentation" element={<DocumentationAndImprovements />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

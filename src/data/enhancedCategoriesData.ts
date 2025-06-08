@@ -1,4 +1,3 @@
-
 import { 
   Calculator, Ruler, Weight, Thermometer, Square, Zap, Clock, Gauge, 
   DollarSign, Bitcoin, TrendingUp, Heart, Activity, Utensils, Building, 
@@ -7,7 +6,7 @@ import {
   PiggyBank, Pizza, Car, Smartphone, BookOpen, Target, Trophy, 
   Calendar, MapPin, Settings, Briefcase, Music, Video, TrendingDown,
   Coffee, Moon, Sun, Cloud, Droplet, Wind, Compass, Mountain,
-  Scissors, PaintBucket, Shirt, Baby, Dog, Leaf, Recycle
+  Scissors, PaintBucket, Shirt, Baby, Dog, Leaf, Recycle, Shield, Brain, Monitor, HardHat, FileText
 } from "lucide-react";
 
 export interface Category {
@@ -289,6 +288,42 @@ export const allEnhancedCategories: Category[] = [
       to: "água/dia",
       value: "2.5L"
     }
+  },
+  { 
+    title: "Saúde Ocupacional", 
+    description: "Avaliação de riscos e saúde no trabalho", 
+    path: "/occupational-health",
+    icon: Shield,
+    category: "health-pro",
+    tags: ["trabalho", "saúde", "ocupacional", "risco"],
+    premium: true
+  },
+  { 
+    title: "Bem-Estar Mental", 
+    description: "Avaliação de saúde mental e bem-estar", 
+    path: "/mental-wellness",
+    icon: Brain,
+    category: "health-pro", 
+    tags: ["mental", "stress", "bem-estar", "psicologia"],
+    premium: true
+  },
+  { 
+    title: "Ergonomia", 
+    description: "Avaliação ergonômica do ambiente de trabalho", 
+    path: "/ergonomics",
+    icon: Monitor,
+    category: "health-pro",
+    tags: ["ergonomia", "postura", "trabalho", "cadeira"],
+    premium: true
+  },
+  { 
+    title: "Segurança no Trabalho", 
+    description: "Avaliação de segurança ocupacional", 
+    path: "/workplace-safety",
+    icon: HardHat,
+    category: "health-pro",
+    tags: ["segurança", "trabalho", "EPI", "risco"],
+    premium: true
   },
 
   // === GAMERS ===
@@ -1033,6 +1068,17 @@ export const allEnhancedCategories: Category[] = [
       value: "225 milhões km"
     }
   },
+
+  // === CRIADORES DE CONTEÚDO ===
+  { 
+    title: "Documentação e Melhorias", 
+    description: "Estado do sistema e roadmap de melhorias", 
+    path: "/admin/documentation", 
+    icon: FileText,
+    category: "admin",
+    tags: ["documentação", "melhorias", "sistema", "roadmap"],
+    premium: false
+  }
 ];
 
 // Função para agrupar categorias
