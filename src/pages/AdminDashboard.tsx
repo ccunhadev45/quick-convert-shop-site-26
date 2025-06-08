@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, BarChart3, Settings, MessageSquare, Users } from "lucide-react";
 import { Link } from "react-router-dom";
-import Header from "@/components/Header";
+import EnhancedHeader from "@/components/EnhancedHeader";
 import AdSpace from "@/components/AdSpace";
 import AnalyticsDashboard from "@/components/admin/AnalyticsDashboard";
 import AdSenseSettings from "@/components/admin/AdSenseSettings";
@@ -17,7 +17,7 @@ import SystemSettings from "@/components/admin/SystemSettings";
 const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header />
+      <EnhancedHeader />
       <AdSpace position="top" />
       
       <div className="container mx-auto px-6 py-8">
@@ -65,7 +65,7 @@ const AdminDashboard = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground mb-4">
-                      Métricas gerais e dados de performance do sistema.
+                      Métricas gerais e dados de performance do sistema expandido.
                     </p>
                     <AnalyticsDashboard />
                   </CardContent>
