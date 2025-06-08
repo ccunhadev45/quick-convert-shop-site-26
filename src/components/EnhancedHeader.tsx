@@ -1,6 +1,5 @@
-
 import { Link } from "react-router-dom";
-import { Calculator, Menu, Settings, Search, User, Star } from "lucide-react";
+import { Calculator, Menu, Settings, Search, User, Star, LogIn, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
@@ -17,9 +16,11 @@ import ThemeToggle from "./ThemeToggle";
 import ConversionHistory from "./ConversionHistory";
 import { allEnhancedCategories, getGroupedCategories } from "@/data/enhancedCategoriesData";
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 
 const EnhancedHeader = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const { user, isAuthenticated, logout } = useAuth();
   const groupedCategories = getGroupedCategories();
 
   const megaMenuCategories = [
@@ -206,33 +207,49 @@ const EnhancedHeader = () => {
             <ConversionHistory />
             <ThemeToggle />
             
-            <Button variant="ghost" size="sm" className="hidden lg:flex items-center space-x-2">
-              <User className="h-4 w-4" />
-              <span>Perfil</span>
-            </Button>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="hidden lg:flex items-center space-x-2">
-                  <Settings className="h-4 w-4" />
-                  <span>Admin</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-popover border border-border shadow-lg z-[100]">
-                <DropdownMenuItem asChild>
-                  <Link to="/admin-login" className="cursor-pointer">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Login Admin</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/admin" className="cursor-pointer">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Dashboard</span>
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {isAuthenticated ? (
+              <>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="hidden lg:flex items-center space-x-2">
+                      <User className="h-4 w-4" />
+                      <span>{user?.name}</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-popover border border-border shadow-lg z-[100]">
+                    <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link to={user?.role === 'admin' ? "/admin" : "/dashboard"} className="cursor-pointer">
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>Dashboard</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-600">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Sair</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="ghost" size="sm" className="hidden lg:flex items-center space-x-2">
+                    <LogIn className="h-4 w-4" />
+                    <span>Entrar</span>
+                  </Button>
+                </Link>
+                
+                <Link to="/login">
+                  <Button size="sm" className="hidden lg:flex items-center space-x-2">
+                    <User className="h-4 w-4" />
+                    <span>Cadastrar</span>
+                  </Button>
+                </Link>
+              </>
+            )}
 
             {/* Mobile Menu */}
             <Sheet>
@@ -278,17 +295,43 @@ const EnhancedHeader = () => {
                   ))}
 
                   <div className="flex items-center justify-between pt-4 border-t border-border">
-                    <Button variant="ghost" size="sm" className="flex items-center space-x-2">
-                      <User className="h-4 w-4" />
-                      <span>Perfil</span>
-                    </Button>
-                    <Link
-                      to="/admin-login"
-                      className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
-                    >
-                      <Settings className="h-4 w-4" />
-                      <span>Admin</span>
-                    </Link>
+                    {isAuthenticated ? (
+                      <>
+                        <Link
+                          to={user?.role === 'admin' ? "/admin" : "/dashboard"}
+                          className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
+                        >
+                          <User className="h-4 w-4" />
+                          <span>Dashboard</span>
+                        </Link>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={logout}
+                          className="flex items-center space-x-2 text-red-600"
+                        >
+                          <LogOut className="h-4 w-4" />
+                          <span>Sair</span>
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          to="/login"
+                          className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
+                        >
+                          <LogIn className="h-4 w-4" />
+                          <span>Entrar</span>
+                        </Link>
+                        <Link
+                          to="/login"
+                          className="flex items-center space-x-2 text-sm text-primary font-medium"
+                        >
+                          <User className="h-4 w-4" />
+                          <span>Cadastrar</span>
+                        </Link>
+                      </>
+                    )}
                   </div>
                 </div>
               </SheetContent>
