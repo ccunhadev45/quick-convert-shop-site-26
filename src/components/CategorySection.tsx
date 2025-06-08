@@ -22,8 +22,8 @@ const CategorySection = ({ title, description, cards }: CategorySectionProps) =>
   return (
     <div className="mb-16">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
-        <p className="text-gray-600">{description}</p>
+        <h2 className="text-2xl font-bold text-foreground mb-2">{title}</h2>
+        <p className="text-muted-foreground">{description}</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {cards.map((category) => (

@@ -82,46 +82,46 @@ const EnhancedHeader = () => {
   ).slice(0, 8);
 
   return (
-    <header className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 shadow-sm">
+    <header className="bg-background border-b border-border sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg">
-              <Calculator className="h-6 w-6 text-white" />
+            <div className="bg-gradient-to-r from-primary to-primary/80 p-2 rounded-lg">
+              <Calculator className="h-6 w-6 text-primary-foreground" />
             </div>
             <div>
-              <span className="text-xl font-bold text-gray-900 dark:text-gray-100">Super Conversor</span>
-              <div className="text-xs text-gray-500 dark:text-gray-400">Universal</div>
+              <span className="text-xl font-bold text-foreground">Super Conversor</span>
+              <div className="text-xs text-muted-foreground">Universal</div>
             </div>
           </Link>
 
           {/* Search Bar - Desktop */}
           <div className="hidden lg:flex relative flex-1 max-w-md mx-8">
             <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
                 placeholder="Buscar conversores, calculadoras..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4"
+                className="pl-10 pr-4 bg-background border-border"
               />
             </div>
             
             {/* Search Results Dropdown */}
             {searchTerm && filteredResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
+              <div className="absolute top-full left-0 right-0 mt-1 bg-popover border border-border rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
                 {filteredResults.map((result) => (
                   <Link
                     key={result.path}
                     to={result.path}
-                    className="flex items-center space-x-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-600 last:border-b-0"
+                    className="flex items-center space-x-3 p-3 hover:bg-accent border-b border-border last:border-b-0"
                     onClick={() => setSearchTerm("")}
                   >
-                    <result.icon className="h-5 w-5 text-gray-400" />
+                    <result.icon className="h-5 w-5 text-muted-foreground" />
                     <div className="flex-1">
-                      <div className="font-medium text-gray-900 dark:text-gray-100">{result.title}</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">{result.description}</div>
+                      <div className="font-medium text-popover-foreground">{result.title}</div>
+                      <div className="text-sm text-muted-foreground">{result.description}</div>
                     </div>
                     {result.premium && (
                       <Badge variant="secondary" className="bg-gradient-to-r from-yellow-400 to-orange-400 text-white">
@@ -144,22 +144,22 @@ const EnhancedHeader = () => {
                     {category.premium && <Star className="h-3 w-3 text-yellow-500" />}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-80 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg z-[100]">
+                <DropdownMenuContent className="w-80 bg-popover border border-border shadow-lg z-[100]">
                   <DropdownMenuLabel className="border-b pb-3 mb-3">
-                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">{category.title}</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{category.description}</p>
+                    <h3 className="font-semibold text-popover-foreground">{category.title}</h3>
+                    <p className="text-sm text-muted-foreground">{category.description}</p>
                   </DropdownMenuLabel>
                   <div className="max-h-96 overflow-y-auto">
                     {groupedCategories[category.key]?.map((item) => (
                       <DropdownMenuItem key={item.path} asChild>
                         <Link
                           to={item.path}
-                          className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors w-full"
+                          className="flex items-center space-x-3 p-2 rounded-lg hover:bg-accent transition-colors w-full"
                         >
-                          <item.icon className="h-4 w-4 text-gray-400" />
+                          <item.icon className="h-4 w-4 text-muted-foreground" />
                           <div className="flex-1">
-                            <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.title}</div>
-                            <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{item.description}</div>
+                            <div className="text-sm font-medium text-popover-foreground">{item.title}</div>
+                            <div className="text-xs text-muted-foreground truncate">{item.description}</div>
                           </div>
                           {item.premium && <Star className="h-3 w-3 text-yellow-500" />}
                         </Link>
@@ -174,21 +174,21 @@ const EnhancedHeader = () => {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost">Mais</Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-96 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg z-[100]">
+              <DropdownMenuContent className="w-96 bg-popover border border-border shadow-lg z-[100]">
                 <div className="grid grid-cols-2 gap-6 p-6">
                   {megaMenuCategories.slice(4).map((category) => (
                     <div key={category.key} className="space-y-2">
-                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 flex items-center space-x-2">
+                      <h4 className="font-semibold text-popover-foreground flex items-center space-x-2">
                         <span>{category.title}</span>
                         {category.premium && <Star className="h-3 w-3 text-yellow-500" />}
                       </h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">{category.description}</p>
+                      <p className="text-sm text-muted-foreground">{category.description}</p>
                       <div className="space-y-1">
                         {groupedCategories[category.key]?.slice(0, 3).map((item) => (
                           <Link
                             key={item.path}
                             to={item.path}
-                            className="block text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                            className="block text-sm text-muted-foreground hover:text-primary transition-colors"
                           >
                             {item.title}
                           </Link>
@@ -211,13 +211,35 @@ const EnhancedHeader = () => {
               <span>Perfil</span>
             </Button>
             
-            <Link
-              to="/admin-login"
-              className="hidden lg:flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-lg transition-colors duration-200 text-sm"
-            >
-              <Settings className="h-4 w-4" />
-              <span>Admin</span>
-            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="hidden lg:flex items-center space-x-2">
+                  <Settings className="h-4 w-4" />
+                  <span>Admin</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-popover border border-border shadow-lg z-[100]">
+                <DropdownMenuItem asChild>
+                  <Link to="/admin-login" className="cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Login Admin</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/admin" className="cursor-pointer">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/admin/documentation" className="cursor-pointer">
+                    <Search className="mr-2 h-4 w-4" />
+                    <span>Documentação</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             {/* Mobile Menu */}
             <Sheet>
@@ -226,23 +248,23 @@ const EnhancedHeader = () => {
                   <Menu className="h-4 w-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent className="w-80 bg-white dark:bg-gray-900 overflow-y-auto">
+              <SheetContent className="w-80 bg-background overflow-y-auto">
                 <div className="flex flex-col space-y-6 mt-6">
                   {/* Mobile Search */}
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                     <Input
                       placeholder="Buscar..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10"
+                      className="pl-10 bg-background border-border"
                     />
                   </div>
                   
                   {/* Mobile Navigation */}
                   {megaMenuCategories.map((category) => (
                     <div key={category.key} className="space-y-3">
-                      <h3 className="font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
+                      <h3 className="font-semibold text-foreground flex items-center space-x-2">
                         <span>{category.title}</span>
                         {category.premium && <Star className="h-4 w-4 text-yellow-500" />}
                       </h3>
@@ -251,7 +273,7 @@ const EnhancedHeader = () => {
                           <Link
                             key={item.path}
                             to={item.path}
-                            className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                            className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors duration-200"
                           >
                             <item.icon className="h-4 w-4" />
                             <span>{item.title}</span>
@@ -262,14 +284,14 @@ const EnhancedHeader = () => {
                     </div>
                   ))}
 
-                  <div className="flex items-center justify-between pt-4 border-t dark:border-gray-700">
+                  <div className="flex items-center justify-between pt-4 border-t border-border">
                     <Button variant="ghost" size="sm" className="flex items-center space-x-2">
                       <User className="h-4 w-4" />
                       <span>Perfil</span>
                     </Button>
                     <Link
                       to="/admin-login"
-                      className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                      className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
                     >
                       <Settings className="h-4 w-4" />
                       <span>Admin</span>
