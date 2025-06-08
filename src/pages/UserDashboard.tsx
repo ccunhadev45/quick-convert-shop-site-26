@@ -1,10 +1,9 @@
-
 import { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Star, MessageSquare, User, LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import EnhancedHeader from "@/components/EnhancedHeader";
 import UserFavorites from "@/components/user/UserFavorites";
@@ -13,12 +12,17 @@ import UserProfile from "@/components/user/UserProfile";
 
 const UserDashboard = () => {
   const { user, loading, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && (!user || user.role !== 'user')) {
-      // Redirecionar para login se não for usuário comum
+    if (!loading && !user) {
+      // Redirecionar para login se não estiver logado
+      navigate("/login");
+    } else if (!loading && user && user.role === 'admin') {
+      // Se for admin, redirecionar para o dashboard admin
+      navigate("/admin");
     }
-  }, [user, loading]);
+  }, [user, loading, navigate]);
 
   if (loading) {
     return (
@@ -31,7 +35,7 @@ const UserDashboard = () => {
     );
   }
 
-  if (!user || user.role !== 'user') {
+  if (!user) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Card className="w-full max-w-md">
@@ -47,6 +51,11 @@ const UserDashboard = () => {
         </Card>
       </div>
     );
+  }
+
+  // Verificar se é usuário comum (não admin)
+  if (user.role !== 'user') {
+    return null; // Já foi redirecionado no useEffect
   }
 
   return (

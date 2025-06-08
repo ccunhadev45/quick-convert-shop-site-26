@@ -20,7 +20,9 @@ export const useAuth = () => {
     const checkAuth = () => {
       const userData = localStorage.getItem("user_data");
       if (userData) {
-        setUser(JSON.parse(userData));
+        const parsedUser = JSON.parse(userData);
+        console.log("User loaded from localStorage:", parsedUser);
+        setUser(parsedUser);
       }
       setLoading(false);
     };
@@ -29,6 +31,8 @@ export const useAuth = () => {
   }, []);
 
   const login = (email: string, password: string) => {
+    console.log("Login attempt:", { email, password });
+    
     // Credenciais de demo
     const credentials = {
       'admin@demo.com': { password: 'admin123', role: 'admin' as const },
@@ -47,6 +51,9 @@ export const useAuth = () => {
         createdAt: new Date().toISOString()
       };
       
+      console.log("Login successful, user data:", userData);
+      console.log("Redirecting to:", userData.role === 'admin' ? '/admin' : '/dashboard');
+      
       setUser(userData);
       localStorage.setItem("user_data", JSON.stringify(userData));
       
@@ -60,6 +67,7 @@ export const useAuth = () => {
       return { success: true };
     }
     
+    console.log("Login failed: invalid credentials");
     return { success: false, error: 'Credenciais inválidas' };
   };
 
