@@ -119,7 +119,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "yellow",
     tags: ["energia", "joules", "calorias", "watts"],
     premium: false,
-    implemented: false
+    implemented: true
   },
   {
     title: "Conversor de Tempo",
@@ -154,7 +154,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "gray",
     tags: ["base numérica", "binário", "decimal", "hexadecimal"],
     premium: false,
-    implemented: false
+    implemented: true
   },
 
   // Saúde - IMPLEMENTADOS
@@ -167,7 +167,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "pink",
     tags: ["imc", "índice de massa corporal", "peso", "altura"],
     premium: false,
-    implemented: false
+    implemented: true
   },
   {
     title: "Calculadora de TMB",
@@ -178,7 +178,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "purple",
     tags: ["tmb", "taxa metabólica basal", "energia", "metabolismo"],
     premium: false,
-    implemented: false
+    implemented: true
   },
   {
     title: "Calculadora de Calorias",
@@ -189,7 +189,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "orange",
     tags: ["calorias", "energia", "dieta", "nutrição"],
     premium: false,
-    implemented: false
+    implemented: true
   },
 
   // Financeiros - IMPLEMENTADOS PARCIALMENTE
@@ -213,7 +213,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "amber",
     tags: ["criptomoedas", "bitcoin", "ethereum", "litecoin"],
     premium: false,
-    implemented: false
+    implemented: true
   },
   {
     title: "Calculadora de Juros",
@@ -346,7 +346,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "blue",
     tags: ["fps", "quadros", "conversão", "jogos"],
     premium: false,
-    implemented: false
+    implemented: true
   },
   {
     title: "Moeda de Jogos",
@@ -370,7 +370,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "blue",
     tags: ["física", "cálculo", "mecânica", "termodinâmica"],
     premium: false,
-    implemented: false
+    implemented: true
   },
   {
     title: "Calculadora de Química",
@@ -381,7 +381,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "green",
     tags: ["química", "cálculo", "reações", "elementos"],
     premium: false,
-    implemented: false
+    implemented: true
   },
   {
     title: "Calculadora de Matemática",
@@ -392,7 +392,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "purple",
     tags: ["matemática", "cálculo", "álgebra", "geometria"],
     premium: false,
-    implemented: false
+    implemented: true
   },
 
   // Engenharia
@@ -405,7 +405,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "stone",
     tags: ["concreto", "cimento", "areia", "brita"],
     premium: false,
-    implemented: false
+    implemented: true
   },
 
   // Programação
@@ -418,7 +418,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "pink",
     tags: ["cores", "hexadecimal", "rgb", "hsl"],
     premium: false,
-    implemented: false
+    implemented: true
   },
   {
     title: "Conversor de Encoding",
@@ -429,7 +429,7 @@ export const unifiedCategories: CategoryCard[] = [
     color: "indigo",
     tags: ["encoding", "base64", "url", "programação"],
     premium: false,
-    implemented: false
+    implemented: true
   }
 ];
 

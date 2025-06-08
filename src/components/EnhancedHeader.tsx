@@ -12,9 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-import ThemeToggle from "./ThemeToggle";
-import ConversionHistory from "./ConversionHistory";
-import { allEnhancedCategories, getGroupedCategories } from "@/data/enhancedCategoriesData";
+import { allEnhancedCategories, getGroupedCategories } from "@/data/unifiedCategoriesData";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -204,9 +202,6 @@ const EnhancedHeader = () => {
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
-            <ConversionHistory />
-            <ThemeToggle />
-            
             {isAuthenticated ? (
               <>
                 <DropdownMenu>
@@ -236,16 +231,9 @@ const EnhancedHeader = () => {
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="ghost" size="sm" className="hidden lg:flex items-center space-x-2">
+                  <Button size="sm" className="hidden lg:flex items-center space-x-2">
                     <LogIn className="h-4 w-4" />
                     <span>Entrar</span>
-                  </Button>
-                </Link>
-                
-                <Link to="/login">
-                  <Button size="sm" className="hidden lg:flex items-center space-x-2">
-                    <User className="h-4 w-4" />
-                    <span>Cadastrar</span>
                   </Button>
                 </Link>
               </>
@@ -294,7 +282,7 @@ const EnhancedHeader = () => {
                     </div>
                   ))}
 
-                  <div className="flex items-center justify-between pt-4 border-t border-border">
+                    <div className="flex items-center justify-between pt-4 border-t border-border">
                     {isAuthenticated ? (
                       <>
                         <Link
@@ -318,17 +306,10 @@ const EnhancedHeader = () => {
                       <>
                         <Link
                           to="/login"
-                          className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
+                          className="flex items-center space-x-2 text-sm text-primary font-medium"
                         >
                           <LogIn className="h-4 w-4" />
                           <span>Entrar</span>
-                        </Link>
-                        <Link
-                          to="/login"
-                          className="flex items-center space-x-2 text-sm text-primary font-medium"
-                        >
-                          <User className="h-4 w-4" />
-                          <span>Cadastrar</span>
                         </Link>
                       </>
                     )}
