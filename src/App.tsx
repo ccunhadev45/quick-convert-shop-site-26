@@ -10,7 +10,6 @@ import Index from "@/pages/Index";
 import Login from "@/pages/Login";
 import UserDashboard from "@/pages/UserDashboard";
 import AdminDashboard from "@/pages/AdminDashboard";
-import AdminLogin from "@/pages/AdminLogin";
 
 // Páginas de conversores com lazy loading
 const LengthConverter = lazy(() => import("@/pages/LengthConverter"));
@@ -41,7 +40,6 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<UserDashboard />} />
               <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin-login" element={<AdminLogin />} />
               
               {/* Conversores de unidades */}
               <Route path="/length" element={<LengthConverter />} />

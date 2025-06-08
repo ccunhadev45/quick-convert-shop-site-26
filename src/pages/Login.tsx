@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LogIn, UserPlus } from "lucide-react";
+import { LogIn, UserPlus, User, Shield } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import EnhancedHeader from "@/components/EnhancedHeader";
@@ -71,6 +71,14 @@ const Login = () => {
     setLoading(false);
   };
 
+  const fillAdminData = () => {
+    setLoginData({ email: "admin@demo.com", password: "admin123" });
+  };
+
+  const fillUserData = () => {
+    setLoginData({ email: "user@demo.com", password: "user123" });
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <EnhancedHeader />
@@ -123,13 +131,43 @@ const Login = () => {
                     </Button>
                   </form>
                   
-                  <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg space-y-2">
-                    <p className="text-sm text-blue-800 dark:text-blue-200 text-center font-semibold">
-                      Contas de demonstração:
-                    </p>
-                    <div className="text-xs text-blue-700 dark:text-blue-300 space-y-1">
-                      <p><strong>Admin:</strong> admin@demo.com | admin123</p>
-                      <p><strong>Usuário:</strong> user@demo.com | user123</p>
+                  <div className="space-y-3">
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t" />
+                      </div>
+                      <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-background px-2 text-muted-foreground">
+                          Ou acesse como
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button 
+                        onClick={fillAdminData}
+                        variant="outline"
+                        type="button"
+                        className="flex items-center gap-2"
+                      >
+                        <Shield className="h-4 w-4" />
+                        Admin
+                      </Button>
+                      <Button 
+                        onClick={fillUserData}
+                        variant="outline"
+                        type="button"
+                        className="flex items-center gap-2"
+                      >
+                        <User className="h-4 w-4" />
+                        Usuário
+                      </Button>
+                    </div>
+                    
+                    <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <p className="text-xs text-blue-700 dark:text-blue-300 text-center">
+                        Clique nos botões acima para preencher automaticamente os dados de demonstração
+                      </p>
                     </div>
                   </div>
                 </TabsContent>

@@ -50,7 +50,7 @@ export const useAuth = () => {
       setUser(userData);
       localStorage.setItem("user_data", JSON.stringify(userData));
       
-      // Redirecionar para dashboard específico
+      // Redirecionar para dashboard específico baseado no role
       if (userData.role === 'admin') {
         navigate("/admin");
       } else {
