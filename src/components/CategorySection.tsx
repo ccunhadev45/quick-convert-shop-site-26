@@ -8,11 +8,6 @@ interface Category {
   path: string;
   color: string;
   type: string;
-  conversionExample?: {
-    from: string;
-    to: string;
-    value: string;
-  };
 }
 
 interface CategorySectionProps {
@@ -39,7 +34,6 @@ const CategorySection = ({ title, description, cards }: CategorySectionProps) =>
             icon={category.icon}
             path={category.path}
             color={category.color}
-            conversionExample={category.conversionExample}
           />
         ))}
       </div>

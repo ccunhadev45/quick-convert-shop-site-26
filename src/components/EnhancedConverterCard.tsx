@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LucideIcon, Copy } from "lucide-react";
@@ -62,33 +63,6 @@ const EnhancedConverterCard = ({
           <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
           <p className="text-sm text-gray-600 mb-4">{description}</p>
         </Link>
-        
-        {conversionExample && (
-          <div className="mt-4 pt-4 border-t border-gray-100">
-            <div className="text-xs text-gray-500 mb-2">Exemplo de conversão:</div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-600">{conversionExample.from}</span>
-                <span className="text-gray-400">→</span>
-                <span className="text-gray-600">{conversionExample.to}</span>
-              </div>
-              <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                <span className="text-lg font-bold text-gray-900">{conversionExample.value}</span>
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="h-8 w-8 hover:bg-gray-200"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    copyToClipboard(conversionExample.value);
-                  }}
-                >
-                  <Copy className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
       </CardContent>
     </Card>
   );
