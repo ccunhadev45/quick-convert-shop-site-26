@@ -151,171 +151,173 @@ const EncodingConverter = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-6 py-8">
         <div className="flex items-center gap-4 mb-8">
-          <Link to="/" className="text-indigo-600 hover:text-indigo-700">
+          <Link to="/" className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300">
             <ArrowLeft className="h-6 w-6" />
           </Link>
           <div className="flex items-center gap-3">
-            <FileCode className="h-8 w-8 text-indigo-600" />
+            <FileCode className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               Conversor de Encoding
             </h1>
           </div>
         </div>
 
-        <Tabs defaultValue="base64" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="base64">Base64</TabsTrigger>
-            <TabsTrigger value="url">URL Encoding</TabsTrigger>
-            <TabsTrigger value="html">HTML Entities</TabsTrigger>
-          </TabsList>
+        <div className="max-w-4xl mx-auto">
+          <Tabs defaultValue="base64" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="base64">Base64</TabsTrigger>
+              <TabsTrigger value="url">URL Encoding</TabsTrigger>
+              <TabsTrigger value="html">HTML Entities</TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="base64">
-            <Card>
-              <CardHeader>
-                <CardTitle>Conversor Base64</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="textInput">Texto Original</Label>
-                  <Textarea
-                    id="textInput"
-                    value={textInput}
-                    onChange={(e) => setTextInput(e.target.value)}
-                    placeholder="Digite o texto para codificar"
-                    rows={4}
-                  />
-                  <Button onClick={encodeBase64} className="mt-2 w-full">
-                    Codificar para Base64
-                  </Button>
-                </div>
-                
-                <div>
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="base64Output">Base64 Codificado</Label>
-                    {base64Output && (
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => copyToClipboard(base64Output)}
-                      >
-                        <Copy className="h-4 w-4" />
-                      </Button>
-                    )}
+            <TabsContent value="base64">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Conversor Base64</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="textInput">Texto Original</Label>
+                    <Textarea
+                      id="textInput"
+                      value={textInput}
+                      onChange={(e) => setTextInput(e.target.value)}
+                      placeholder="Digite o texto para codificar"
+                      rows={4}
+                    />
+                    <Button onClick={encodeBase64} className="mt-2 w-full">
+                      Codificar para Base64
+                    </Button>
                   </div>
-                  <Textarea
-                    id="base64Output"
-                    value={base64Output}
-                    onChange={(e) => setBase64Output(e.target.value)}
-                    placeholder="Resultado Base64 ou cole aqui para decodificar"
-                    rows={4}
-                  />
-                  <Button onClick={decodeBase64} className="mt-2 w-full" variant="outline">
-                    Decodificar Base64
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+                  
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="base64Output">Base64 Codificado</Label>
+                      {base64Output && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => copyToClipboard(base64Output)}
+                        >
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                    <Textarea
+                      id="base64Output"
+                      value={base64Output}
+                      onChange={(e) => setBase64Output(e.target.value)}
+                      placeholder="Resultado Base64 ou cole aqui para decodificar"
+                      rows={4}
+                    />
+                    <Button onClick={decodeBase64} className="mt-2 w-full" variant="outline">
+                      Decodificar Base64
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          <TabsContent value="url">
-            <Card>
-              <CardHeader>
-                <CardTitle>Conversor URL Encoding</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="urlInput">Texto Original</Label>
-                  <Textarea
-                    id="urlInput"
-                    value={urlInput}
-                    onChange={(e) => setUrlInput(e.target.value)}
-                    placeholder="Digite o texto para codificar"
-                    rows={4}
-                  />
-                  <Button onClick={encodeURL} className="mt-2 w-full">
-                    Codificar para URL
-                  </Button>
-                </div>
-                
-                <div>
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="urlOutput">URL Encoded</Label>
-                    {urlOutput && (
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => copyToClipboard(urlOutput)}
-                      >
-                        <Copy className="h-4 w-4" />
-                      </Button>
-                    )}
+            <TabsContent value="url">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Conversor URL Encoding</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="urlInput">Texto Original</Label>
+                    <Textarea
+                      id="urlInput"
+                      value={urlInput}
+                      onChange={(e) => setUrlInput(e.target.value)}
+                      placeholder="Digite o texto para codificar"
+                      rows={4}
+                    />
+                    <Button onClick={encodeURL} className="mt-2 w-full">
+                      Codificar para URL
+                    </Button>
                   </div>
-                  <Textarea
-                    id="urlOutput"
-                    value={urlOutput}
-                    onChange={(e) => setUrlOutput(e.target.value)}
-                    placeholder="Resultado URL encoded ou cole aqui para decodificar"
-                    rows={4}
-                  />
-                  <Button onClick={decodeURL} className="mt-2 w-full" variant="outline">
-                    Decodificar URL
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+                  
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="urlOutput">URL Encoded</Label>
+                      {urlOutput && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => copyToClipboard(urlOutput)}
+                        >
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                    <Textarea
+                      id="urlOutput"
+                      value={urlOutput}
+                      onChange={(e) => setUrlOutput(e.target.value)}
+                      placeholder="Resultado URL encoded ou cole aqui para decodificar"
+                      rows={4}
+                    />
+                    <Button onClick={decodeURL} className="mt-2 w-full" variant="outline">
+                      Decodificar URL
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          <TabsContent value="html">
-            <Card>
-              <CardHeader>
-                <CardTitle>Conversor HTML Entities</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="htmlInput">Texto Original</Label>
-                  <Textarea
-                    id="htmlInput"
-                    value={htmlInput}
-                    onChange={(e) => setHtmlInput(e.target.value)}
-                    placeholder="Digite o texto para codificar"
-                    rows={4}
-                  />
-                  <Button onClick={encodeHTML} className="mt-2 w-full">
-                    Codificar HTML Entities
-                  </Button>
-                </div>
-                
-                <div>
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="htmlOutput">HTML Entities</Label>
-                    {htmlOutput && (
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => copyToClipboard(htmlOutput)}
-                      >
-                        <Copy className="h-4 w-4" />
-                      </Button>
-                    )}
+            <TabsContent value="html">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Conversor HTML Entities</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="htmlInput">Texto Original</Label>
+                    <Textarea
+                      id="htmlInput"
+                      value={htmlInput}
+                      onChange={(e) => setHtmlInput(e.target.value)}
+                      placeholder="Digite o texto para codificar"
+                      rows={4}
+                    />
+                    <Button onClick={encodeHTML} className="mt-2 w-full">
+                      Codificar HTML Entities
+                    </Button>
                   </div>
-                  <Textarea
-                    id="htmlOutput"
-                    value={htmlOutput}
-                    onChange={(e) => setHtmlOutput(e.target.value)}
-                    placeholder="Resultado HTML entities ou cole aqui para decodificar"
-                    rows={4}
-                  />
-                  <Button onClick={decodeHTML} className="mt-2 w-full" variant="outline">
-                    Decodificar HTML Entities
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+                  
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="htmlOutput">HTML Entities</Label>
+                      {htmlOutput && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => copyToClipboard(htmlOutput)}
+                        >
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                    <Textarea
+                      id="htmlOutput"
+                      value={htmlOutput}
+                      onChange={(e) => setHtmlOutput(e.target.value)}
+                      placeholder="Resultado HTML entities ou cole aqui para decodificar"
+                      rows={4}
+                    />
+                    <Button onClick={decodeHTML} className="mt-2 w-full" variant="outline">
+                      Decodificar HTML Entities
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </div>
   );

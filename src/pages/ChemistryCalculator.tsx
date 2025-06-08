@@ -85,142 +85,144 @@ const ChemistryCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-6 py-8">
         <div className="flex items-center gap-4 mb-8">
-          <Link to="/" className="text-green-600 hover:text-green-700">
+          <Link to="/" className="text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300">
             <ArrowLeft className="h-6 w-6" />
           </Link>
           <div className="flex items-center gap-3">
-            <FlaskRound className="h-8 w-8 text-green-600" />
+            <FlaskRound className="h-8 w-8 text-green-600 dark:text-green-400" />
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               Calculadora de Química
             </h1>
           </div>
         </div>
 
-        <Tabs defaultValue="molarity" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="molarity">Molaridade</TabsTrigger>
-            <TabsTrigger value="ph">pH</TabsTrigger>
-            <TabsTrigger value="molar">Massa Molar</TabsTrigger>
-          </TabsList>
+        <div className="max-w-4xl mx-auto">
+          <Tabs defaultValue="molarity" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="molarity">Molaridade</TabsTrigger>
+              <TabsTrigger value="ph">pH</TabsTrigger>
+              <TabsTrigger value="molar">Massa Molar</TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="molarity">
-            <Card>
-              <CardHeader>
-                <CardTitle>Cálculo de Molaridade (M = n/V)</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="moles">Número de Mols (mol)</Label>
-                  <Input
-                    id="moles"
-                    type="number"
-                    value={moles}
-                    onChange={(e) => setMoles(e.target.value)}
-                    placeholder="Digite o número de mols"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="volume">Volume da Solução (L)</Label>
-                  <Input
-                    id="volume"
-                    type="number"
-                    value={volume}
-                    onChange={(e) => setVolume(e.target.value)}
-                    placeholder="Digite o volume em litros"
-                  />
-                </div>
-                <Button onClick={calculateMolarity} className="w-full">
-                  Calcular Molaridade
-                </Button>
-                {molarity && (
-                  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                    <p className="text-lg font-semibold text-green-800 dark:text-green-200">
-                      Molaridade: {molarity} M (mol/L)
-                    </p>
+            <TabsContent value="molarity">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Cálculo de Molaridade (M = n/V)</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="moles">Número de Mols (mol)</Label>
+                    <Input
+                      id="moles"
+                      type="number"
+                      value={moles}
+                      onChange={(e) => setMoles(e.target.value)}
+                      placeholder="Digite o número de mols"
+                    />
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+                  <div>
+                    <Label htmlFor="volume">Volume da Solução (L)</Label>
+                    <Input
+                      id="volume"
+                      type="number"
+                      value={volume}
+                      onChange={(e) => setVolume(e.target.value)}
+                      placeholder="Digite o volume em litros"
+                    />
+                  </div>
+                  <Button onClick={calculateMolarity} className="w-full">
+                    Calcular Molaridade
+                  </Button>
+                  {molarity && (
+                    <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                      <p className="text-lg font-semibold text-green-800 dark:text-green-200">
+                        Molaridade: {molarity} M (mol/L)
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          <TabsContent value="ph">
-            <Card>
-              <CardHeader>
-                <CardTitle>Cálculo de pH (pH = -log[H⁺])</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="hConcentration">Concentração de H⁺ (M)</Label>
-                  <Input
-                    id="hConcentration"
-                    type="number"
-                    value={hConcentration}
-                    onChange={(e) => setHConcentration(e.target.value)}
-                    placeholder="Digite a concentração de H+"
-                    step="0.0001"
-                  />
-                </div>
-                <Button onClick={calculatePH} className="w-full">
-                  Calcular pH
-                </Button>
-                {ph && (
-                  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                    <p className="text-lg font-semibold text-green-800 dark:text-green-200">
-                      pH: {ph}
-                    </p>
-                    <p className="text-sm text-green-600 dark:text-green-300 mt-2">
-                      {parseFloat(ph) < 7 ? "Solução ácida" : 
-                       parseFloat(ph) > 7 ? "Solução básica" : "Solução neutra"}
-                    </p>
+            <TabsContent value="ph">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Cálculo de pH (pH = -log[H⁺])</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="hConcentration">Concentração de H⁺ (M)</Label>
+                    <Input
+                      id="hConcentration"
+                      type="number"
+                      value={hConcentration}
+                      onChange={(e) => setHConcentration(e.target.value)}
+                      placeholder="Digite a concentração de H+"
+                      step="0.0001"
+                    />
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+                  <Button onClick={calculatePH} className="w-full">
+                    Calcular pH
+                  </Button>
+                  {ph && (
+                    <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                      <p className="text-lg font-semibold text-green-800 dark:text-green-200">
+                        pH: {ph}
+                      </p>
+                      <p className="text-sm text-green-600 dark:text-green-300 mt-2">
+                        {parseFloat(ph) < 7 ? "Solução ácida" : 
+                         parseFloat(ph) > 7 ? "Solução básica" : "Solução neutra"}
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          <TabsContent value="molar">
-            <Card>
-              <CardHeader>
-                <CardTitle>Massa Molar (MM = m/n)</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="mass">Massa (g)</Label>
-                  <Input
-                    id="mass"
-                    type="number"
-                    value={mass}
-                    onChange={(e) => setMass(e.target.value)}
-                    placeholder="Digite a massa em gramas"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="molesForMass">Número de Mols (mol)</Label>
-                  <Input
-                    id="molesForMass"
-                    type="number"
-                    value={molesForMass}
-                    onChange={(e) => setMolesForMass(e.target.value)}
-                    placeholder="Digite o número de mols"
-                  />
-                </div>
-                <Button onClick={calculateMolarMass} className="w-full">
-                  Calcular Massa Molar
-                </Button>
-                {molarMass && (
-                  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                    <p className="text-lg font-semibold text-green-800 dark:text-green-200">
-                      Massa Molar: {molarMass} g/mol
-                    </p>
+            <TabsContent value="molar">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Massa Molar (MM = m/n)</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="mass">Massa (g)</Label>
+                    <Input
+                      id="mass"
+                      type="number"
+                      value={mass}
+                      onChange={(e) => setMass(e.target.value)}
+                      placeholder="Digite a massa em gramas"
+                    />
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+                  <div>
+                    <Label htmlFor="molesForMass">Número de Mols (mol)</Label>
+                    <Input
+                      id="molesForMass"
+                      type="number"
+                      value={molesForMass}
+                      onChange={(e) => setMolesForMass(e.target.value)}
+                      placeholder="Digite o número de mols"
+                    />
+                  </div>
+                  <Button onClick={calculateMolarMass} className="w-full">
+                    Calcular Massa Molar
+                  </Button>
+                  {molarMass && (
+                    <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                      <p className="text-lg font-semibold text-green-800 dark:text-green-200">
+                        Massa Molar: {molarMass} g/mol
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </div>
   );

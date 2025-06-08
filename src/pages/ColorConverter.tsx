@@ -142,14 +142,14 @@ const ColorConverter = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-rose-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-6 py-8">
         <div className="flex items-center gap-4 mb-8">
-          <Link to="/" className="text-pink-600 hover:text-pink-700">
+          <Link to="/" className="text-pink-600 hover:text-pink-700 dark:text-pink-400 dark:hover:text-pink-300">
             <ArrowLeft className="h-6 w-6" />
           </Link>
           <div className="flex items-center gap-3">
-            <Palette className="h-8 w-8 text-pink-600" />
+            <Palette className="h-8 w-8 text-pink-600 dark:text-pink-400" />
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               Conversor de Cores
             </h1>
@@ -164,7 +164,7 @@ const ColorConverter = () => {
             </CardHeader>
             <CardContent>
               <div 
-                className="w-full h-32 rounded-lg border-2 border-gray-300"
+                className="w-full h-32 rounded-lg border-2 border-border"
                 style={{ backgroundColor: hex }}
               />
             </CardContent>
@@ -279,19 +279,19 @@ const ColorConverter = () => {
               <CardContent className="space-y-3">
                 <div>
                   <Label>Cyan: {cmyk.c}%</Label>
-                  <div className="text-sm text-gray-600">Somente leitura</div>
+                  <div className="text-sm text-muted-foreground">Somente leitura</div>
                 </div>
                 <div>
                   <Label>Magenta: {cmyk.m}%</Label>
-                  <div className="text-sm text-gray-600">Somente leitura</div>
+                  <div className="text-sm text-muted-foreground">Somente leitura</div>
                 </div>
                 <div>
                   <Label>Yellow: {cmyk.y}%</Label>
-                  <div className="text-sm text-gray-600">Somente leitura</div>
+                  <div className="text-sm text-muted-foreground">Somente leitura</div>
                 </div>
                 <div>
                   <Label>Key (Black): {cmyk.k}%</Label>
-                  <div className="text-sm text-gray-600">Somente leitura</div>
+                  <div className="text-sm text-muted-foreground">Somente leitura</div>
                 </div>
               </CardContent>
             </Card>

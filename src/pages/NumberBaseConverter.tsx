@@ -101,11 +101,11 @@ const NumberBaseConverter = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-6 py-8">
         <div className="flex items-center gap-4 mb-8">
-          <Link to="/" className="text-blue-600 hover:text-blue-700">
+          <Link to="/" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
             <ArrowLeft className="h-6 w-6" />
           </Link>
           <div className="flex items-center gap-3">
-            <Binary className="h-8 w-8 text-blue-600" />
+            <Binary className="h-8 w-8 text-blue-600 dark:text-blue-400" />
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               Conversor de Base Numérica
             </h1>
@@ -159,7 +159,7 @@ const NumberBaseConverter = () => {
                   onChange={(e) => setInputValue(e.target.value.toUpperCase())}
                   placeholder={`Digite um número na base ${fromBase}`}
                 />
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-muted-foreground mt-1">
                   {fromBase === "16" && "Use A-F para dígitos hexadecimais"}
                   {fromBase === "2" && "Use apenas 0 e 1"}
                   {fromBase === "8" && "Use apenas dígitos 0-7"}
@@ -188,7 +188,7 @@ const NumberBaseConverter = () => {
                 </div>
               )}
 
-              <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+              <div className="bg-muted/50 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2">Referência Rápida:</h3>
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div><strong>Decimal 15:</strong></div>

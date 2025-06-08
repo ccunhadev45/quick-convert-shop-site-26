@@ -114,146 +114,148 @@ const MathCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-6 py-8">
         <div className="flex items-center gap-4 mb-8">
-          <Link to="/" className="text-purple-600 hover:text-purple-700">
+          <Link to="/" className="text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300">
             <ArrowLeft className="h-6 w-6" />
           </Link>
           <div className="flex items-center gap-3">
-            <Calculator className="h-8 w-8 text-purple-600" />
+            <Calculator className="h-8 w-8 text-purple-600 dark:text-purple-400" />
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               Calculadora Matemática
             </h1>
           </div>
         </div>
 
-        <Tabs defaultValue="circle" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="circle">Círculo</TabsTrigger>
-            <TabsTrigger value="triangle">Triângulo</TabsTrigger>
-            <TabsTrigger value="trigonometry">Trigonometria</TabsTrigger>
-          </TabsList>
+        <div className="max-w-4xl mx-auto">
+          <Tabs defaultValue="circle" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="circle">Círculo</TabsTrigger>
+              <TabsTrigger value="triangle">Triângulo</TabsTrigger>
+              <TabsTrigger value="trigonometry">Trigonometria</TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="circle">
-            <Card>
-              <CardHeader>
-                <CardTitle>Cálculos do Círculo</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="radius">Raio</Label>
-                  <Input
-                    id="radius"
-                    type="number"
-                    value={radius}
-                    onChange={(e) => setRadius(e.target.value)}
-                    placeholder="Digite o raio"
-                  />
-                </div>
-                <Button onClick={calculateCircle} className="w-full">
-                  Calcular
-                </Button>
-                {circleArea && (
-                  <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg space-y-2">
-                    <p className="text-lg font-semibold text-purple-800 dark:text-purple-200">
-                      Área: {circleArea} unidades²
-                    </p>
-                    <p className="text-lg font-semibold text-purple-800 dark:text-purple-200">
-                      Circunferência: {circumference} unidades
-                    </p>
+            <TabsContent value="circle">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Cálculos do Círculo</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="radius">Raio</Label>
+                    <Input
+                      id="radius"
+                      type="number"
+                      value={radius}
+                      onChange={(e) => setRadius(e.target.value)}
+                      placeholder="Digite o raio"
+                    />
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+                  <Button onClick={calculateCircle} className="w-full">
+                    Calcular
+                  </Button>
+                  {circleArea && (
+                    <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg space-y-2">
+                      <p className="text-lg font-semibold text-purple-800 dark:text-purple-200">
+                        Área: {circleArea} unidades²
+                      </p>
+                      <p className="text-lg font-semibold text-purple-800 dark:text-purple-200">
+                        Circunferência: {circumference} unidades
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          <TabsContent value="triangle">
-            <Card>
-              <CardHeader>
-                <CardTitle>Área do Triângulo (Fórmula de Heron)</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="sideA">Lado A</Label>
-                  <Input
-                    id="sideA"
-                    type="number"
-                    value={sideA}
-                    onChange={(e) => setSideA(e.target.value)}
-                    placeholder="Digite o lado A"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="sideB">Lado B</Label>
-                  <Input
-                    id="sideB"
-                    type="number"
-                    value={sideB}
-                    onChange={(e) => setSideB(e.target.value)}
-                    placeholder="Digite o lado B"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="sideC">Lado C</Label>
-                  <Input
-                    id="sideC"
-                    type="number"
-                    value={sideC}
-                    onChange={(e) => setSideC(e.target.value)}
-                    placeholder="Digite o lado C"
-                  />
-                </div>
-                <Button onClick={calculateTriangle} className="w-full">
-                  Calcular Área
-                </Button>
-                {triangleArea && (
-                  <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                    <p className="text-lg font-semibold text-purple-800 dark:text-purple-200">
-                      Área: {triangleArea} unidades²
-                    </p>
+            <TabsContent value="triangle">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Área do Triângulo (Fórmula de Heron)</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="sideA">Lado A</Label>
+                    <Input
+                      id="sideA"
+                      type="number"
+                      value={sideA}
+                      onChange={(e) => setSideA(e.target.value)}
+                      placeholder="Digite o lado A"
+                    />
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+                  <div>
+                    <Label htmlFor="sideB">Lado B</Label>
+                    <Input
+                      id="sideB"
+                      type="number"
+                      value={sideB}
+                      onChange={(e) => setSideB(e.target.value)}
+                      placeholder="Digite o lado B"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="sideC">Lado C</Label>
+                    <Input
+                      id="sideC"
+                      type="number"
+                      value={sideC}
+                      onChange={(e) => setSideC(e.target.value)}
+                      placeholder="Digite o lado C"
+                    />
+                  </div>
+                  <Button onClick={calculateTriangle} className="w-full">
+                    Calcular Área
+                  </Button>
+                  {triangleArea && (
+                    <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                      <p className="text-lg font-semibold text-purple-800 dark:text-purple-200">
+                        Área: {triangleArea} unidades²
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          <TabsContent value="trigonometry">
-            <Card>
-              <CardHeader>
-                <CardTitle>Funções Trigonométricas</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="angle">Ângulo (graus)</Label>
-                  <Input
-                    id="angle"
-                    type="number"
-                    value={angle}
-                    onChange={(e) => setAngle(e.target.value)}
-                    placeholder="Digite o ângulo em graus"
-                  />
-                </div>
-                <Button onClick={calculateTrigonometry} className="w-full">
-                  Calcular
-                </Button>
-                {sine && (
-                  <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg space-y-2">
-                    <p className="text-lg font-semibold text-purple-800 dark:text-purple-200">
-                      Seno: {sine}
-                    </p>
-                    <p className="text-lg font-semibold text-purple-800 dark:text-purple-200">
-                      Cosseno: {cosine}
-                    </p>
-                    <p className="text-lg font-semibold text-purple-800 dark:text-purple-200">
-                      Tangente: {tangent}
-                    </p>
+            <TabsContent value="trigonometry">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Funções Trigonométricas</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="angle">Ângulo (graus)</Label>
+                    <Input
+                      id="angle"
+                      type="number"
+                      value={angle}
+                      onChange={(e) => setAngle(e.target.value)}
+                      placeholder="Digite o ângulo em graus"
+                    />
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+                  <Button onClick={calculateTrigonometry} className="w-full">
+                    Calcular
+                  </Button>
+                  {sine && (
+                    <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg space-y-2">
+                      <p className="text-lg font-semibold text-purple-800 dark:text-purple-200">
+                        Seno: {sine}
+                      </p>
+                      <p className="text-lg font-semibold text-purple-800 dark:text-purple-200">
+                        Cosseno: {cosine}
+                      </p>
+                      <p className="text-lg font-semibold text-purple-800 dark:text-purple-200">
+                        Tangente: {tangent}
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </div>
   );

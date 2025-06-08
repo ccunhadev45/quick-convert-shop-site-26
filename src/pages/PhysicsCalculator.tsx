@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useConversionHistory } from "@/hooks/useConversionHistory";
@@ -86,157 +85,159 @@ const PhysicsCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-6 py-8">
         <div className="flex items-center gap-4 mb-8">
-          <Link to="/" className="text-blue-600 hover:text-blue-700">
+          <Link to="/" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
             <ArrowLeft className="h-6 w-6" />
           </Link>
           <div className="flex items-center gap-3">
-            <Calculator className="h-8 w-8 text-blue-600" />
+            <Calculator className="h-8 w-8 text-blue-600 dark:text-blue-400" />
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
               Calculadora de Física
             </h1>
           </div>
         </div>
 
-        <Tabs defaultValue="force" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="force">Força</TabsTrigger>
-            <TabsTrigger value="energy">Energia</TabsTrigger>
-            <TabsTrigger value="motion">Movimento</TabsTrigger>
-          </TabsList>
+        <div className="max-w-4xl mx-auto">
+          <Tabs defaultValue="force" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="force">Força</TabsTrigger>
+              <TabsTrigger value="energy">Energia</TabsTrigger>
+              <TabsTrigger value="motion">Movimento</TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="force">
-            <Card>
-              <CardHeader>
-                <CardTitle>Cálculo de Força (F = m × a)</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="mass">Massa (kg)</Label>
-                  <Input
-                    id="mass"
-                    type="number"
-                    value={mass}
-                    onChange={(e) => setMass(e.target.value)}
-                    placeholder="Digite a massa em kg"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="acceleration">Aceleração (m/s²)</Label>
-                  <Input
-                    id="acceleration"
-                    type="number"
-                    value={acceleration}
-                    onChange={(e) => setAcceleration(e.target.value)}
-                    placeholder="Digite a aceleração em m/s²"
-                  />
-                </div>
-                <Button onClick={calculateForce} className="w-full">
-                  Calcular Força
-                </Button>
-                {force && (
-                  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                    <p className="text-lg font-semibold text-green-800 dark:text-green-200">
-                      Força: {force} N (Newtons)
-                    </p>
+            <TabsContent value="force">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Cálculo de Força (F = m × a)</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="mass">Massa (kg)</Label>
+                    <Input
+                      id="mass"
+                      type="number"
+                      value={mass}
+                      onChange={(e) => setMass(e.target.value)}
+                      placeholder="Digite a massa em kg"
+                    />
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+                  <div>
+                    <Label htmlFor="acceleration">Aceleração (m/s²)</Label>
+                    <Input
+                      id="acceleration"
+                      type="number"
+                      value={acceleration}
+                      onChange={(e) => setAcceleration(e.target.value)}
+                      placeholder="Digite a aceleração em m/s²"
+                    />
+                  </div>
+                  <Button onClick={calculateForce} className="w-full">
+                    Calcular Força
+                  </Button>
+                  {force && (
+                    <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <p className="text-lg font-semibold text-blue-800 dark:text-blue-200">
+                        Força: {force} N (Newtons)
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          <TabsContent value="energy">
-            <Card>
-              <CardHeader>
-                <CardTitle>Energia Cinética (E = ½mv²)</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="energyMass">Massa (kg)</Label>
-                  <Input
-                    id="energyMass"
-                    type="number"
-                    value={energyMass}
-                    onChange={(e) => setEnergyMass(e.target.value)}
-                    placeholder="Digite a massa em kg"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="velocity">Velocidade (m/s)</Label>
-                  <Input
-                    id="velocity"
-                    type="number"
-                    value={velocity}
-                    onChange={(e) => setVelocity(e.target.value)}
-                    placeholder="Digite a velocidade em m/s"
-                  />
-                </div>
-                <Button onClick={calculateKineticEnergy} className="w-full">
-                  Calcular Energia Cinética
-                </Button>
-                {kineticEnergy && (
-                  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                    <p className="text-lg font-semibold text-green-800 dark:text-green-200">
-                      Energia Cinética: {kineticEnergy} J (Joules)
-                    </p>
+            <TabsContent value="energy">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Energia Cinética (E = ½mv²)</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="energyMass">Massa (kg)</Label>
+                    <Input
+                      id="energyMass"
+                      type="number"
+                      value={energyMass}
+                      onChange={(e) => setEnergyMass(e.target.value)}
+                      placeholder="Digite a massa em kg"
+                    />
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+                  <div>
+                    <Label htmlFor="velocity">Velocidade (m/s)</Label>
+                    <Input
+                      id="velocity"
+                      type="number"
+                      value={velocity}
+                      onChange={(e) => setVelocity(e.target.value)}
+                      placeholder="Digite a velocidade em m/s"
+                    />
+                  </div>
+                  <Button onClick={calculateKineticEnergy} className="w-full">
+                    Calcular Energia Cinética
+                  </Button>
+                  {kineticEnergy && (
+                    <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <p className="text-lg font-semibold text-blue-800 dark:text-blue-200">
+                        Energia Cinética: {kineticEnergy} J (Joules)
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          <TabsContent value="motion">
-            <Card>
-              <CardHeader>
-                <CardTitle>Movimento Uniformemente Variado (s = v₀t + ½at²)</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="initialVelocity">Velocidade Inicial (m/s)</Label>
-                  <Input
-                    id="initialVelocity"
-                    type="number"
-                    value={initialVelocity}
-                    onChange={(e) => setInitialVelocity(e.target.value)}
-                    placeholder="Digite a velocidade inicial"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="motionAcceleration">Aceleração (m/s²)</Label>
-                  <Input
-                    id="motionAcceleration"
-                    type="number"
-                    value={motionAcceleration}
-                    onChange={(e) => setMotionAcceleration(e.target.value)}
-                    placeholder="Digite a aceleração"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="time">Tempo (s)</Label>
-                  <Input
-                    id="time"
-                    type="number"
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                    placeholder="Digite o tempo em segundos"
-                  />
-                </div>
-                <Button onClick={calculateDistance} className="w-full">
-                  Calcular Distância
-                </Button>
-                {distance && (
-                  <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                    <p className="text-lg font-semibold text-green-800 dark:text-green-200">
-                      Distância: {distance} m (metros)
-                    </p>
+            <TabsContent value="motion">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Movimento Uniformemente Variado (s = v₀t + ½at²)</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <Label htmlFor="initialVelocity">Velocidade Inicial (m/s)</Label>
+                    <Input
+                      id="initialVelocity"
+                      type="number"
+                      value={initialVelocity}
+                      onChange={(e) => setInitialVelocity(e.target.value)}
+                      placeholder="Digite a velocidade inicial"
+                    />
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+                  <div>
+                    <Label htmlFor="motionAcceleration">Aceleração (m/s²)</Label>
+                    <Input
+                      id="motionAcceleration"
+                      type="number"
+                      value={motionAcceleration}
+                      onChange={(e) => setMotionAcceleration(e.target.value)}
+                      placeholder="Digite a aceleração"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="time">Tempo (s)</Label>
+                    <Input
+                      id="time"
+                      type="number"
+                      value={time}
+                      onChange={(e) => setTime(e.target.value)}
+                      placeholder="Digite o tempo em segundos"
+                    />
+                  </div>
+                  <Button onClick={calculateDistance} className="w-full">
+                    Calcular Distância
+                  </Button>
+                  {distance && (
+                    <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <p className="text-lg font-semibold text-blue-800 dark:text-blue-200">
+                        Distância: {distance} m (metros)
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </div>
   );
