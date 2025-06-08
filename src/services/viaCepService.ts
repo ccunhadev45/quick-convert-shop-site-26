@@ -20,39 +20,66 @@ export interface CityResult {
   fullName: string;
 }
 
-// Cache para cidades
-let citiesCache: CityResult[] | null = null;
+// Cache para cidades com TTL
+interface CacheEntry {
+  data: CityResult[];
+  timestamp: number;
+}
+
+let citiesCache: CacheEntry | null = null;
+const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 horas
 
 export const fetchBrazilianCitiesViaCep = async (): Promise<CityResult[]> => {
-  if (citiesCache) {
-    return citiesCache;
+  // Verifica se o cache ainda é válido
+  if (citiesCache && (Date.now() - citiesCache.timestamp) < CACHE_TTL) {
+    console.log('Retornando cidades do cache');
+    return citiesCache.data;
   }
 
   try {
     console.log('Buscando cidades do IBGE...');
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos timeout
+
     const response = await fetch(
-      'https://servicodados.ibge.gov.br/api/v1/localidades/municipios?orderBy=nome'
+      'https://servicodados.ibge.gov.br/api/v1/localidades/municipios?orderBy=nome',
+      { signal: controller.signal }
     );
     
+    clearTimeout(timeoutId);
+
     if (!response.ok) {
-      throw new Error('Falha ao buscar cidades');
+      throw new Error(`Falha ao buscar cidades: ${response.status} ${response.statusText}`);
     }
     
     const data = await response.json();
     console.log('Cidades carregadas:', data.length);
     
-    citiesCache = data.map((city: any) => ({
+    const cities = data.map((city: any) => ({
       id: city.id.toString(),
       name: city.nome,
       state: city.microrregiao.mesorregiao.UF.nome,
       stateCode: city.microrregiao.mesorregiao.UF.sigla,
       fullName: `${city.nome}, ${city.microrregiao.mesorregiao.UF.sigla}`
     }));
+
+    // Atualiza o cache
+    citiesCache = {
+      data: cities,
+      timestamp: Date.now()
+    };
     
-    return citiesCache;
+    return cities;
   } catch (error) {
     console.error('Erro ao buscar cidades:', error);
-    throw error;
+    
+    // Se houver cache expirado, use-o como fallback
+    if (citiesCache) {
+      console.log('Usando cache expirado como fallback');
+      return citiesCache.data;
+    }
+    
+    throw new Error('Não foi possível carregar as cidades. Verifique sua conexão.');
   }
 };
 
@@ -81,19 +108,30 @@ export const searchCitiesViaCep = async (query: string): Promise<CityResult[]> =
     return results;
   } catch (error) {
     console.error('Erro na busca:', error);
-    return [];
+    throw error;
   }
 };
 
 export const geocodeCityViaCep = async (cityName: string, stateCode: string) => {
   try {
     const query = `${cityName}, ${stateCode}, Brazil`;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 segundos timeout
+
     const response = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&countrycodes=br`
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&countrycodes=br`,
+      { 
+        signal: controller.signal,
+        headers: {
+          'User-Agent': 'SuperConversor/1.0'
+        }
+      }
     );
     
+    clearTimeout(timeoutId);
+
     if (!response.ok) {
-      throw new Error('Geocoding request failed');
+      throw new Error(`Geocoding request failed: ${response.status}`);
     }
     
     const data = await response.json();
@@ -111,6 +149,12 @@ export const geocodeCityViaCep = async (cityName: string, stateCode: string) => 
     return null;
   } catch (error) {
     console.error('Geocoding error:', error);
-    return null;
+    throw new Error('Não foi possível obter as coordenadas da cidade');
   }
+};
+
+// Função para limpar cache manualmente
+export const clearCitiesCache = () => {
+  citiesCache = null;
+  console.log('Cache de cidades limpo');
 };

@@ -1,16 +1,51 @@
 
 import { Link } from "react-router-dom";
-import { Calculator, Menu, Settings } from "lucide-react";
+import { Calculator, Menu, Settings, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
-  const navItems = [
-    { name: "Início", path: "/" },
+  const converterItems = [
     { name: "Comprimento", path: "/length" },
     { name: "Peso", path: "/weight" },
     { name: "Volume", path: "/volume" },
     { name: "Temperatura", path: "/temperature" },
+    { name: "Área", path: "/area" },
+    { name: "Energia", path: "/energy" },
+    { name: "Tempo", path: "/time" },
+    { name: "Velocidade", path: "/speed" },
+  ];
+
+  const financialItems = [
+    { name: "Moedas", path: "/currency" },
+    { name: "Criptomoedas", path: "/crypto" },
+    { name: "Índices Financeiros", path: "/financial-indices" },
+  ];
+
+  const healthItems = [
+    { name: "IMC", path: "/imc" },
+    { name: "TMB", path: "/tmb" },
+    { name: "Calorias", path: "/calories" },
+  ];
+
+  const engineeringItems = [
+    { name: "Concreto", path: "/concrete-calculator" },
+    { name: "Área de Construção", path: "/construction-area" },
+    { name: "Estrutural", path: "/structural-calculator" },
+  ];
+
+  const specialtyItems = [
+    { name: "Mapa Astral", path: "/birth-chart" },
+    { name: "Distância Astronômica", path: "/astronomical-distance" },
+    { name: "Regra de Três", path: "/regra-de-tres" },
   ];
 
   return (
@@ -28,16 +63,114 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium text-sm"
-              >
-                {item.name}
-              </Link>
-            ))}
+          <nav className="hidden lg:flex items-center space-x-6">
+            <Link
+              to="/"
+              className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium text-sm"
+            >
+              Início
+            </Link>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
+                  <span>Conversores</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 bg-white z-50">
+                <DropdownMenuLabel>Conversores de Unidades</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {converterItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link to={item.path} className="cursor-pointer">
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
+                  <span>Financeiro</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 bg-white z-50">
+                <DropdownMenuLabel>Conversores Financeiros</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {financialItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link to={item.path} className="cursor-pointer">
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
+                  <span>Saúde</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 bg-white z-50">
+                <DropdownMenuLabel>Calculadoras de Saúde</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {healthItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link to={item.path} className="cursor-pointer">
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
+                  <span>Engenharia</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 bg-white z-50">
+                <DropdownMenuLabel>Engenharia & Construção</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {engineeringItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link to={item.path} className="cursor-pointer">
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
+                  <span>Especialidades</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 bg-white z-50">
+                <DropdownMenuLabel>Ferramentas Especiais</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {specialtyItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link to={item.path} className="cursor-pointer">
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Link
               to="/admin"
               className="flex items-center space-x-2 bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg transition-colors duration-200 text-sm"
@@ -50,21 +183,94 @@ const Header = () => {
           {/* Mobile Navigation */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="md:hidden">
+              <Button variant="outline" size="icon" className="lg:hidden">
                 <Menu className="h-4 w-4" />
               </Button>
             </SheetTrigger>
-            <SheetContent>
-              <div className="flex flex-col space-y-4 mt-6">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className="text-lg text-gray-600 hover:text-blue-600 transition-colors duration-200"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+            <SheetContent className="w-80">
+              <div className="flex flex-col space-y-6 mt-6">
+                <Link
+                  to="/"
+                  className="text-lg text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                >
+                  Início
+                </Link>
+                
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-gray-900">Conversores</h3>
+                  <div className="pl-4 space-y-2">
+                    {converterItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className="block text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-gray-900">Financeiro</h3>
+                  <div className="pl-4 space-y-2">
+                    {financialItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className="block text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-gray-900">Saúde</h3>
+                  <div className="pl-4 space-y-2">
+                    {healthItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className="block text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-gray-900">Engenharia</h3>
+                  <div className="pl-4 space-y-2">
+                    {engineeringItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className="block text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-gray-900">Especialidades</h3>
+                  <div className="pl-4 space-y-2">
+                    {specialtyItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className="block text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
                 <Link
                   to="/admin"
                   className="flex items-center space-x-2 text-lg text-gray-600 hover:text-blue-600 transition-colors duration-200 mt-4 pt-4 border-t"
