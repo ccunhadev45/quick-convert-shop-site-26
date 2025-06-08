@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -61,6 +62,11 @@ import OvenConversions from "./pages/OvenConversions";
 import NutritionCalculator from "./pages/NutritionCalculator";
 import EducationalUnits from "./pages/EducationalUnits";
 import BasicStatistics from "./pages/BasicStatistics";
+
+// Novas páginas de Moda & Beleza
+import ClothingSizes from "./pages/ClothingSizes";
+import HairColor from "./pages/HairColor";
+import BodyMeasurements from "./pages/BodyMeasurements";
 
 const queryClient = new QueryClient({
   defaultOptions: {

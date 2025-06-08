@@ -6,13 +6,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from "@/components/ui/dropdown-menu";
 import ThemeToggle from "./ThemeToggle";
 import ConversionHistory from "./ConversionHistory";
 import { allEnhancedCategories, getGroupedCategories } from "@/data/enhancedCategoriesData";
@@ -135,72 +135,71 @@ const EnhancedHeader = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <NavigationMenu className="hidden lg:flex">
-            <NavigationMenuList>
-              {megaMenuCategories.slice(0, 4).map((category) => (
-                <NavigationMenuItem key={category.key}>
-                  <NavigationMenuTrigger className="flex items-center space-x-2 relative group">
+          <div className="hidden lg:flex items-center space-x-4">
+            {megaMenuCategories.slice(0, 4).map((category) => (
+              <DropdownMenu key={category.key}>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center space-x-2 relative group">
                     <span>{category.title}</span>
                     {category.premium && <Star className="h-3 w-3 text-yellow-500" />}
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent className="absolute top-full left-0 mt-2 z-[100]">
-                    <div className="grid gap-3 p-6 w-80 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
-                      <div className="border-b pb-3 mb-3">
-                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">{category.title}</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{category.description}</p>
-                      </div>
-                      <div className="grid gap-2 max-h-96 overflow-y-auto">
-                        {groupedCategories[category.key]?.map((item) => (
-                          <NavigationMenuLink key={item.path} asChild>
-                            <Link
-                              to={item.path}
-                              className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                            >
-                              <item.icon className="h-4 w-4 text-gray-400" />
-                              <div className="flex-1">
-                                <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.title}</div>
-                                <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{item.description}</div>
-                              </div>
-                              {item.premium && <Star className="h-3 w-3 text-yellow-500" />}
-                            </Link>
-                          </NavigationMenuLink>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-80 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg z-[100]">
+                  <DropdownMenuLabel className="border-b pb-3 mb-3">
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">{category.title}</h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{category.description}</p>
+                  </DropdownMenuLabel>
+                  <div className="max-h-96 overflow-y-auto">
+                    {groupedCategories[category.key]?.map((item) => (
+                      <DropdownMenuItem key={item.path} asChild>
+                        <Link
+                          to={item.path}
+                          className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors w-full"
+                        >
+                          <item.icon className="h-4 w-4 text-gray-400" />
+                          <div className="flex-1">
+                            <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.title}</div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{item.description}</div>
+                          </div>
+                          {item.premium && <Star className="h-3 w-3 text-yellow-500" />}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ))}
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost">Mais</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-96 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg z-[100]">
+                <div className="grid grid-cols-2 gap-6 p-6">
+                  {megaMenuCategories.slice(4).map((category) => (
+                    <div key={category.key} className="space-y-2">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 flex items-center space-x-2">
+                        <span>{category.title}</span>
+                        {category.premium && <Star className="h-3 w-3 text-yellow-500" />}
+                      </h4>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{category.description}</p>
+                      <div className="space-y-1">
+                        {groupedCategories[category.key]?.slice(0, 3).map((item) => (
+                          <Link
+                            key={item.path}
+                            to={item.path}
+                            className="block text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                          >
+                            {item.title}
+                          </Link>
                         ))}
                       </div>
                     </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              ))}
-              
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Mais</NavigationMenuTrigger>
-                <NavigationMenuContent className="absolute top-full left-0 mt-2 z-[100]">
-                  <div className="grid grid-cols-2 gap-6 p-6 w-96 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg">
-                    {megaMenuCategories.slice(4).map((category) => (
-                      <div key={category.key} className="space-y-2">
-                        <h4 className="font-semibold text-gray-900 dark:text-gray-100 flex items-center space-x-2">
-                          <span>{category.title}</span>
-                          {category.premium && <Star className="h-3 w-3 text-yellow-500" />}
-                        </h4>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{category.description}</p>
-                        <div className="space-y-1">
-                          {groupedCategories[category.key]?.slice(0, 3).map((item) => (
-                            <NavigationMenuLink key={item.path} asChild>
-                              <Link
-                                to={item.path}
-                                className="block text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                              >
-                                {item.title}
-                              </Link>
-                            </NavigationMenuLink>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
+                  ))}
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
