@@ -1,94 +1,59 @@
 
-import { Star, ArrowRight } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { useConversionHistory } from "@/hooks/useConversionHistory";
-import { useFavorites } from "@/hooks/useFavorites";
+import { Star, Calculator, Thermometer, Scale } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Card, CardContent } from "@/components/ui/card";
 
 const QuickFavorites = () => {
-  const { getFavorites } = useConversionHistory();
-  const { favorites } = useFavorites();
-  
-  const conversionFavorites = getFavorites().slice(0, 3);
-  const toolFavorites = favorites.slice(0, 3);
-
-  if (conversionFavorites.length === 0 && toolFavorites.length === 0) {
-    return null;
-  }
+  const favorites = [
+    {
+      title: "Conversor de Temperatura",
+      description: "Celsius, Fahrenheit, Kelvin",
+      icon: Thermometer,
+      path: "/temperature",
+      color: "red"
+    },
+    {
+      title: "Conversor de Peso",
+      description: "Kg, gramas, libras",
+      icon: Scale,
+      path: "/weight",
+      color: "green"
+    },
+    {
+      title: "Calculadora de IMC",
+      description: "Índice de massa corporal",
+      icon: Calculator,
+      path: "/imc",
+      color: "blue"
+    }
+  ];
 
   return (
     <div className="mb-16">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-          Seus Favoritos
+      <div className="flex items-center justify-center gap-2 mb-8">
+        <Star className="h-6 w-6 text-yellow-500" />
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+          Ferramentas Mais Usadas
         </h2>
-        <p className="text-gray-600 dark:text-gray-400">
-          Acesso rápido às suas conversões e ferramentas favoritas
-        </p>
+        <Star className="h-6 w-6 text-yellow-500" />
       </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Conversões Favoritas */}
-        {conversionFavorites.length > 0 && (
-          <Card className="border border-gray-200 dark:border-gray-700">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
-                Conversões Favoritas
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {conversionFavorites.map((record) => (
-                <div key={record.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Badge variant="secondary" className="text-xs">
-                        {record.category}
-                      </Badge>
-                    </div>
-                    <div className="text-sm">
-                      <span className="font-mono">{record.input}</span>
-                      <ArrowRight className="inline h-3 w-3 mx-2" />
-                      <span className="font-mono font-semibold">{record.output}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Ferramentas Favoritas */}
-        {toolFavorites.length > 0 && (
-          <Card className="border border-gray-200 dark:border-gray-700">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
-                Ferramentas Favoritas
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {toolFavorites.map((favorite) => (
-                <div key={favorite.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Badge variant="secondary" className="text-xs">
-                        {favorite.category}
-                      </Badge>
-                    </div>
-                    <div className="font-medium">{favorite.title}</div>
-                  </div>
-                  <Button variant="ghost" size="sm" asChild>
-                    <a href={favorite.path}>
-                      <ArrowRight className="h-4 w-4" />
-                    </a>
-                  </Button>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        )}
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        {favorites.map((item) => (
+          <Link key={item.path} to={item.path}>
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer border-2 border-transparent hover:border-yellow-300">
+              <CardContent className="p-6 text-center">
+                <item.icon className={`h-12 w-12 mx-auto mb-4 text-${item.color}-600`} />
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {item.description}
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
       </div>
     </div>
   );
