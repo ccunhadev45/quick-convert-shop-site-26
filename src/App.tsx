@@ -9,9 +9,19 @@ import LengthConverter from "./pages/LengthConverter";
 import WeightConverter from "./pages/WeightConverter";
 import VolumeConverter from "./pages/VolumeConverter";
 import TemperatureConverter from "./pages/TemperatureConverter";
+import AreaConverter from "./pages/AreaConverter";
+import EnergyConverter from "./pages/EnergyConverter";
+import TimeConverter from "./pages/TimeConverter";
+import SpeedConverter from "./pages/SpeedConverter";
+import CurrencyConverter from "./pages/CurrencyConverter";
+import CryptoConverter from "./pages/CryptoConverter";
+import FinancialIndicesPage from "./pages/FinancialIndicesPage";
 import ImcCalculator from "./pages/ImcCalculator";
 import TmbCalculator from "./pages/TmbCalculator";
 import CalorieCalculator from "./pages/CalorieCalculator";
+import ConcreteCalculator from "./pages/ConcreteCalculator";
+import ConstructionAreaCalculator from "./pages/ConstructionAreaCalculator";
+import StructuralCalculator from "./pages/StructuralCalculator";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
@@ -29,9 +39,19 @@ const App = () => (
           <Route path="/weight" element={<WeightConverter />} />
           <Route path="/volume" element={<VolumeConverter />} />
           <Route path="/temperature" element={<TemperatureConverter />} />
+          <Route path="/area" element={<AreaConverter />} />
+          <Route path="/energy" element={<EnergyConverter />} />
+          <Route path="/time" element={<TimeConverter />} />
+          <Route path="/speed" element={<SpeedConverter />} />
+          <Route path="/currency" element={<CurrencyConverter />} />
+          <Route path="/crypto" element={<CryptoConverter />} />
+          <Route path="/financial-indices" element={<FinancialIndicesPage />} />
           <Route path="/imc" element={<ImcCalculator />} />
           <Route path="/tmb" element={<TmbCalculator />} />
           <Route path="/calories" element={<CalorieCalculator />} />
+          <Route path="/concrete-calculator" element={<ConcreteCalculator />} />
+          <Route path="/construction-area" element={<ConstructionAreaCalculator />} />
+          <Route path="/structural-calculator" element={<StructuralCalculator />} />
           <Route path="/admin" element={<AdminDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
