@@ -11,6 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import ThemeToggle from "./ThemeToggle";
+import ConversionHistory from "./ConversionHistory";
 
 const Header = () => {
   const converterItems = [
@@ -49,7 +51,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+    <header className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-3">
@@ -57,8 +59,8 @@ const Header = () => {
               <Calculator className="h-6 w-6 text-white" />
             </div>
             <div>
-              <span className="text-xl font-bold text-gray-900">Super Conversor</span>
-              <div className="text-xs text-gray-500">de Unidades</div>
+              <span className="text-xl font-bold text-gray-900 dark:text-gray-100">Super Conversor</span>
+              <div className="text-xs text-gray-500 dark:text-gray-400">de Unidades</div>
             </div>
           </Link>
 
@@ -66,19 +68,19 @@ const Header = () => {
           <nav className="hidden lg:flex items-center space-x-6">
             <Link
               to="/"
-              className="text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium text-sm"
+              className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium text-sm"
             >
               Início
             </Link>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
                   <span>Conversores</span>
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-white z-50">
+              <DropdownMenuContent className="w-56 bg-white dark:bg-gray-800 z-50">
                 <DropdownMenuLabel>Conversores de Unidades</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {converterItems.map((item) => (
@@ -93,12 +95,12 @@ const Header = () => {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
                   <span>Financeiro</span>
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-white z-50">
+              <DropdownMenuContent className="w-56 bg-white dark:bg-gray-800 z-50">
                 <DropdownMenuLabel>Conversores Financeiros</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {financialItems.map((item) => (
@@ -113,12 +115,12 @@ const Header = () => {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
                   <span>Saúde</span>
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-white z-50">
+              <DropdownMenuContent className="w-56 bg-white dark:bg-gray-800 z-50">
                 <DropdownMenuLabel>Calculadoras de Saúde</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {healthItems.map((item) => (
@@ -133,12 +135,12 @@ const Header = () => {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
                   <span>Engenharia</span>
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-white z-50">
+              <DropdownMenuContent className="w-56 bg-white dark:bg-gray-800 z-50">
                 <DropdownMenuLabel>Engenharia & Construção</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {engineeringItems.map((item) => (
@@ -153,12 +155,12 @@ const Header = () => {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 hover:text-blue-600">
+                <Button variant="ghost" className="flex items-center space-x-1 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
                   <span>Especialidades</span>
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-white z-50">
+              <DropdownMenuContent className="w-56 bg-white dark:bg-gray-800 z-50">
                 <DropdownMenuLabel>Ferramentas Especiais</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {specialtyItems.map((item) => (
@@ -171,13 +173,17 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link
-              to="/admin"
-              className="flex items-center space-x-2 bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg transition-colors duration-200 text-sm"
-            >
-              <Settings className="h-4 w-4" />
-              <span>Admin</span>
-            </Link>
+            <div className="flex items-center space-x-2">
+              <ConversionHistory />
+              <ThemeToggle />
+              <Link
+                to="/admin"
+                className="flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-lg transition-colors duration-200 text-sm"
+              >
+                <Settings className="h-4 w-4" />
+                <span>Admin</span>
+              </Link>
+            </div>
           </nav>
 
           {/* Mobile Navigation */}
@@ -187,14 +193,20 @@ const Header = () => {
                 <Menu className="h-4 w-4" />
               </Button>
             </SheetTrigger>
-            <SheetContent className="w-80">
+            <SheetContent className="w-80 bg-white dark:bg-gray-900">
               <div className="flex flex-col space-y-6 mt-6">
-                <Link
-                  to="/"
-                  className="text-lg text-gray-600 hover:text-blue-600 transition-colors duration-200"
-                >
-                  Início
-                </Link>
+                <div className="flex items-center justify-between">
+                  <Link
+                    to="/"
+                    className="text-lg text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                  >
+                    Início
+                  </Link>
+                  <div className="flex items-center space-x-2">
+                    <ConversionHistory />
+                    <ThemeToggle />
+                  </div>
+                </div>
                 
                 <div className="space-y-3">
                   <h3 className="font-semibold text-gray-900">Conversores</h3>
@@ -273,7 +285,7 @@ const Header = () => {
 
                 <Link
                   to="/admin"
-                  className="flex items-center space-x-2 text-lg text-gray-600 hover:text-blue-600 transition-colors duration-200 mt-4 pt-4 border-t"
+                  className="flex items-center space-x-2 text-lg text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 mt-4 pt-4 border-t dark:border-gray-700"
                 >
                   <Settings className="h-5 w-5" />
                   <span>Administração</span>

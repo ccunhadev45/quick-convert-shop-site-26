@@ -5,6 +5,7 @@ import SearchFilter from "@/components/SearchFilter";
 import HeroSection from "@/components/HeroSection";
 import CategorySection from "@/components/CategorySection";
 import QuickConversions from "@/components/QuickConversions";
+import QuickFavorites from "@/components/QuickFavorites";
 import AdSpace from "@/components/AdSpace";
 import ProductShowcase from "@/components/ProductShowcase";
 import { allCategories } from "@/data/categoriesData";
@@ -35,7 +36,7 @@ const Index = () => {
   }, [filteredCategories]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Header />
       
       <AdSpace position="top" />
@@ -47,6 +48,8 @@ const Index = () => {
         />
 
         <HeroSection />
+
+        <QuickFavorites />
 
         <CategorySection 
           title="Conversores de Unidades"
@@ -86,7 +89,7 @@ const Index = () => {
 
         {filteredCategories.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">
+            <p className="text-gray-500 dark:text-gray-400 text-lg">
               Nenhum resultado encontrado para "{searchTerm}"
             </p>
           </div>

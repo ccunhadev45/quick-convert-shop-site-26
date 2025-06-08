@@ -1,0 +1,69 @@
+
+{
+  "name": "Super Conversor de Unidades",
+  "short_name": "Super Conversor",
+  "description": "Ferramenta completa para conversão de unidades, cálculos e muito mais",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "categories": ["utilities", "education"],
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48 64x64",
+      "type": "image/x-icon",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/placeholder.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/placeholder.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/placeholder.svg",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide",
+      "label": "Super Conversor - Desktop"
+    },
+    {
+      "src": "/placeholder.svg",
+      "sizes": "720x1280",
+      "type": "image/svg+xml",
+      "form_factor": "narrow",
+      "label": "Super Conversor - Mobile"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Conversor de Moedas",
+      "short_name": "Moedas",
+      "url": "/currency",
+      "icons": [{"src": "/placeholder.svg", "sizes": "96x96"}]
+    },
+    {
+      "name": "Calculadora IMC",
+      "short_name": "IMC",
+      "url": "/imc",
+      "icons": [{"src": "/placeholder.svg", "sizes": "96x96"}]
+    },
+    {
+      "name": "Mapa Astral",
+      "short_name": "Astral",
+      "url": "/birth-chart",
+      "icons": [{"src": "/placeholder.svg", "sizes": "96x96"}]
+    }
+  ]
+}
