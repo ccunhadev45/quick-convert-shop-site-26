@@ -1,8 +1,9 @@
+
 import Header from "@/components/Header";
 import ConverterCard from "@/components/ConverterCard";
 import AdSpace from "@/components/AdSpace";
 import ProductShowcase from "@/components/ProductShowcase";
-import { Ruler, Weight, Beaker, Thermometer, Square, Zap, Clock, Gauge, Calculator, Heart } from "lucide-react";
+import { Ruler, Weight, Beaker, Thermometer, Square, Zap, Clock, Gauge, Calculator, Heart, Apple } from "lucide-react";
 
 const Index = () => {
   const converterCategories = [
@@ -61,7 +62,10 @@ const Index = () => {
       icon: Gauge,
       path: "/speed",
       color: "pink"
-    },
+    }
+  ];
+
+  const calculatorCategories = [
     {
       title: "Calculadora IMC",
       description: "Índice de Massa Corporal",
@@ -78,11 +82,41 @@ const Index = () => {
     }
   ];
 
+  const nutritionCategories = [
+    {
+      title: "Calculadora de Calorias",
+      description: "Calorias e macros dos alimentos",
+      icon: Apple,
+      path: "/calories",
+      color: "green"
+    }
+  ];
+
+  const CategorySection = ({ title, description, cards }: { title: string, description: string, cards: any[] }) => (
+    <div className="mb-16">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
+        <p className="text-gray-600">{description}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {cards.map((category) => (
+          <ConverterCard
+            key={category.title}
+            title={category.title}
+            description={category.description}
+            icon={category.icon}
+            path={category.path}
+            color={category.color}
+          />
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      {/* AdSense - Topo */}
       <AdSpace position="top" />
       
       <main className="container mx-auto px-6 py-12">
@@ -95,23 +129,26 @@ const Index = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {converterCategories.map((category) => (
-            <ConverterCard
-              key={category.title}
-              title={category.title}
-              description={category.description}
-              icon={category.icon}
-              path={category.path}
-              color={category.color}
-            />
-          ))}
-        </div>
+        <CategorySection 
+          title="Conversores de Unidades"
+          description="Converta entre diferentes unidades de medida"
+          cards={converterCategories}
+        />
 
-        {/* AdSense - Meio */}
+        <CategorySection 
+          title="Calculadoras de Saúde"
+          description="Ferramentas para cálculos relacionados à saúde"
+          cards={calculatorCategories}
+        />
+
+        <CategorySection 
+          title="Valores Energéticos"
+          description="Calcule calorias e macronutrientes dos alimentos"
+          cards={nutritionCategories}
+        />
+
         <AdSpace position="middle" />
 
-        {/* Showcase de Produtos */}
         <ProductShowcase />
 
         {/* Conversões Rápidas */}
@@ -140,7 +177,6 @@ const Index = () => {
         </div>
       </main>
 
-      {/* AdSense - Rodapé */}
       <AdSpace position="footer" />
     </div>
   );
