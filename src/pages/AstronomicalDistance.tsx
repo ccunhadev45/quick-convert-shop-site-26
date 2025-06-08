@@ -74,40 +74,40 @@ const AstronomicalDistance = () => {
   const distance = calculated ? getDistance() : 0;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-background py-8">
       <div className="container mx-auto px-6">
         <div className="mb-6">
           <Link
             to="/"
-            className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-4"
+            className="inline-flex items-center text-primary hover:text-primary/80 mb-4 transition-colors"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Voltar para início
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-foreground mb-2">
             Calculadora de Distância Astronômica
           </h1>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             Calcule distâncias entre corpos celestes e tempo de viagem com tecnologia atual
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card>
+          <Card className="border border-border">
             <CardHeader>
-              <CardTitle className="flex items-center">
+              <CardTitle className="flex items-center text-card-foreground">
                 <Globe className="mr-2 h-5 w-5 text-cyan-600" />
                 Selecionar Corpos Celestes
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <Label className="text-base font-medium">Origem</Label>
+                <Label className="text-base font-medium text-foreground">Origem</Label>
                 <RadioGroup value={selectedOrigin} onValueChange={setSelectedOrigin} className="mt-2">
                   {Object.entries(celestialBodies).map(([key, body]) => (
                     <div key={key} className="flex items-center space-x-2">
                       <RadioGroupItem value={key} id={`origin-${key}`} />
-                      <Label htmlFor={`origin-${key}`} className="cursor-pointer">
+                      <Label htmlFor={`origin-${key}`} className="cursor-pointer text-foreground">
                         {body.name}
                       </Label>
                     </div>
@@ -116,12 +116,12 @@ const AstronomicalDistance = () => {
               </div>
 
               <div>
-                <Label className="text-base font-medium">Destino</Label>
+                <Label className="text-base font-medium text-foreground">Destino</Label>
                 <RadioGroup value={selectedDestination} onValueChange={setSelectedDestination} className="mt-2">
                   {Object.entries(celestialBodies).map(([key, body]) => (
                     <div key={key} className="flex items-center space-x-2">
                       <RadioGroupItem value={key} id={`dest-${key}`} />
-                      <Label htmlFor={`dest-${key}`} className="cursor-pointer">
+                      <Label htmlFor={`dest-${key}`} className="cursor-pointer text-foreground">
                         {body.name}
                       </Label>
                     </div>
@@ -131,7 +131,7 @@ const AstronomicalDistance = () => {
 
               <Button
                 onClick={calculateDistance}
-                className="w-full bg-cyan-600 hover:bg-cyan-700"
+                className="w-full bg-cyan-600 hover:bg-cyan-700 text-white"
                 disabled={selectedOrigin === selectedDestination}
               >
                 Calcular Distância e Tempo de Viagem
@@ -140,20 +140,20 @@ const AstronomicalDistance = () => {
           </Card>
 
           {calculated && (
-            <Card>
+            <Card className="border border-border">
               <CardHeader>
-                <CardTitle>Resultados da Viagem</CardTitle>
-                <p className="text-sm text-gray-600">
+                <CardTitle className="text-card-foreground">Resultados da Viagem</CardTitle>
+                <p className="text-sm text-muted-foreground">
                   De {celestialBodies[selectedOrigin as keyof typeof celestialBodies].name} para{" "}
                   {celestialBodies[selectedDestination as keyof typeof celestialBodies].name}
                 </p>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
-                  <div className="bg-cyan-50 p-4 rounded-lg">
+                  <div className="bg-cyan-50 p-4 rounded-lg border border-cyan-200">
                     <div className="flex items-center mb-2">
                       <Globe className="mr-2 h-5 w-5 text-cyan-600" />
-                      <span className="font-medium">Distância</span>
+                      <span className="font-medium text-foreground">Distância</span>
                     </div>
                     <div className="text-2xl font-bold text-cyan-800">
                       {formatDistance(distance)}
@@ -161,23 +161,23 @@ const AstronomicalDistance = () => {
                   </div>
 
                   <div>
-                    <h3 className="font-semibold text-lg mb-3 flex items-center">
+                    <h3 className="font-semibold text-lg mb-3 flex items-center text-foreground">
                       <Rocket className="mr-2 h-5 w-5" />
                       Tempo de Viagem por Tecnologia
                     </h3>
                     <div className="space-y-3">
                       {Object.entries(spacecraftSpeeds).map(([key, spacecraft]) => (
-                        <div key={key} className="p-3 border rounded-lg">
+                        <div key={key} className="p-3 border border-border rounded-lg bg-card">
                           <div className="flex items-center justify-between mb-1">
-                            <span className="font-medium">{spacecraft.name}</span>
+                            <span className="font-medium text-card-foreground">{spacecraft.name}</span>
                             <Badge variant="outline">
                               {spacecraft.speed.toLocaleString()} km/h
                             </Badge>
                           </div>
-                          <div className="text-sm text-gray-600 mb-2">
+                          <div className="text-sm text-muted-foreground mb-2">
                             {spacecraft.description}
                           </div>
-                          <div className="flex items-center text-lg font-semibold text-blue-600">
+                          <div className="flex items-center text-lg font-semibold text-primary">
                             <Clock className="mr-2 h-4 w-4" />
                             {calculateTravelTime(distance, spacecraft.speed)}
                           </div>
@@ -186,9 +186,9 @@ const AstronomicalDistance = () => {
                     </div>
                   </div>
 
-                  <div className="bg-amber-50 p-4 rounded-lg">
-                    <h4 className="font-medium mb-2">💡 Curiosidade</h4>
-                    <p className="text-sm text-gray-700">
+                  <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                    <h4 className="font-medium mb-2 text-foreground">💡 Curiosidade</h4>
+                    <p className="text-sm text-muted-foreground">
                       A luz viajaria essa distância em aproximadamente{" "}
                       <strong>{Math.round(distance / 299792458 / 60)} minutos</strong>!
                       Para comparação, a luz do Sol leva cerca de 8 minutos para chegar à Terra.
