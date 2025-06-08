@@ -29,18 +29,7 @@ export const fetchBrazilianCitiesViaCep = async (): Promise<CityResult[]> => {
   }
 
   try {
-    // ViaCEP não tem endpoint direto para todas as cidades, então vamos usar uma lista de CEPs conhecidos
-    // Para uma solução mais robusta, podemos usar uma combinação de APIs
-    const statesAndCities = [
-      { state: "São Paulo", code: "SP", cep: "01001000" },
-      { state: "Rio de Janeiro", code: "RJ", cep: "20040020" },
-      { state: "Belo Horizonte", code: "MG", cep: "30112000" },
-      // Adicionar mais conforme necessário
-    ];
-
-    const cities: CityResult[] = [];
-    
-    // Para demonstração, vamos usar o IBGE como fallback
+    console.log('Buscando cidades do IBGE...');
     const response = await fetch(
       'https://servicodados.ibge.gov.br/api/v1/localidades/municipios?orderBy=nome'
     );
@@ -50,6 +39,7 @@ export const fetchBrazilianCitiesViaCep = async (): Promise<CityResult[]> => {
     }
     
     const data = await response.json();
+    console.log('Cidades carregadas:', data.length);
     
     citiesCache = data.map((city: any) => ({
       id: city.id.toString(),
@@ -71,20 +61,28 @@ export const searchCitiesViaCep = async (query: string): Promise<CityResult[]> =
     return [];
   }
 
-  const cities = await fetchBrazilianCitiesViaCep();
-  const normalizedQuery = query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  
-  return cities
-    .filter(city => {
-      const normalizedName = city.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      const normalizedState = city.state.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      const normalizedStateCode = city.stateCode.toLowerCase();
+  try {
+    const cities = await fetchBrazilianCitiesViaCep();
+    const normalizedQuery = query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    
+    const results = cities
+      .filter(city => {
+        const normalizedName = city.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const normalizedState = city.state.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const normalizedStateCode = city.stateCode.toLowerCase();
+        
+        return normalizedName.includes(normalizedQuery) ||
+               normalizedState.includes(normalizedQuery) ||
+               normalizedStateCode.includes(normalizedQuery);
+      })
+      .slice(0, 10);
       
-      return normalizedName.includes(normalizedQuery) ||
-             normalizedState.includes(normalizedQuery) ||
-             normalizedStateCode.includes(normalizedQuery);
-    })
-    .slice(0, 10);
+    console.log('Resultados filtrados:', results.length);
+    return results;
+  } catch (error) {
+    console.error('Erro na busca:', error);
+    return [];
+  }
 };
 
 export const geocodeCityViaCep = async (cityName: string, stateCode: string) => {

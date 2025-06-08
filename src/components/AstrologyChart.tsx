@@ -1,7 +1,7 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AstrologyChart as ChartData } from "@/services/astrologyService";
+import { AlertCircle } from "lucide-react";
 
 interface AstrologyChartProps {
   chartData: ChartData;
@@ -11,6 +11,7 @@ interface AstrologyChartProps {
     time: string;
     city: string;
   };
+  unknownTime?: boolean;
 }
 
 const planetColors = {
@@ -51,7 +52,7 @@ const planetSymbols = {
   southNode: "☋"
 };
 
-const AstrologyChart = ({ chartData, birthData }: AstrologyChartProps) => {
+const AstrologyChart = ({ chartData, birthData, unknownTime = false }: AstrologyChartProps) => {
   const planetData = [
     { key: 'sun', data: chartData.sun, category: 'Planetas Pessoais' },
     { key: 'moon', data: chartData.moon, category: 'Planetas Pessoais' },
@@ -86,8 +87,14 @@ const AstrologyChart = ({ chartData, birthData }: AstrologyChartProps) => {
           Mapa Astral Completo - {birthData.name}
         </CardTitle>
         <p className="text-center text-sm text-gray-600">
-          {new Date(birthData.date).toLocaleDateString('pt-BR')} às {birthData.time} - {birthData.city}
+          {new Date(birthData.date).toLocaleDateString('pt-BR')} às {unknownTime ? 'horário aproximado (12:00)' : birthData.time} - {birthData.city}
         </p>
+        {unknownTime && (
+          <div className="flex items-center justify-center space-x-2 text-amber-600 bg-amber-50 p-2 rounded-lg">
+            <AlertCircle className="h-4 w-4" />
+            <span className="text-sm">Cálculo com horário aproximado</span>
+          </div>
+        )}
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Mandala Central */}
@@ -99,18 +106,22 @@ const AstrologyChart = ({ chartData, birthData }: AstrologyChartProps) => {
               <div className="text-sm text-gray-600">Sol em Casa {chartData.sun.house}</div>
             </div>
             
-            {/* Pontos cardeais */}
-            <div className="absolute top-2 text-xs font-semibold">
+            {/* Pontos cardeais - com aviso se horário desconhecido */}
+            <div className={`absolute top-2 text-xs font-semibold ${unknownTime ? 'opacity-50' : ''}`}>
               <span className="text-green-600">ASC: {chartData.ascendant.sign}</span>
+              {unknownTime && <span className="text-amber-500">*</span>}
             </div>
-            <div className="absolute bottom-2 text-xs font-semibold">
+            <div className={`absolute bottom-2 text-xs font-semibold ${unknownTime ? 'opacity-50' : ''}`}>
               <span className="text-teal-600">DSC: {chartData.descendant.sign}</span>
+              {unknownTime && <span className="text-amber-500">*</span>}
             </div>
-            <div className="absolute right-2 text-xs font-semibold transform rotate-90">
+            <div className={`absolute right-2 text-xs font-semibold transform rotate-90 ${unknownTime ? 'opacity-50' : ''}`}>
               <span className="text-emerald-600">MC: {chartData.midheaven.sign}</span>
+              {unknownTime && <span className="text-amber-500">*</span>}
             </div>
-            <div className="absolute left-2 text-xs font-semibold transform -rotate-90">
+            <div className={`absolute left-2 text-xs font-semibold transform -rotate-90 ${unknownTime ? 'opacity-50' : ''}`}>
               <span className="text-lime-600">IC: {chartData.imumCoeli.sign}</span>
+              {unknownTime && <span className="text-amber-500">*</span>}
             </div>
           </div>
         </div>
@@ -118,7 +129,12 @@ const AstrologyChart = ({ chartData, birthData }: AstrologyChartProps) => {
         {/* Tabelas por Categoria */}
         {Object.entries(groupedData).map(([category, planets]) => (
           <div key={category} className="space-y-3">
-            <h3 className="font-semibold text-lg text-center text-purple-700">{category}</h3>
+            <h3 className="font-semibold text-lg text-center text-purple-700">
+              {category}
+              {unknownTime && (category === 'Pontos Importantes' || category.includes('Casa')) && (
+                <span className="text-amber-500 text-sm ml-2">*Aproximado</span>
+              )}
+            </h3>
             
             <div className="grid gap-2">
               <div className="grid grid-cols-5 gap-2 text-sm font-semibold text-gray-700 border-b pb-2">
@@ -129,46 +145,50 @@ const AstrologyChart = ({ chartData, birthData }: AstrologyChartProps) => {
                 <span>Minutos</span>
               </div>
               
-              {planets.map(({ key, data }) => (
-                <div 
-                  key={key}
-                  className={`grid grid-cols-5 gap-2 items-center p-3 rounded-lg border ${planetColors[key as keyof typeof planetColors]}`}
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl">
-                      {planetSymbols[key as keyof typeof planetSymbols]}
-                    </span>
-                    <span className="font-medium text-sm">
-                      {data.planet}
-                    </span>
+              {planets.map(({ key, data }) => {
+                const isTimeDependent = ['ascendant', 'midheaven', 'descendant', 'imumCoeli'].includes(key);
+                return (
+                  <div 
+                    key={key}
+                    className={`grid grid-cols-5 gap-2 items-center p-3 rounded-lg border ${planetColors[key as keyof typeof planetColors]} ${unknownTime && isTimeDependent ? 'opacity-70' : ''}`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-xl">
+                        {planetSymbols[key as keyof typeof planetSymbols]}
+                      </span>
+                      <span className="font-medium text-sm">
+                        {data.planet}
+                      </span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">{data.symbol}</span>
+                      <Badge variant="outline" className="text-xs">
+                        {data.sign}
+                      </Badge>
+                    </div>
+                    
+                    <div className="text-center">
+                      <span className="font-mono text-sm font-semibold">
+                        {data.house}
+                        {unknownTime && isTimeDependent && <span className="text-amber-500">*</span>}
+                      </span>
+                    </div>
+                    
+                    <div className="text-center">
+                      <span className="font-mono text-sm">
+                        {Math.floor(data.degree)}°
+                      </span>
+                    </div>
+                    
+                    <div className="text-center">
+                      <span className="font-mono text-sm">
+                        {Math.floor((data.degree % 1) * 60)}'
+                      </span>
+                    </div>
                   </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">{data.symbol}</span>
-                    <Badge variant="outline" className="text-xs">
-                      {data.sign}
-                    </Badge>
-                  </div>
-                  
-                  <div className="text-center">
-                    <span className="font-mono text-sm font-semibold">
-                      {data.house}
-                    </span>
-                  </div>
-                  
-                  <div className="text-center">
-                    <span className="font-mono text-sm">
-                      {Math.floor(data.degree)}°
-                    </span>
-                  </div>
-                  
-                  <div className="text-center">
-                    <span className="font-mono text-sm">
-                      {Math.floor((data.degree % 1) * 60)}'
-                    </span>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         ))}
@@ -187,11 +207,21 @@ const AstrologyChart = ({ chartData, birthData }: AstrologyChartProps) => {
             </p>
             <p>
               <strong>Ascendente em {chartData.ascendant.sign}:</strong> Como você se apresenta ao mundo e sua personalidade exterior.
+              {unknownTime && <span className="text-amber-600"> (Aproximado)</span>}
             </p>
             <p>
               <strong>Meio do Céu em {chartData.midheaven.sign}:</strong> Sua vocação e objetivos de carreira.
+              {unknownTime && <span className="text-amber-600"> (Aproximado)</span>}
             </p>
           </div>
+          {unknownTime && (
+            <div className="mt-3 p-3 bg-amber-100 rounded-lg">
+              <p className="text-sm text-amber-800">
+                <strong>* Nota:</strong> Elementos marcados com asterisco são aproximados devido ao horário de nascimento desconhecido.
+                Para um mapa mais preciso, procure seu horário exato na certidão de nascimento.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Distribuição por Casas */}
@@ -199,8 +229,11 @@ const AstrologyChart = ({ chartData, birthData }: AstrologyChartProps) => {
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(house => {
             const planetsInHouse = planetData.filter(p => p.data.house === house);
             return (
-              <div key={house} className="p-3 bg-gray-50 rounded-lg">
-                <div className="font-semibold text-purple-700">Casa {house}</div>
+              <div key={house} className={`p-3 bg-gray-50 rounded-lg ${unknownTime ? 'opacity-70' : ''}`}>
+                <div className="font-semibold text-purple-700">
+                  Casa {house}
+                  {unknownTime && <span className="text-amber-500 text-xs">*</span>}
+                </div>
                 <div className="text-xs text-gray-600 mt-1">
                   {planetsInHouse.length > 0 
                     ? planetsInHouse.map(p => p.data.planet).join(', ')

@@ -34,9 +34,11 @@ const CityAutocomplete = ({ value, onSelect, placeholder = "Digite o nome da cid
         return;
       }
 
+      console.log('Buscando cidades para:', inputValue);
       setIsLoading(true);
       try {
         const results = await searchCitiesViaCep(inputValue);
+        console.log('Resultados encontrados:', results);
         setSuggestions(results);
         setShowSuggestions(true);
       } catch (error) {
@@ -47,7 +49,7 @@ const CityAutocomplete = ({ value, onSelect, placeholder = "Digite o nome da cid
       }
     };
 
-    const timeoutId = setTimeout(searchCitiesDebounced, 300);
+    const timeoutId = setTimeout(searchCitiesDebounced, 500);
     return () => clearTimeout(timeoutId);
   }, [inputValue]);
 
@@ -78,12 +80,14 @@ const CityAutocomplete = ({ value, onSelect, placeholder = "Digite o nome da cid
   };
 
   const handleSuggestionClick = async (city: CityResult) => {
+    console.log('Cidade selecionada:', city);
     setInputValue(city.fullName);
     setShowSuggestions(false);
     setIsGeocoding(true);
 
     try {
       const coords = await geocodeCityViaCep(city.name, city.stateCode);
+      console.log('Coordenadas:', coords);
       onSelect(city.fullName, coords || undefined);
     } catch (error) {
       console.error('Erro ao geocodificar cidade:', error);
@@ -94,7 +98,7 @@ const CityAutocomplete = ({ value, onSelect, placeholder = "Digite o nome da cid
   };
 
   const handleInputFocus = () => {
-    if (suggestions.length > 0) {
+    if (suggestions.length > 0 && inputValue.length >= 2) {
       setShowSuggestions(true);
     }
   };
